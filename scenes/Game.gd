@@ -11,18 +11,26 @@ enum CURSE {
   ALPHA = 3,
   REVERSE = 4,
   FLIP = 5, #todo (need to change pivot point of PrefixList and then rotate 180 (remember to reset)
-  JUMBLE = 6, #todo fix bug where word is rejumbled when label prefixe labels regenerated
+  JUMBLE = 6,
   ROT13 = 7,
   ROT1 = 8,
   ROT1NEG = 9,
   ALLE = 10
  }
+const curse_descriptions = [
+  "Ps are Qs", "Ds are Bs", "vowels are shifted (a>e>i>o>u>a)",
+  "words are alphabetised", "words are reversed", "words are flipped",
+  "words are jumbled",  "letters are rot13 (a>m>a, b>n>b)",
+  "letters are shifted (a>b>c>...)", "letters are shifted backwards (c>b>a>z>...)",
+  "vowels are all E"
+ ]
 
 onready var GameOver = $CanvasLayer/CenterContainer/VBoxContainer/GameOver
 onready var StartButton = $CanvasLayer/CenterContainer/VBoxContainer/StartButton
 onready var Clock = $CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Clock
+onready var Rules = $CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Rules
 onready var Score = $CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Score
-onready var Health = $CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Health
+onready var Health = $CanvasLayer/CenterContainer/Health
 onready var Typed = $CanvasLayer/MarginContainer/VBoxContainer/Typed
 onready var PrefixList = $CanvasLayer/MarginContainer/VBoxContainer/Fragments/Prefixes
 onready var SuffixList = $CanvasLayer/MarginContainer/VBoxContainer/Fragments/Suffixes
@@ -45,7 +53,7 @@ var playing := false
 
 var curses = [
 #  CURSE.PQ, CURSE.ALPHA, CURSE.VOWEL
-  CURSE.ALLE,
+  CURSE.PQ, CURSE.ALLE, CURSE.ALPHA,
  ]
 
 
@@ -62,6 +70,7 @@ func start_game() -> void:
 
   update_score()
   update_health()
+  update_rules()
 
   generate_words()
 
@@ -140,13 +149,13 @@ func _unhandled_key_input(event: InputEventKey) -> void:
               update_health()
               reset_current()
 
-        update_label()
+        update_typed()
       else:
         print("invalid letter: ", letter)
     elif event.scancode == KEY_BACKSPACE:
       delete_character()
       update_prefix_list()
-      update_label()
+      update_typed()
 
 
 func create_timer() -> void:
@@ -176,7 +185,15 @@ func update_health() -> void:
   Health.text = "Health: %d/%d" % [current_health, MAX_HEALTH]
 
 
-func update_label() -> void:
+func update_rules() -> void:
+  var new_text := "Mind your "
+  var and_string := ", and "
+  for curse in curses:
+    new_text += curse_descriptions[curse] + and_string
+  Rules.text = new_text.trim_suffix(and_string) + "."
+
+
+func update_typed() -> void:
   Typed.text = current_word.prefix + current_word.suffix
 
 

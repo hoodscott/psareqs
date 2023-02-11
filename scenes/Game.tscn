@@ -24,96 +24,101 @@ alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
 margin_right = 974.0
-margin_bottom = 14.0
+margin_bottom = 48.0
+custom_constants/separation = 10
 
 [node name="Clock" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_top = 17.0
 margin_right = 61.0
-margin_bottom = 14.0
+margin_bottom = 31.0
 text = "Time: xxx"
 
-[node name="Health" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 65.0
-margin_right = 899.0
-margin_bottom = 14.0
+[node name="Rules" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 71.0
+margin_right = 900.0
+margin_bottom = 48.0
 size_flags_horizontal = 3
-text = "Health : xxx"
+text = "Mind your Ps are Qs, and vowels are shifted, and words are backwards, and vowels are all Es, and words are in alphabetical order, and Ds are Bs
+"
 align = 1
+autowrap = true
 
 [node name="Score" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 903.0
+margin_left = 910.0
+margin_top = 17.0
 margin_right = 974.0
-margin_bottom = 14.0
-text = "Score: xzxx"
+margin_bottom = 31.0
+text = "Score: xxx"
 
 [node name="Fragments" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
-margin_top = 18.0
+margin_top = 52.0
 margin_right = 974.0
 margin_bottom = 532.0
 size_flags_vertical = 3
 
 [node name="Prefixes" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/Fragments"]
 margin_right = 78.0
-margin_bottom = 514.0
+margin_bottom = 480.0
 alignment = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Fragments/Prefixes"]
-margin_top = 223.0
+margin_top = 206.0
 margin_right = 78.0
-margin_bottom = 237.0
+margin_bottom = 220.0
 text = "test content"
 
 [node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Fragments/Prefixes"]
-margin_top = 241.0
+margin_top = 224.0
 margin_right = 78.0
-margin_bottom = 255.0
+margin_bottom = 238.0
 text = "test content"
 
 [node name="Label3" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Fragments/Prefixes"]
-margin_top = 259.0
+margin_top = 242.0
 margin_right = 78.0
-margin_bottom = 273.0
+margin_bottom = 256.0
 text = "test content"
 
 [node name="Label4" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Fragments/Prefixes"]
-margin_top = 277.0
+margin_top = 260.0
 margin_right = 78.0
-margin_bottom = 291.0
+margin_bottom = 274.0
 text = "test content"
 
 [node name="Spacer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/Fragments"]
 margin_left = 82.0
 margin_right = 892.0
-margin_bottom = 514.0
+margin_bottom = 480.0
 size_flags_horizontal = 3
 
 [node name="Suffixes" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/Fragments"]
 margin_left = 896.0
 margin_right = 974.0
-margin_bottom = 514.0
+margin_bottom = 480.0
 alignment = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Fragments/Suffixes"]
-margin_top = 223.0
+margin_top = 206.0
 margin_right = 78.0
-margin_bottom = 237.0
+margin_bottom = 220.0
 text = "test content"
 
 [node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Fragments/Suffixes"]
-margin_top = 241.0
+margin_top = 224.0
 margin_right = 78.0
-margin_bottom = 255.0
+margin_bottom = 238.0
 text = "test content"
 
 [node name="Label3" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Fragments/Suffixes"]
-margin_top = 259.0
+margin_top = 242.0
 margin_right = 78.0
-margin_bottom = 273.0
+margin_bottom = 256.0
 text = "test content"
 
 [node name="Label4" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Fragments/Suffixes"]
-margin_top = 277.0
+margin_top = 260.0
 margin_right = 78.0
-margin_bottom = 291.0
+margin_bottom = 274.0
 text = "test content"
 
 [node name="Typed" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
@@ -143,5 +148,14 @@ margin_top = 34.0
 margin_right = 83.0
 margin_bottom = 54.0
 text = "Start Game"
+
+[node name="Health" type="Label" parent="CanvasLayer/CenterContainer"]
+margin_left = 474.0
+margin_top = 293.0
+margin_right = 549.0
+margin_bottom = 307.0
+size_flags_horizontal = 3
+text = "Health : xxx"
+align = 1
 
 [connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/StartButton" to="." method="_on_Button_pressed"]
