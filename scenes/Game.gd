@@ -1,8 +1,16 @@
 extends Node2D
 
-export (int) var GAME_LENGTH := 60
+export (int) var GAME_LENGTH := 10
 export (int) var MAX_HEALTH := 2
 export (int) var WORD_BUFFER := 3
+var NUM_CURSE_OPTIONS := 3
+
+enum GAMESTATE {
+  CURSE_CHOICE = 0,
+  PLAYING = 1,
+  GAMEOVER = 2
+ }
+var current_state = GAMESTATE.CURSE_CHOICE
 
 enum CURSE {
   PQ = 0,
@@ -15,25 +23,40 @@ enum CURSE {
   ROT13 = 7,
   ROT1 = 8,
   ROT1NEG = 9,
-  ALLE = 10
+  ALLE = 10,
+  KC = 11,
+  ALLY = 12
  }
 const curse_descriptions = [
   "Ps are Qs", "Ds are Bs", "vowels are shifted (a>e>i>o>u>a)",
   "words are alphabetised", "words are reversed", "words are flipped",
   "words are jumbled",  "letters are rot13 (a>m>a, b>n>b)",
   "letters are shifted (a>b>c>...)", "letters are shifted backwards (c>b>a>z>...)",
-  "vowels are all E"
+  "vowels are all E", "Ks are Cs", "vowels are all Y"
  ]
+var curse_options := [
+  [CURSE.PQ, CURSE.DB, CURSE.KC], # letter swaps
+  [CURSE.VOWEL, CURSE.ALLE, CURSE.ALLY], # vowel changes
+  [CURSE.REVERSE, CURSE.JUMBLE, CURSE.ALPHA, CURSE.ROT1, CURSE.ROT1NEG], # reorder
+ ]
+var num_rounds = curse_options.size()
 
-onready var GameOver = $CanvasLayer/CenterContainer/VBoxContainer/GameOver
-onready var StartButton = $CanvasLayer/CenterContainer/VBoxContainer/StartButton
-onready var Clock = $CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Clock
-onready var Rules = $CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Rules
-onready var Score = $CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Score
-onready var Health = $CanvasLayer/CenterContainer/Health
-onready var Typed = $CanvasLayer/MarginContainer/VBoxContainer/Typed
-onready var PrefixList = $CanvasLayer/MarginContainer/VBoxContainer/Fragments/Prefixes
-onready var SuffixList = $CanvasLayer/MarginContainer/VBoxContainer/Fragments/Suffixes
+onready var GameContainer := $CanvasLayer/GameContainer
+onready var CurseChooser := $CanvasLayer/CenterContainer/CurseChooser
+onready var CurseChoices := [
+  $CanvasLayer/CenterContainer/CurseChooser/Choice,
+  $CanvasLayer/CenterContainer/CurseChooser/Choice2,
+  $CanvasLayer/CenterContainer/CurseChooser/Choice3
+ ]
+onready var GameOver := $CanvasLayer/CenterContainer/VBoxContainer/GameOver
+onready var StartButton := $CanvasLayer/CenterContainer/VBoxContainer/StartButton
+onready var Clock := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/Clock
+onready var Rules := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/Rules
+onready var Score := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/Score
+onready var Health := $CanvasLayer/CenterContainer/Health
+onready var Typed := $CanvasLayer/GameContainer/VBoxContainer/Typed
+onready var PrefixList := $CanvasLayer/GameContainer/VBoxContainer/Fragments/Prefixes
+onready var SuffixList := $CanvasLayer/GameContainer/VBoxContainer/Fragments/Suffixes
 var timer:Timer
 
 const WordList := preload("res://resources/word_list.gd")
@@ -49,11 +72,12 @@ var current_health := MAX_HEALTH
 var time_remaining := 0
 var score := 0
 
-var playing := false
+var current_round := 0
 
-var curses = [
+
+var current_curses = [
 #  CURSE.PQ, CURSE.ALPHA, CURSE.VOWEL
-  CURSE.PQ, CURSE.ALLE, CURSE.ALPHA,
+#  CURSE.PQ, CURSE.ALLE, CURSE.ALPHA,
  ]
 
 
@@ -63,32 +87,62 @@ func _ready() -> void:
 
   create_timer()
 
+  GameContainer.hide()
+
 func start_game() -> void:
   score = 0
-  current_health = MAX_HEALTH
+  current_round = 0
   reset_current()
 
   update_score()
   update_health()
+
+  shuffle_curse_options()
+
+  show_curse_options()
+
+
+func show_curse_options() -> void:
+  for i in range(NUM_CURSE_OPTIONS):
+    CurseChoices[i].text = curse_descriptions[curse_options[current_round][i]]
+
+  GameContainer.hide()
+  CurseChooser.show()
+
+
+func end_game() -> void:
+  current_round += 1
+
+  if current_round == num_rounds:
+    GameContainer.hide()
+    current_state = GAMESTATE.GAMEOVER
+    print("game over")
+
+    GameOver.text = "Game Over!\nFinal Score: %s" % score
+    GameOver.show()
+
+    yield(get_tree().create_timer(3), "timeout")
+    StartButton.show()
+  else:
+    current_state = GAMESTATE.CURSE_CHOICE
+    show_curse_options()
+
+
+func curse_chosen(index: int) -> void:
+  current_curses.append(curse_options[current_round][index])
   update_rules()
+
+  current_health = MAX_HEALTH
+  update_health()
 
   generate_words()
 
   reset_timer()
 
-  playing = true
+  CurseChooser.hide()
+  GameContainer.show()
 
-
-func end_game() -> void:
-  playing = false
-  timer.stop()
-  print("game over")
-
-  GameOver.text = "Game Over!\nFinal Score: %s" % score
-  GameOver.show()
-
-  yield(get_tree().create_timer(3), "timeout")
-  StartButton.show()
+  current_state = GAMESTATE.PLAYING
 
 
 func generate_words() -> void:
@@ -111,8 +165,13 @@ func reset_current() -> void:
   current_word.prefix_used = false
 
 
+func shuffle_curse_options():
+  for i in curse_options:
+    i.shuffle()
+
+
 func _unhandled_key_input(event: InputEventKey) -> void:
-  if playing and event.pressed:
+  if current_state == GAMESTATE.PLAYING and event.pressed:
     if event.scancode >= KEY_A and event.scancode <= KEY_Z:
       var letter = OS.get_scancode_string(event.scancode).to_lower()
 
@@ -140,7 +199,7 @@ func _unhandled_key_input(event: InputEventKey) -> void:
             print("word complete")
             current_health -= 1
             if current_health == 0:
-              score += 1 * curses.size()
+              score += 1 * current_curses.size()
               update_score()
               current_health = MAX_HEALTH
               update_health()
@@ -188,7 +247,7 @@ func update_health() -> void:
 func update_rules() -> void:
   var new_text := "Mind your "
   var and_string := ", and "
-  for curse in curses:
+  for curse in current_curses:
     new_text += curse_descriptions[curse] + and_string
   Rules.text = new_text.trim_suffix(and_string) + "."
 
@@ -212,7 +271,7 @@ func update_list(node: Control, list, new := false) -> void:
   for fragment in list:
     if new:
       var word: String = fragment.fragment
-      for curse in curses:
+      for curse in current_curses:
         match curse:
           CURSE.VOWEL:
             word = string_vowel_shift(word)
@@ -222,6 +281,8 @@ func update_list(node: Control, list, new := false) -> void:
             word = string_swap(word, "p", "q")
           CURSE.DB:
             word = string_swap(word, "b", "d")
+          CURSE.KC:
+            word = string_swap(word, "k", "c")
           CURSE.ALPHA:
             word = string_alphabetise(word)
           CURSE.JUMBLE:
@@ -234,6 +295,8 @@ func update_list(node: Control, list, new := false) -> void:
             word = string_rot(word, 1)
           CURSE.ALLE:
             word = string_vowel_replace(word, "e")
+          CURSE.ALLY:
+            word = string_vowel_replace(word, "y")
           _:
             print("no curse implementation", curse)
             word = word
@@ -376,11 +439,12 @@ func _on_timer_timeout():
   if time_remaining >= 0:
     update_clock()
     if time_remaining == 0:
+      timer.stop()
       end_game()
   else:
     # shouldn't get here, but end here as well just in case
     end_game()
-    print("game over")
+    print("game over - should be imposs")
     timer.stop()
 
 
@@ -388,3 +452,15 @@ func _on_Button_pressed() -> void:
   start_game()
   StartButton.hide()
   GameOver.hide()
+
+
+func _on_Choice_pressed() -> void:
+  curse_chosen(0)
+
+
+func _on_Choice2_pressed() -> void:
+  curse_chosen(1)
+
+
+func _on_Choice3_pressed() -> void:
+  curse_chosen(2)
