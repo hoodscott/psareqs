@@ -1,8 +1,67 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/Game.gd" type="Script" id=1]
 [ext_resource path="res://assets/img/background.png" type="Texture" id=2]
 [ext_resource path="res://assets/font/Augusta.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/img/arm.png" type="Texture" id=4]
+[ext_resource path="res://assets/img/body_tex.png" type="Texture" id=5]
+[ext_resource path="res://assets/img/anger.png" type="Texture" id=6]
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite/ArmLeft:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite/ArmRight:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 20.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "idle"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite/ArmRight:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 20.0, 40.0, 30.0, 0.0, 20.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite/ArmLeft:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -5.0, 5.0, 15.0, 0.0 ]
+}
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 3 )
@@ -14,7 +73,46 @@ script = ExtResource( 1 )
 texture = ExtResource( 2 )
 centered = false
 
+[node name="Mephistopheles" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Mephistopheles"]
+position = Vector2( 402, 280 )
+texture = ExtResource( 5 )
+
+[node name="Head" type="Position2D" parent="Mephistopheles/Sprite"]
+position = Vector2( -9, -54 )
+
+[node name="Sprite" type="Sprite" parent="Mephistopheles/Sprite/Head"]
+texture = ExtResource( 6 )
+
+[node name="ArmRight" type="Position2D" parent="Mephistopheles/Sprite"]
+position = Vector2( -16, -39 )
+rotation = 0.349066
+
+[node name="Sprite" type="Sprite" parent="Mephistopheles/Sprite/ArmRight"]
+position = Vector2( -17, 10 )
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ArmLeft" type="Position2D" parent="Mephistopheles/Sprite"]
+position = Vector2( 0, -39 )
+
+[node name="Sprite" type="Sprite" parent="Mephistopheles/Sprite/ArmLeft"]
+position = Vector2( -17, 10 )
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Mephistopheles"]
+autoplay = "idle"
+anims/RESET = SubResource( 2 )
+anims/idle = SubResource( 3 )
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="GameContainer" type="MarginContainer" parent="CanvasLayer"]
 anchor_right = 1.0
