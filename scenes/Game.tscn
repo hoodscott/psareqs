@@ -160,6 +160,7 @@ text = "test content"
 margin_top = 342.0
 margin_right = 618.0
 margin_bottom = 370.0
+text = "type an insult to banish the demon"
 align = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]

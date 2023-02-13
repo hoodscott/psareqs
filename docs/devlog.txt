@@ -1,0 +1,4 @@
+day 1: idea
+day 2: test idea (mvp)
+day 3: create game loop (time based)
+day 4: art (tweak loop to add num demons)
