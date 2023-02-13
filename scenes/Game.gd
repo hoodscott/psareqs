@@ -4,6 +4,7 @@ export (int) var GAME_LENGTH := 10
 export (int) var MAX_HEALTH := 2
 export (int) var WORD_BUFFER := 3
 var NUM_CURSE_OPTIONS := 3
+var NUM_DEMONS := 1
 
 enum GAMESTATE {
   CURSE_CHOICE = 0,
@@ -51,7 +52,8 @@ onready var CurseChoices := [
 onready var GameOver := $CanvasLayer/CenterContainer/VBoxContainer/GameOver
 onready var StartButton := $CanvasLayer/CenterContainer/VBoxContainer/StartButton
 onready var Clock := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Clock
-onready var Rules := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/Rules
+onready var Demons := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Demons
+onready var Rules := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer1/Rules
 onready var Score := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Score
 onready var Health := $CanvasLayer/CenterContainer/Health
 onready var Typed := $CanvasLayer/GameContainer/VBoxContainer/Typed
@@ -68,6 +70,7 @@ var current_word: Dictionary = {
   "prefix": "", "suffix": "", "prefix_used": false
  }
 
+var current_demons := NUM_DEMONS
 var current_health := MAX_HEALTH
 var time_remaining := 0
 var score := 0
@@ -91,6 +94,7 @@ func _ready() -> void:
 
 func start_game() -> void:
   score = 0
+  current_curses = []
   current_round = 0
   reset_current()
 
@@ -110,22 +114,28 @@ func show_curse_options() -> void:
   CurseChooser.show()
 
 
-func end_game() -> void:
+func end_round() -> void:
+  timer.stop()
+
   current_round += 1
 
   if current_round == num_rounds:
-    GameContainer.hide()
-    current_state = GAMESTATE.GAMEOVER
-    print("game over")
-
-    GameOver.text = "Game Over!\nFinal Score: %s" % score
-    GameOver.show()
-
-    yield(get_tree().create_timer(3), "timeout")
-    StartButton.show()
+    end_game()
   else:
     current_state = GAMESTATE.CURSE_CHOICE
     show_curse_options()
+
+
+func end_game() -> void:
+  print("game over")
+  GameContainer.hide()
+  current_state = GAMESTATE.GAMEOVER
+
+  GameOver.text = "Game Over!\nFinal Score: %s" % score
+  GameOver.show()
+
+  yield(get_tree().create_timer(3), "timeout")
+  StartButton.show()
 
 
 func curse_chosen(index: int) -> void:
@@ -134,6 +144,9 @@ func curse_chosen(index: int) -> void:
 
   current_health = MAX_HEALTH
   update_health()
+
+  current_demons = NUM_DEMONS
+  update_demons()
 
   generate_words()
 
@@ -203,7 +216,14 @@ func _unhandled_key_input(event: InputEventKey) -> void:
               update_score()
               current_health = MAX_HEALTH
               update_health()
-              generate_words()
+              current_demons -= 1
+
+              if current_demons == 0:
+                print("round complete")
+                end_round()
+              else:
+                update_demons()
+                generate_words()
             else:
               update_health()
               reset_current()
@@ -242,6 +262,10 @@ func update_score() -> void:
 
 func update_health() -> void:
   Health.text = "Health: %d/%d" % [current_health, MAX_HEALTH]
+
+
+func update_demons() -> void:
+  Demons.text = "Demons Left: %d" % current_demons
 
 
 func update_rules() -> void:
