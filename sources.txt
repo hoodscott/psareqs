@@ -1,0 +1,5 @@
+game engine: godot, godotengine.org
+
+background image and devil design: Image from page 62 of "Chap-books of the eighteenth century" (1882), scanned by Internet Archive Book Images, https://www.flickr.com/photos/internetarchivebookimages/14780158621/
+
+font: Augusta à by Dieter Steffmann, http://www.steffmann.de/, https://www.dafont.com/augusta.font 
