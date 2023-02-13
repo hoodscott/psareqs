@@ -86,10 +86,10 @@ tracks/2/keys = {
 }
 
 [node name="Mephistopheles" type="Node2D"]
-position = Vector2( 408, 276 )
 scale = Vector2( 1.5, 1.5 )
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 5, 10 )
 z_index = 1
 texture = ExtResource( 3 )
 __meta__ = {
@@ -101,10 +101,13 @@ position = Vector2( -9, -57 )
 
 [node name="Sprite" type="Sprite" parent="Sprite/Head"]
 texture = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="ArmRight" type="Position2D" parent="Sprite"]
 position = Vector2( -16, -39 )
-rotation = 0.575796
+rotation = 0.349066
 
 [node name="Sprite" type="Sprite" parent="Sprite/ArmRight"]
 position = Vector2( -17, 10 )
@@ -115,7 +118,6 @@ __meta__ = {
 
 [node name="ArmLeft" type="Position2D" parent="Sprite"]
 position = Vector2( 0, -38 )
-rotation = -0.0660383
 
 [node name="Sprite" type="Sprite" parent="Sprite/ArmLeft"]
 position = Vector2( -17, 10 )
@@ -126,7 +128,6 @@ __meta__ = {
 
 [node name="Tail" type="Position2D" parent="Sprite"]
 position = Vector2( 5.33334, -0.666656 )
-rotation = -0.162234
 z_as_relative = false
 
 [node name="Sprite" type="Sprite" parent="Sprite/Tail"]

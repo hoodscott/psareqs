@@ -16,6 +16,7 @@ texture = ExtResource( 2 )
 centered = false
 
 [node name="Mephistopheles" parent="." instance=ExtResource( 4 )]
+position = Vector2( 399, 262 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -87,76 +88,76 @@ text = "Score: xxx"
 [node name="Fragments" type="HBoxContainer" parent="CanvasLayer/GameContainer/VBoxContainer"]
 margin_top = 89.0
 margin_right = 618.0
-margin_bottom = 352.0
+margin_bottom = 338.0
 size_flags_vertical = 3
 
 [node name="Prefixes" type="VBoxContainer" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments"]
-margin_right = 78.0
-margin_bottom = 263.0
+margin_right = 108.0
+margin_bottom = 249.0
 alignment = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Prefixes"]
-margin_top = 97.0
-margin_right = 78.0
-margin_bottom = 111.0
+margin_top = 62.0
+margin_right = 108.0
+margin_bottom = 90.0
 text = "test content"
 
 [node name="Label2" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Prefixes"]
-margin_top = 115.0
-margin_right = 78.0
-margin_bottom = 129.0
+margin_top = 94.0
+margin_right = 108.0
+margin_bottom = 122.0
 text = "test content"
 
 [node name="Label3" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Prefixes"]
-margin_top = 133.0
-margin_right = 78.0
-margin_bottom = 147.0
+margin_top = 126.0
+margin_right = 108.0
+margin_bottom = 154.0
 text = "test content"
 
 [node name="Label4" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Prefixes"]
-margin_top = 151.0
-margin_right = 78.0
-margin_bottom = 165.0
+margin_top = 158.0
+margin_right = 108.0
+margin_bottom = 186.0
 text = "test content"
 
 [node name="Spacer" type="HBoxContainer" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments"]
-margin_left = 82.0
-margin_right = 536.0
-margin_bottom = 263.0
+margin_left = 112.0
+margin_right = 506.0
+margin_bottom = 249.0
 size_flags_horizontal = 3
 
 [node name="Suffixes" type="VBoxContainer" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments"]
-margin_left = 540.0
+margin_left = 510.0
 margin_right = 618.0
-margin_bottom = 263.0
+margin_bottom = 249.0
 alignment = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Suffixes"]
-margin_top = 97.0
-margin_right = 78.0
-margin_bottom = 111.0
+margin_top = 62.0
+margin_right = 108.0
+margin_bottom = 90.0
 text = "test content"
 
 [node name="Label2" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Suffixes"]
-margin_top = 115.0
-margin_right = 78.0
-margin_bottom = 129.0
+margin_top = 94.0
+margin_right = 108.0
+margin_bottom = 122.0
 text = "test content"
 
 [node name="Label3" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Suffixes"]
-margin_top = 133.0
-margin_right = 78.0
-margin_bottom = 147.0
+margin_top = 126.0
+margin_right = 108.0
+margin_bottom = 154.0
 text = "test content"
 
 [node name="Label4" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Suffixes"]
-margin_top = 151.0
-margin_right = 78.0
-margin_bottom = 165.0
+margin_top = 158.0
+margin_right = 108.0
+margin_bottom = 186.0
 text = "test content"
 
 [node name="Typed" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer"]
-margin_top = 356.0
+margin_top = 342.0
 margin_right = 618.0
 margin_bottom = 370.0
 align = 1
@@ -166,10 +167,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Health" type="Label" parent="CanvasLayer/CenterContainer"]
-margin_left = 296.0
-margin_top = 203.0
-margin_right = 371.0
-margin_bottom = 217.0
+margin_left = 276.0
+margin_top = 196.0
+margin_right = 391.0
+margin_bottom = 224.0
 size_flags_horizontal = 3
 text = "Health : xxx"
 align = 1
@@ -194,10 +195,10 @@ text = "Start Game"
 
 [node name="CurseChooser" type="VBoxContainer" parent="CanvasLayer/CenterContainer"]
 visible = false
-margin_left = 285.0
-margin_top = 150.0
-margin_right = 383.0
-margin_bottom = 269.0
+margin_left = 261.0
+margin_top = 125.0
+margin_right = 406.0
+margin_bottom = 294.0
 custom_constants/separation = 15
 
 [node name="Label" type="Label" parent="CanvasLayer/CenterContainer/CurseChooser"]
