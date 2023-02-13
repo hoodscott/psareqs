@@ -1,9 +1,18 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/Game.gd" type="Script" id=1]
+[ext_resource path="res://assets/img/background.png" type="Texture" id=2]
+[ext_resource path="res://assets/font/Augusta.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 3 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
+
+[node name="Background" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+centered = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -18,124 +27,144 @@ custom_constants/margin_bottom = 25
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameContainer"]
 margin_left = 25.0
 margin_top = 25.0
-margin_right = 999.0
-margin_bottom = 575.0
+margin_right = 643.0
+margin_bottom = 395.0
 alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GameContainer/VBoxContainer"]
-margin_right = 974.0
-margin_bottom = 48.0
+margin_right = 618.0
+margin_bottom = 85.0
 custom_constants/separation = 10
 
-[node name="Clock" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/HBoxContainer"]
-margin_top = 17.0
-margin_right = 61.0
-margin_bottom = 31.0
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameContainer/VBoxContainer/HBoxContainer"]
+margin_right = 140.0
+margin_bottom = 85.0
+size_flags_horizontal = 3
+
+[node name="Clock" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 140.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 140, 0 )
 text = "Time: xxx"
 
 [node name="Rules" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/HBoxContainer"]
-margin_left = 71.0
-margin_right = 900.0
-margin_bottom = 48.0
+margin_left = 150.0
+margin_right = 493.0
+margin_bottom = 85.0
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+custom_fonts/font = SubResource( 1 )
 text = "Mind your Ps are Qs, and vowels are shifted, and words are backwards, and vowels are all Es, and words are in alphabetical order, and Ds are Bs
 "
 align = 1
 autowrap = true
 
-[node name="Score" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/HBoxContainer"]
-margin_left = 910.0
-margin_top = 17.0
-margin_right = 974.0
-margin_bottom = 31.0
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/GameContainer/VBoxContainer/HBoxContainer"]
+margin_left = 503.0
+margin_right = 618.0
+margin_bottom = 85.0
+size_flags_horizontal = 3
+
+[node name="Score" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_right = 115.0
+margin_bottom = 28.0
 text = "Score: xxx"
 
 [node name="Fragments" type="HBoxContainer" parent="CanvasLayer/GameContainer/VBoxContainer"]
-margin_top = 52.0
-margin_right = 974.0
-margin_bottom = 532.0
+margin_top = 89.0
+margin_right = 618.0
+margin_bottom = 352.0
 size_flags_vertical = 3
 
 [node name="Prefixes" type="VBoxContainer" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments"]
 margin_right = 78.0
-margin_bottom = 480.0
+margin_bottom = 263.0
 alignment = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Prefixes"]
-margin_top = 206.0
+margin_top = 97.0
 margin_right = 78.0
-margin_bottom = 220.0
+margin_bottom = 111.0
 text = "test content"
 
 [node name="Label2" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Prefixes"]
-margin_top = 224.0
+margin_top = 115.0
 margin_right = 78.0
-margin_bottom = 238.0
+margin_bottom = 129.0
 text = "test content"
 
 [node name="Label3" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Prefixes"]
-margin_top = 242.0
+margin_top = 133.0
 margin_right = 78.0
-margin_bottom = 256.0
+margin_bottom = 147.0
 text = "test content"
 
 [node name="Label4" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Prefixes"]
-margin_top = 260.0
+margin_top = 151.0
 margin_right = 78.0
-margin_bottom = 274.0
+margin_bottom = 165.0
 text = "test content"
 
 [node name="Spacer" type="HBoxContainer" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments"]
 margin_left = 82.0
-margin_right = 892.0
-margin_bottom = 480.0
+margin_right = 536.0
+margin_bottom = 263.0
 size_flags_horizontal = 3
 
 [node name="Suffixes" type="VBoxContainer" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments"]
-margin_left = 896.0
-margin_right = 974.0
-margin_bottom = 480.0
+margin_left = 540.0
+margin_right = 618.0
+margin_bottom = 263.0
 alignment = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Suffixes"]
-margin_top = 206.0
+margin_top = 97.0
 margin_right = 78.0
-margin_bottom = 220.0
+margin_bottom = 111.0
 text = "test content"
 
 [node name="Label2" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Suffixes"]
-margin_top = 224.0
+margin_top = 115.0
 margin_right = 78.0
-margin_bottom = 238.0
+margin_bottom = 129.0
 text = "test content"
 
 [node name="Label3" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Suffixes"]
-margin_top = 242.0
+margin_top = 133.0
 margin_right = 78.0
-margin_bottom = 256.0
+margin_bottom = 147.0
 text = "test content"
 
 [node name="Label4" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/Fragments/Suffixes"]
-margin_top = 260.0
+margin_top = 151.0
 margin_right = 78.0
-margin_bottom = 274.0
+margin_bottom = 165.0
 text = "test content"
 
 [node name="Typed" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer"]
-margin_top = 536.0
-margin_right = 974.0
-margin_bottom = 550.0
+margin_top = 356.0
+margin_right = 618.0
+margin_bottom = 370.0
 align = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
+[node name="Health" type="Label" parent="CanvasLayer/CenterContainer"]
+margin_left = 296.0
+margin_top = 203.0
+margin_right = 371.0
+margin_bottom = 217.0
+size_flags_horizontal = 3
+text = "Health : xxx"
+align = 1
+
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer"]
-margin_left = 470.0
-margin_top = 273.0
-margin_right = 553.0
-margin_bottom = 327.0
+margin_left = 292.0
+margin_top = 183.0
+margin_right = 375.0
+margin_bottom = 237.0
 custom_constants/separation = 20
 
 [node name="GameOver" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer"]
@@ -149,21 +178,12 @@ margin_right = 83.0
 margin_bottom = 54.0
 text = "Start Game"
 
-[node name="Health" type="Label" parent="CanvasLayer/CenterContainer"]
-margin_left = 474.0
-margin_top = 293.0
-margin_right = 549.0
-margin_bottom = 307.0
-size_flags_horizontal = 3
-text = "Health : xxx"
-align = 1
-
 [node name="CurseChooser" type="VBoxContainer" parent="CanvasLayer/CenterContainer"]
 visible = false
-margin_left = 463.0
-margin_top = 240.0
-margin_right = 561.0
-margin_bottom = 359.0
+margin_left = 285.0
+margin_top = 150.0
+margin_right = 383.0
+margin_bottom = 269.0
 custom_constants/separation = 15
 
 [node name="Label" type="Label" parent="CanvasLayer/CenterContainer/CurseChooser"]

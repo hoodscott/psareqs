@@ -50,9 +50,9 @@ onready var CurseChoices := [
  ]
 onready var GameOver := $CanvasLayer/CenterContainer/VBoxContainer/GameOver
 onready var StartButton := $CanvasLayer/CenterContainer/VBoxContainer/StartButton
-onready var Clock := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/Clock
+onready var Clock := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Clock
 onready var Rules := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/Rules
-onready var Score := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/Score
+onready var Score := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Score
 onready var Health := $CanvasLayer/CenterContainer/Health
 onready var Typed := $CanvasLayer/GameContainer/VBoxContainer/Typed
 onready var PrefixList := $CanvasLayer/GameContainer/VBoxContainer/Fragments/Prefixes
