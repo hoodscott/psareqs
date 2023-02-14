@@ -1,12 +1,12 @@
 extends Node2D
 
-var GAME_LENGTH := 10
-var MAX_HEALTH := 3
-var WORD_BUFFER := 2
-var NUM_CURSE_OPTIONS := 3
-var NUM_DEMONS := 1
+const GAME_LENGTH := 10
+const MAX_HEALTH := 3
+const WORD_BUFFER := 2
+const NUM_CURSE_OPTIONS := 3
+const NUM_DEMONS := 1
 
-var DEFAULT_TYPED := "type an insult to deal with the demon"
+const DEFAULT_TYPED := "type an insult to deal with the demon"
 
 enum GAMESTATE {
   CURSE_CHOICE = 0,
