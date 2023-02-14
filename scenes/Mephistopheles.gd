@@ -6,7 +6,12 @@ onready var Animations := $AnimationPlayer
 
 
 
+func _ready() -> void:
+  hide()
+
+
 func spawn() -> void:
+  show()
   change_face(0)
   Animations.stop()
   Animations.play("spawn")
@@ -29,5 +34,4 @@ func _set_playback_speed(value: float) -> void:
 
 func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
   if anim_name == "spawn":
-    Animations.stop()
     Animations.play("idle")
