@@ -165,15 +165,6 @@ align = 1
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Health" type="Label" parent="UI/CenterContainer"]
-margin_left = 276.0
-margin_top = 196.0
-margin_right = 391.0
-margin_bottom = 224.0
-size_flags_horizontal = 3
-text = "Health : xxx"
-align = 1
-
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/CenterContainer"]
 margin_left = 277.0
 margin_top = 154.0
@@ -225,9 +216,12 @@ margin_right = 98.0
 margin_bottom = 119.0
 text = "Ps are Qs"
 
+[node name="Timer" type="Timer" parent="UI"]
+
 [node name="AudioManager" parent="." instance=ExtResource( 5 )]
 
 [connection signal="pressed" from="UI/CenterContainer/VBoxContainer/StartButton" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="UI/CenterContainer/CurseChooser/Choice" to="." method="_on_Choice_pressed"]
 [connection signal="pressed" from="UI/CenterContainer/CurseChooser/Choice2" to="." method="_on_Choice2_pressed"]
 [connection signal="pressed" from="UI/CenterContainer/CurseChooser/Choice3" to="." method="_on_Choice3_pressed"]
+[connection signal="timeout" from="UI/Timer" to="." method="_on_Timer_timeout"]

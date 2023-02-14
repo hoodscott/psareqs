@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "Curses",
+"language": "GDScript",
+"path": "res://class/curses.gd"
+}, {
+"base": "Node",
+"class": "WordList",
+"language": "GDScript",
+"path": "res://class/word_list.gd"
+} ]
+_global_script_class_icons={
+"Curses": "",
+"WordList": ""
+}
+
 [application]
 
 config/name="Mind your Ps are Qs"

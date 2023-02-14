@@ -13,35 +13,6 @@ enum GAMESTATE {
  }
 var current_state = GAMESTATE.CURSE_CHOICE
 
-enum CURSE {
-  PQ = 0,
-  DB = 1,
-  VOWEL = 2,
-  ALPHA = 3,
-  REVERSE = 4,
-  UNIMPLEMENTED = 5,
-  JUMBLE = 6,
-  ROT13 = 7,
-  ROT1 = 8,
-  ROT1NEG = 9,
-  ALLE = 10,
-  KC = 11,
-  ALLY = 12
- }
-const curse_descriptions = [
-  "Ps are Qs", "Ds are Bs", "vowels are shifted (a>e>i>o>u>a)",
-  "words are alphabetised", "words are reversed", "UNIMPLEMENTED",
-  "words are jumbled",  "letters are rot13 (a>m>a, b>n>b)",
-  "letters are shifted (a>b>c>...)", "letters are shifted backwards (c>b>a>z>...)",
-  "vowels are all E", "Ks are Cs", "vowels are all Y"
- ]
-var curse_options := [
-  [CURSE.PQ, CURSE.DB, CURSE.KC], # letter swaps
-  [CURSE.VOWEL, CURSE.ALLE, CURSE.ALLY], # vowel changes
-  [CURSE.REVERSE, CURSE.JUMBLE, CURSE.ALPHA, CURSE.ROT1, CURSE.ROT1NEG], # reorder
- ]
-var num_rounds = curse_options.size()
-
 onready var GameContainer := $UI/GameContainer
 onready var CurseChooser := $UI/CenterContainer/CurseChooser
 onready var CurseChoices := [
@@ -55,16 +26,15 @@ onready var Clock := $UI/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer
 onready var Demons := $UI/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Demons
 onready var Rules := $UI/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer1/Rules
 onready var Score := $UI/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Score
-onready var Health := $UI/CenterContainer/Health
 onready var Typed := $UI/GameContainer/VBoxContainer/Typed
 onready var PrefixList := $UI/GameContainer/VBoxContainer/Fragments/Prefixes
 onready var SuffixList := $UI/GameContainer/VBoxContainer/Fragments/Suffixes
 onready var Mephistopheles := $Mephistopheles
 onready var AudioManager := $AudioManager
-var timer:Timer
+onready var timer := $UI/Timer
 
-const WordList := preload("res://resources/word_list.gd")
-var word_list
+onready var word_list:= WordList.new()
+onready var curses:= Curses.new()
 
 var prefixes := [] #: [Dictionary{fragment, used}]
 var suffixes := [] #: [Dictionary{fragment, used}]
@@ -83,9 +53,6 @@ var current_curses = []
 
 func _ready() -> void:
   randomize()
-  word_list = WordList.new()
-
-  create_timer()
 
   GameContainer.hide()
 
@@ -96,16 +63,15 @@ func start_game() -> void:
   reset_current()
 
   update_score()
-  update_health()
 
-  shuffle_curse_options()
+  curses.shuffle_curse_options()
 
   show_curse_options()
 
 
 func show_curse_options() -> void:
   for i in range(NUM_CURSE_OPTIONS):
-    CurseChoices[i].text = curse_descriptions[curse_options[current_round][i]]
+    CurseChoices[i].text = curses.get_round_description(current_round, i)
 
   GameContainer.hide()
   CurseChooser.show()
@@ -116,7 +82,7 @@ func end_round() -> void:
 
   current_round += 1
 
-  if current_round == num_rounds:
+  if current_round == curses.num_rounds:
     end_game()
   else:
     current_state = GAMESTATE.CURSE_CHOICE
@@ -138,12 +104,11 @@ func end_game() -> void:
 func curse_chosen(index: int) -> void:
   AudioManager.play_button_press()
 
-  current_curses.append(curse_options[current_round][index])
+  current_curses.append(curses.get_option(current_round, index))
   update_rules()
 
   current_health = MAX_HEALTH
   Mephistopheles.spawn()
-  update_health()
 
   current_demons = NUM_DEMONS
   update_demons()
@@ -176,11 +141,6 @@ func reset_current() -> void:
   current_word.prefix = ""
   current_word.suffix = ""
   current_word.prefix_used = false
-
-
-func shuffle_curse_options():
-  for i in curse_options:
-    i.shuffle()
 
 
 func _unhandled_key_input(event: InputEventKey) -> void:
@@ -223,7 +183,6 @@ func _unhandled_key_input(event: InputEventKey) -> void:
               update_score()
               current_health = MAX_HEALTH
               Mephistopheles.spawn()
-              update_health()
               current_demons -= 1
 
               if current_demons == 0:
@@ -235,7 +194,6 @@ func _unhandled_key_input(event: InputEventKey) -> void:
                 update_demons()
                 generate_words()
             else:
-              update_health()
               reset_current()
 
         update_typed()
@@ -246,15 +204,6 @@ func _unhandled_key_input(event: InputEventKey) -> void:
       delete_character()
       update_prefix_list()
       update_typed()
-
-
-func create_timer() -> void:
-  timer = Timer.new()
-# warning-ignore:return_value_discarded
-  timer.connect("timeout", self, "_on_timer_timeout")
-  timer.set_wait_time(1)
-  timer.set_one_shot(false)
-  add_child(timer)
 
 
 func reset_timer() -> void:
@@ -271,10 +220,6 @@ func update_score() -> void:
   Score.text = "Score: %d" % score
 
 
-func update_health() -> void:
-  Health.text = "Health: %d/%d" % [current_health, MAX_HEALTH]
-
-
 func update_demons() -> void:
   Demons.text = "Demons Left: %d" % current_demons
 
@@ -283,7 +228,7 @@ func update_rules() -> void:
   var new_text := "Mind your "
   var and_string := ", and "
   for curse in current_curses:
-    new_text += curse_descriptions[curse] + and_string
+    new_text += curses.get_description(curse) + and_string
   Rules.text = new_text.trim_suffix(and_string) + "."
 
 
@@ -307,34 +252,7 @@ func update_list(node: Control, list, new := false) -> void:
     if new:
       var word: String = fragment.fragment
       for curse in current_curses:
-        match curse:
-          CURSE.VOWEL:
-            word = string_vowel_shift(word)
-          CURSE.REVERSE:
-            word = string_reverse(word)
-          CURSE.PQ:
-            word = string_swap(word, "p", "q")
-          CURSE.DB:
-            word = string_swap(word, "b", "d")
-          CURSE.KC:
-            word = string_swap(word, "k", "c")
-          CURSE.ALPHA:
-            word = string_alphabetise(word)
-          CURSE.JUMBLE:
-            word = string_jumble(word)
-          CURSE.ROT13:
-            word = string_rot(word, 13)
-          CURSE.ROT1NEG:
-            word = string_rot(word, -1)
-          CURSE.ROT1:
-            word = string_rot(word, 1)
-          CURSE.ALLE:
-            word = string_vowel_replace(word, "e")
-          CURSE.ALLY:
-            word = string_vowel_replace(word, "y")
-          _:
-            print("no curse implementation", curse)
-            word = word
+        word = curses.apply_curse(word, curse)
       fragment.word = word
 
     var label := Label.new()
@@ -392,97 +310,6 @@ func delete_character() -> void:
         prefix.current = false
 
 
-func string_reverse(s: String) -> String:
-  var reversed := ""
-  for letter_index in range(s.length() - 1, -1, -1):
-    reversed += s[letter_index]
-  return reversed
-
-
-func string_alphabetise(s: String) -> String:
-  var alphabetised := ""
-  var letter_array := []
-
-  for letter in s:
-    letter_array.append(letter)
-  letter_array.sort()
-
-  for letter in letter_array:
-    alphabetised += letter
-
-  return alphabetised
-
-
-func string_swap(s: String, swapa: String, swapb: String) -> String:
-  var new_string := ""
-  for letter in s:
-    match letter:
-      swapa:
-        new_string += swapb
-      swapb:
-        new_string += swapa
-      _:
-        new_string += letter
-  return new_string
-
-
-func string_vowel_shift(s: String) -> String:
-  var vowel_shifted := ""
-  var vowels := "aeiou"
-  var vowel_index: int
-  for letter in s:
-    vowel_index = vowels.find(letter)
-    if vowel_index > -1:
-      vowel_shifted += vowels[(vowel_index + 1) % vowels.length()]
-    else:
-      vowel_shifted += letter
-  return vowel_shifted
-
-func string_jumble(s: String) -> String:
-  var jumbled := ""
-  var jumbled_arr := []
-
-  for letter in s:
-    jumbled_arr.append(letter)
-  jumbled_arr.shuffle()
-  for letter in jumbled_arr:
-    jumbled += letter
-
-  return jumbled
-
-
-func string_rot(s: String, value: int) -> String:
-  var rotated := ""
-  for letter in s:
-    rotated += char(97 + ((ord(letter) + value - 97) % 26))
-  return rotated
-
-
-func string_vowel_replace(s: String, replace_with: String) -> String:
-  var replaced := ""
-  var vowels := "aeiou"
-  for letter in s:
-    if letter in vowels:
-      replaced += replace_with
-    else:
-      replaced += letter
-  return replaced
-
-
-func _on_timer_timeout():
-  time_remaining -= 1
-  if time_remaining >= 0:
-    update_clock()
-    if time_remaining == 0:
-      timer.stop()
-      end_game()
-  else:
-    # shouldn't get here, but end here as well just in case
-    end_game()
-    print("game over - should be imposs")
-    timer.stop()
-
-
 func _on_Button_pressed() -> void:
   AudioManager.play_button_press()
 
@@ -502,3 +329,17 @@ func _on_Choice2_pressed() -> void:
 
 func _on_Choice3_pressed() -> void:
   curse_chosen(2)
+
+
+func _on_Timer_timeout() -> void:
+  time_remaining -= 1
+  if time_remaining >= 0:
+    update_clock()
+    if time_remaining == 0:
+      timer.stop()
+      end_game()
+  else:
+    # shouldn't get here, but end here as well just in case
+    end_game()
+    print("game over - should be imposs")
+    timer.stop()
