@@ -1,12 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/Game.gd" type="Script" id=1]
 [ext_resource path="res://assets/img/background.png" type="Texture" id=2]
-[ext_resource path="res://assets/font/Augusta.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://resources/font_16pt.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scenes/Mephistopheles.tscn" type="PackedScene" id=4]
-
-[sub_resource type="DynamicFont" id=1]
-font_data = ExtResource( 3 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
@@ -68,7 +65,7 @@ size_flags_stretch_ratio = 3.0
 [node name="Rules" type="Label" parent="CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer1"]
 margin_right = 343.0
 margin_bottom = 85.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 3 )
 text = "Mind your Ps are Qs, and vowels are shifted, and words are backwards, and vowels are all Es, and words are in alphabetical order, and Ds are Bs
 "
 align = 1
@@ -178,20 +175,22 @@ align = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer"]
 margin_left = 277.0
-margin_top = 170.0
+margin_top = 154.0
 margin_right = 391.0
-margin_bottom = 250.0
+margin_bottom = 265.0
 custom_constants/separation = 20
 
 [node name="GameOver" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer"]
 margin_right = 114.0
-margin_bottom = 28.0
+margin_bottom = 59.0
+text = "Mind Your
+Ps are Qs"
 align = 1
 
 [node name="StartButton" type="Button" parent="CanvasLayer/CenterContainer/VBoxContainer"]
-margin_top = 48.0
+margin_top = 79.0
 margin_right = 114.0
-margin_bottom = 80.0
+margin_bottom = 111.0
 text = "Start Game"
 
 [node name="CurseChooser" type="VBoxContainer" parent="CanvasLayer/CenterContainer"]
