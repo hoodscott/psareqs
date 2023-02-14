@@ -1,9 +1,20 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/img/arm.png" type="Texture" id=1]
 [ext_resource path="res://assets/img/tail.png" type="Texture" id=2]
 [ext_resource path="res://assets/img/body_tex.png" type="Texture" id=3]
 [ext_resource path="res://assets/img/anger.png" type="Texture" id=4]
+[ext_resource path="res://scenes/Mephistopheles.gd" type="Script" id=5]
+[ext_resource path="res://assets/img/shock.png" type="Texture" id=6]
+[ext_resource path="res://assets/img/sad.png" type="Texture" id=7]
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -42,6 +53,33 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "die"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1e-05, 1e-05 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -85,8 +123,24 @@ tracks/2/keys = {
 "values": [ 0.0, -12.0, 15.0, 15.0, 0.0 ]
 }
 
+[sub_resource type="Animation" id=6]
+resource_name = "spawn"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 1, 1 ) ]
+}
+
 [node name="Mephistopheles" type="Node2D"]
 scale = Vector2( 1.5, 1.5 )
+script = ExtResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 5, 10 )
@@ -99,8 +153,8 @@ __meta__ = {
 [node name="Head" type="Position2D" parent="Sprite"]
 position = Vector2( -9, -57 )
 
-[node name="Sprite" type="Sprite" parent="Sprite/Head"]
-texture = ExtResource( 4 )
+[node name="Sprite" type="AnimatedSprite" parent="Sprite/Head"]
+frames = SubResource( 4 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -140,4 +194,6 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
 anims/RESET = SubResource( 2 )
+anims/die = SubResource( 5 )
 anims/idle = SubResource( 3 )
+anims/spawn = SubResource( 6 )

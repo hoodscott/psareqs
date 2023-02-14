@@ -1,8 +1,8 @@
 extends Node2D
 
-export (int) var GAME_LENGTH := 10
-export (int) var MAX_HEALTH := 2
-export (int) var WORD_BUFFER := 3
+var GAME_LENGTH := 10
+var MAX_HEALTH := 2
+var WORD_BUFFER := 3
 var NUM_CURSE_OPTIONS := 3
 var NUM_DEMONS := 1
 
@@ -19,7 +19,7 @@ enum CURSE {
   VOWEL = 2,
   ALPHA = 3,
   REVERSE = 4,
-  FLIP = 5, #todo (need to change pivot point of PrefixList and then rotate 180 (remember to reset)
+  UNIMPLEMENTED = 5,
   JUMBLE = 6,
   ROT13 = 7,
   ROT1 = 8,
@@ -30,7 +30,7 @@ enum CURSE {
  }
 const curse_descriptions = [
   "Ps are Qs", "Ds are Bs", "vowels are shifted (a>e>i>o>u>a)",
-  "words are alphabetised", "words are reversed", "words are flipped",
+  "words are alphabetised", "words are reversed", "UNIMPLEMENTED",
   "words are jumbled",  "letters are rot13 (a>m>a, b>n>b)",
   "letters are shifted (a>b>c>...)", "letters are shifted backwards (c>b>a>z>...)",
   "vowels are all E", "Ks are Cs", "vowels are all Y"
@@ -42,23 +42,25 @@ var curse_options := [
  ]
 var num_rounds = curse_options.size()
 
-onready var GameContainer := $CanvasLayer/GameContainer
-onready var CurseChooser := $CanvasLayer/CenterContainer/CurseChooser
+onready var GameContainer := $UI/GameContainer
+onready var CurseChooser := $UI/CenterContainer/CurseChooser
 onready var CurseChoices := [
-  $CanvasLayer/CenterContainer/CurseChooser/Choice,
-  $CanvasLayer/CenterContainer/CurseChooser/Choice2,
-  $CanvasLayer/CenterContainer/CurseChooser/Choice3
+  $UI/CenterContainer/CurseChooser/Choice,
+  $UI/CenterContainer/CurseChooser/Choice2,
+  $UI/CenterContainer/CurseChooser/Choice3
  ]
-onready var GameOver := $CanvasLayer/CenterContainer/VBoxContainer/GameOver
-onready var StartButton := $CanvasLayer/CenterContainer/VBoxContainer/StartButton
-onready var Clock := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Clock
-onready var Demons := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Demons
-onready var Rules := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer1/Rules
-onready var Score := $CanvasLayer/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Score
-onready var Health := $CanvasLayer/CenterContainer/Health
-onready var Typed := $CanvasLayer/GameContainer/VBoxContainer/Typed
-onready var PrefixList := $CanvasLayer/GameContainer/VBoxContainer/Fragments/Prefixes
-onready var SuffixList := $CanvasLayer/GameContainer/VBoxContainer/Fragments/Suffixes
+onready var GameOver := $UI/CenterContainer/VBoxContainer/GameOver
+onready var StartButton := $UI/CenterContainer/VBoxContainer/StartButton
+onready var Clock := $UI/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Clock
+onready var Demons := $UI/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Demons
+onready var Rules := $UI/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer1/Rules
+onready var Score := $UI/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Score
+onready var Health := $UI/CenterContainer/Health
+onready var Typed := $UI/GameContainer/VBoxContainer/Typed
+onready var PrefixList := $UI/GameContainer/VBoxContainer/Fragments/Prefixes
+onready var SuffixList := $UI/GameContainer/VBoxContainer/Fragments/Suffixes
+onready var Mephistopheles := $Mephistopheles
+onready var AudioManager := $AudioManager
 var timer:Timer
 
 const WordList := preload("res://resources/word_list.gd")
@@ -74,14 +76,9 @@ var current_demons := NUM_DEMONS
 var current_health := MAX_HEALTH
 var time_remaining := 0
 var score := 0
-
 var current_round := 0
+var current_curses = []
 
-
-var current_curses = [
-#  CURSE.PQ, CURSE.ALPHA, CURSE.VOWEL
-#  CURSE.PQ, CURSE.ALLE, CURSE.ALPHA,
- ]
 
 
 func _ready() -> void:
@@ -139,10 +136,13 @@ func end_game() -> void:
 
 
 func curse_chosen(index: int) -> void:
+  AudioManager.play_button_press()
+
   current_curses.append(curse_options[current_round][index])
   update_rules()
 
   current_health = MAX_HEALTH
+  Mephistopheles.spawn()
   update_health()
 
   current_demons = NUM_DEMONS
@@ -189,6 +189,7 @@ func _unhandled_key_input(event: InputEventKey) -> void:
       var letter = OS.get_scancode_string(event.scancode).to_lower()
 
       if is_valid_choice(letter):
+        AudioManager.play_correct_letter()
         if not current_word.prefix_used:
           current_word.prefix += letter
           if check_prefix_complete():
@@ -211,10 +212,17 @@ func _unhandled_key_input(event: InputEventKey) -> void:
 
             print("word complete")
             current_health -= 1
+            Mephistopheles.change_face(MAX_HEALTH - current_health)
+            AudioManager.play_word_complete()
+
             if current_health == 0:
+              Mephistopheles.die()
+              AudioManager.play_demon_death()
+
               score += 1 * current_curses.size()
               update_score()
               current_health = MAX_HEALTH
+              Mephistopheles.spawn()
               update_health()
               current_demons -= 1
 
@@ -222,6 +230,8 @@ func _unhandled_key_input(event: InputEventKey) -> void:
                 print("round complete")
                 end_round()
               else:
+
+                AudioManager.play_demon_spawn()
                 update_demons()
                 generate_words()
             else:
@@ -230,6 +240,7 @@ func _unhandled_key_input(event: InputEventKey) -> void:
 
         update_typed()
       else:
+        AudioManager.play_incorrect_letter()
         print("invalid letter: ", letter)
     elif event.scancode == KEY_BACKSPACE:
       delete_character()
@@ -473,8 +484,11 @@ func _on_timer_timeout():
 
 
 func _on_Button_pressed() -> void:
+  AudioManager.play_button_press()
+
   start_game()
   StartButton.hide()
+  StartButton.text = "Play Again"
   GameOver.hide()
 
 
