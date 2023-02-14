@@ -17,3 +17,8 @@ func die() -> void:
 
 func change_face(index: int) -> void:
   HeadSprite.frame = index
+
+
+func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
+  if anim_name == "spawn":
+    Animations.play("idle")
