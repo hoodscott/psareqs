@@ -1,7 +1,7 @@
 extends Node2D
 
 var GAME_LENGTH := 10
-var MAX_HEALTH := 2
+var MAX_HEALTH := 3
 var WORD_BUFFER := 3
 var NUM_CURSE_OPTIONS := 3
 var NUM_DEMONS := 1
