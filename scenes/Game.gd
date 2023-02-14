@@ -2,7 +2,7 @@ extends Node2D
 
 var GAME_LENGTH := 10
 var MAX_HEALTH := 3
-var WORD_BUFFER := 3
+var WORD_BUFFER := 2
 var NUM_CURSE_OPTIONS := 3
 var NUM_DEMONS := 1
 
@@ -16,14 +16,15 @@ enum GAMESTATE {
 var current_state = GAMESTATE.CURSE_CHOICE
 
 onready var GameContainer := $UI/GameContainer
-onready var CurseChooser := $UI/CenterContainer/CurseChooser
+onready var StartContainer := $UI/StartContainer
+onready var CurseChooser := $UI/ChooserContainer
 onready var CurseChoices := [
-  $UI/CenterContainer/CurseChooser/Choice,
-  $UI/CenterContainer/CurseChooser/Choice2,
-  $UI/CenterContainer/CurseChooser/Choice3
+  $UI/ChooserContainer/CurseChooser/Choice,
+  $UI/ChooserContainer/CurseChooser/Choice2,
+  $UI/ChooserContainer/CurseChooser/Choice3
  ]
-onready var GameOver := $UI/CenterContainer/VBoxContainer/GameOver
-onready var StartButton := $UI/CenterContainer/VBoxContainer/StartButton
+onready var GameOver := $UI/StartContainer/VBoxContainer/GameOver
+onready var StartButton := $UI/StartContainer/VBoxContainer/StartButton
 onready var Clock := $UI/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Clock
 onready var Demons := $UI/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Demons
 onready var Rules := $UI/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer1/Rules
@@ -32,7 +33,7 @@ onready var Typed := $UI/GameContainer/VBoxContainer/Typed
 onready var PrefixList := $UI/GameContainer/VBoxContainer/Fragments/Prefixes
 onready var SuffixList := $UI/GameContainer/VBoxContainer/Fragments/Suffixes
 onready var Mephistopheles := $Mephistopheles
-onready var AudioManager := $AudioManager
+onready var AudioManager := $UI/GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2/AudioManager
 onready var timer := $UI/Timer
 
 onready var word_list:= WordList.new()
@@ -57,6 +58,8 @@ func _ready() -> void:
   randomize()
 
   GameContainer.hide()
+  StartContainer.show()
+  CurseChooser.hide()
 
 func start_game() -> void:
   score = 0
@@ -95,6 +98,7 @@ func end_round() -> void:
 func end_game() -> void:
   print("game over")
   GameContainer.hide()
+  StartContainer.show()
   current_state = GAMESTATE.GAMEOVER
 
   GameOver.text = "Game Over!\nFinal Score: %s" % score
@@ -324,6 +328,7 @@ func _on_Button_pressed() -> void:
   AudioManager.play_button_press()
 
   start_game()
+  StartContainer.hide()
   StartButton.hide()
   StartButton.text = "Play Again"
   GameOver.hide()
