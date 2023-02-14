@@ -6,6 +6,8 @@ var WORD_BUFFER := 3
 var NUM_CURSE_OPTIONS := 3
 var NUM_DEMONS := 1
 
+var DEFAULT_TYPED := "type an insult to deal with the demon"
+
 enum GAMESTATE {
   CURSE_CHOICE = 0,
   PLAYING = 1,
@@ -63,6 +65,7 @@ func start_game() -> void:
   reset_current()
 
   update_score()
+  update_typed()
 
   curses.shuffle_curse_options()
 
@@ -233,7 +236,14 @@ func update_rules() -> void:
 
 
 func update_typed() -> void:
-  Typed.text = current_word.prefix + current_word.suffix
+  var combined_word: String = current_word.prefix + current_word.suffix
+  if combined_word == "":
+    Typed.add_color_override("font_color", Color.dimgray)
+    combined_word = DEFAULT_TYPED
+  else:
+    Typed.remove_color_override("font_color")
+
+  Typed.text = combined_word
 
 
 func update_prefix_list(new := false) -> void:
