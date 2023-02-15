@@ -5,7 +5,7 @@ const MAX_HEALTH := 3 #todo - should current health be stored in devil's script 
 const WORD_BUFFER := 2
 const NUM_CURSE_OPTIONS := 3
 const NUM_DEVILS := 1
-const GAME_LENGTH := 999
+const GAME_LENGTH := 60
 
 enum GAMESTATE {
   CURSE_CHOICE = 0,
