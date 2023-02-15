@@ -1,21 +1,20 @@
 extends Node2D
 
-
-const MAX_HEALTH := 3 #todo - should current health be stored in devil's script instead of player object?
-const WORD_BUFFER := 2
+const WORD_BUFFER := 2 # possible words = devil's max health + word_buffer
 const NUM_CURSE_OPTIONS := 3
-const NUM_DEVILS := 1
-const GAME_LENGTH := 60
+const NUM_DEVILS := 2 # per round
+const GAME_LENGTH := 60 # in seconds
 
 enum GAMESTATE {
   CURSE_CHOICE = 0,
   PLAYING = 1,
-  GAMEOVER = 2
+  GAMEOVER = 2,
+  DAMAGING = 3
  }
 var current_state = GAMESTATE.GAMEOVER
 
 onready var UI := $UI
-onready var Mephistopheles := $Mephistopheles
+onready var DevilSpawn := $DevilSpawn
 onready var word_list := WordList.new()
 onready var curses := Curses.new()
 onready var player := Player.new()
@@ -23,11 +22,12 @@ onready var player := Player.new()
 var prefixes := [] #: [Dictionary{fragment, used}]
 var suffixes := [] #: [Dictionary{fragment, used}]
 
+onready var Mephistopheles: PackedScene = preload("res://scenes/devils/Mephistopheles.tscn")
+var devil:Node2D
 
 
 func _ready() -> void:
   randomize()
-  seed(1)
 
   if (\
     UI.connect("game_started", self, "start_game") != OK or\
@@ -62,27 +62,32 @@ func start_round() -> void:
   UI.update_devils(player.devils_left)
 
   UI.reset_timer()
-
   UI.show_game()
-
-  current_state = GAMESTATE.PLAYING
 
   spawn_devil()
 
 
 func spawn_devil() -> void:
-  player.devil_health = MAX_HEALTH
-  Mephistopheles.spawn()
+  devil = Mephistopheles.instance()
+  DevilSpawn.add_child(devil)
+  UI.AudioManager.play_devil_spawn()
+  UI.update_devils(player.devils_left)
+
+  if (\
+    devil.connect("died", self, "_on_devil_died") != OK or\
+    devil.connect("damage_taken", self, "_on_devil_damaged") != OK):
+      print("error connecting devil signals")
 
   generate_words()
+  current_state = GAMESTATE.PLAYING
 
 
 func generate_words() -> void:
   prefixes = []
   suffixes = []
-  for word in word_list.choose_prefixes(MAX_HEALTH + WORD_BUFFER):
+  for word in word_list.choose_prefixes(devil.MAX_HEALTH + WORD_BUFFER):
     prefixes.append({"fragment": word, "used": false, "current": false})
-  for word in word_list.choose_suffixes(MAX_HEALTH + WORD_BUFFER):
+  for word in word_list.choose_suffixes(devil.MAX_HEALTH + WORD_BUFFER):
     suffixes.append({"fragment": word, "used": false, "current": false})
 
   # apply curses
@@ -158,29 +163,11 @@ func _unhandled_key_input(event: InputEventKey) -> void:
                 UI.update_suffix_list(suffixes)
 
                 print("word complete")
-                player.damage()
-                Mephistopheles.change_face(MAX_HEALTH - player.devil_health)
-                UI.AudioManager.play_word_complete()
-
-                if player.devil_health == 0:
-                  Mephistopheles.die()
+                current_state = GAMESTATE.DAMAGING
+                devil.damage()
+                if devil.health == 0:
                   UI.AudioManager.play_devil_death()
-
-                  player.score_add()
-                  UI.update_score(player.score)
-                  player.devil_health = MAX_HEALTH
-                  Mephistopheles.spawn()
-
-
-                  if player.decr_devils() == 0:
-                    print("round complete")
-                    end_round()
-                  else:
-                    UI.AudioManager.play_devil_spawn()
-                    UI.update_devils(player.devils_left)
-                    generate_words()
-                else:
-                  player.reset_word()
+                UI.AudioManager.play_word_complete()
 
             UI.update_typed(player.get_word())
           else:
@@ -235,6 +222,21 @@ func check_word_complete() -> bool:
       suffix.current = true
       return true
   return false
+
+
+func _on_devil_died() -> void:
+  player.score_add()
+  UI.update_score(player.score)
+
+  if player.decr_devils() == 0:
+    end_round()
+  else:
+    spawn_devil()
+
+
+func _on_devil_damaged() -> void:
+  player.reset_word()
+  current_state = GAMESTATE.PLAYING
 
 
 func show_curse_options() -> void:

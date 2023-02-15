@@ -3,7 +3,6 @@ class_name Player
 
 
 var devils_left :int
-var devil_health :int
 var score := 0
 var round_num := 0
 var curses := []
@@ -45,10 +44,6 @@ func add_curse(curse: int) -> void:
 func next_round() -> int:
   round_num += 1
   return round_num
-
-
-func damage() -> void:
-  devil_health -= 1
 
 
 func score_add() -> void:
