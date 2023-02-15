@@ -2,9 +2,9 @@ extends CanvasLayer
 class_name UI
 
 
-const DEFAULT_TYPED := "type an insult to deal with the devil"
+const _DEFAULT_TYPED := "type an insult to deal with the devil"
 var GAME_LENGTH:int # set in Game.gd
-var time_remaining := 0
+var _time_remaining := 0
 
 
 signal game_started()
@@ -13,65 +13,65 @@ signal curse_chosen(index)
 
 
 onready var AudioManager := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2/AudioManager
-onready var GameContainer := $GameContainer
-onready var StartContainer := $StartContainer
-onready var CurseChooser := $ChooserContainer
-onready var CurseChoices := [
+onready var _GameContainer := $GameContainer
+onready var _StartContainer := $StartContainer
+onready var _CurseChooser := $ChooserContainer
+onready var _CurseChoices := [
   $ChooserContainer/CurseChooser/Choice,
   $ChooserContainer/CurseChooser/Choice2,
   $ChooserContainer/CurseChooser/Choice3
  ]
-onready var GameOver := $StartContainer/VBoxContainer/GameOver
-onready var StartButton := $StartContainer/VBoxContainer/StartButton
-onready var GameTimer := $Timer
-onready var Clock := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Clock
-onready var Devils := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Devils
-onready var Rules := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer1/Rules
-onready var Score := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Score
-onready var PrefixList := $GameContainer/VBoxContainer/Fragments/Prefixes
-onready var SuffixList := $GameContainer/VBoxContainer/Fragments/Suffixes
-onready var Typed := $GameContainer/VBoxContainer/Typed
+onready var _GameOver := $StartContainer/VBoxContainer/GameOver
+onready var _StartButton := $StartContainer/VBoxContainer/StartButton
+onready var _GameTimer := $Timer
+onready var _Clock := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Clock
+onready var _Devils := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Devils
+onready var _Rules := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer1/Rules
+onready var _Score := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Score
+onready var _PrefixList := $GameContainer/VBoxContainer/Fragments/Prefixes
+onready var _SuffixList := $GameContainer/VBoxContainer/Fragments/Suffixes
+onready var _Typed := $GameContainer/VBoxContainer/Typed
 
 
 
 func _ready() -> void:
-  GameContainer.hide()
-  StartContainer.show()
-  CurseChooser.hide()
+  _GameContainer.hide()
+  _StartContainer.show()
+  _CurseChooser.hide()
 
 
 func end_game(score: int) -> void:
-  GameContainer.hide()
-  StartContainer.show()
+  _GameContainer.hide()
+  _StartContainer.show()
 
-  GameOver.text = "Game Over!\nFinal Score: %s" % score
-  GameOver.show()
+  _GameOver.text = "Game Over!\nFinal Score: %s" % score
+  _GameOver.show()
 
   yield(get_tree().create_timer(3), "timeout")
-  StartButton.show()
+  _StartButton.show()
 
 
 func show_game() -> void:
-  CurseChooser.hide()
-  GameContainer.show()
+  _CurseChooser.hide()
+  _GameContainer.show()
 
 
 func show_curse_option(option: String, i: int) -> void:
-  CurseChoices[i].text = option
+  _CurseChoices[i].text = option
 
-  GameContainer.hide()
-  CurseChooser.show()
+  _GameContainer.hide()
+  _CurseChooser.show()
 
 
 func update_prefix_list(prefixes) -> void:
-  update_list(PrefixList, prefixes)
+  _update_list(_PrefixList, prefixes)
 
 
 func update_suffix_list(suffixes) -> void:
-  update_list(SuffixList, suffixes)
+  _update_list(_SuffixList, suffixes)
 
 
-func update_list(node: Control, list) -> void:
+func _update_list(node: Control, list) -> void:
   for child in node.get_children():
     child.queue_free()
 
@@ -86,25 +86,27 @@ func update_list(node: Control, list) -> void:
 
 
 func reset_timer() -> void:
-  GameTimer.start()
-  time_remaining = GAME_LENGTH
-  update_clock()
+  _GameTimer.start()
+  _time_remaining = GAME_LENGTH
+  _update_clock(_time_remaining)
 
 
-func stop_timer() -> void:
-  GameTimer.stop()
+func stop_timer(emit := false) -> void:
+  _GameTimer.stop()
+  if emit:
+    emit_signal("game_ended")
 
 
-func update_clock() -> void:
-  Clock.text = "Time Left: %3d" % time_remaining
+func _update_clock(time: int) -> void:
+  _Clock.text = "Time Left: %3d" % time
 
 
 func update_score(score: int) -> void:
-  Score.text = "Score: %d" % score
+  _Score.text = "Score: %d" % score
 
 
 func update_devils(devil_count: int) -> void:
-  Devils.text = "Devils Left: %d" % devil_count
+  _Devils.text = "Devils Left: %d" % devil_count
 
 
 func update_rules(rules) -> void:
@@ -112,27 +114,27 @@ func update_rules(rules) -> void:
   var and_string := ", and "
   for rule in rules:
     new_text += rule + and_string
-  Rules.text = new_text.trim_suffix(and_string) + "."
+  _Rules.text = new_text.trim_suffix(and_string) + "."
 
 
 func update_typed(combined_word: String) -> void:
   if combined_word == "":
-    Typed.add_color_override("font_color", Color.dimgray)
-    combined_word = DEFAULT_TYPED
+    _Typed.add_color_override("font_color", Color.dimgray)
+    combined_word = _DEFAULT_TYPED
   else:
-    Typed.remove_color_override("font_color")
+    _Typed.remove_color_override("font_color")
 
-  Typed.text = combined_word
+  _Typed.text = combined_word
 
 
 func _on_StartButton_pressed() -> void:
   AudioManager.play_button_press()
 
   emit_signal("game_started")
-  StartContainer.hide()
-  StartButton.hide()
-  StartButton.text = "Play Again"
-  GameOver.hide()
+  _StartContainer.hide()
+  _StartButton.hide()
+  _StartButton.text = "Play Again"
+  _GameOver.hide()
 
 
 func _on_Choice_pressed() -> void:
@@ -148,14 +150,12 @@ func _on_Choice3_pressed() -> void:
 
 
 func _on_Timer_timeout() -> void:
-  time_remaining -= 1
-  if time_remaining >= 0:
-    update_clock()
-    if time_remaining == 0:
-      GameTimer.stop()
-      emit_signal("game_ended")
+  _time_remaining -= 1
+  if _time_remaining >= 0:
+    _update_clock(_time_remaining)
+    if _time_remaining == 0:
+      stop_timer(true)
   else:
     # shouldn't get here, but end here as well just in case
-    emit_signal("game_ended")
     print("game over - should be imposs")
-    GameTimer.stop()
+    stop_timer(true)

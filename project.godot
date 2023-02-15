@@ -12,22 +12,22 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Curses",
 "language": "GDScript",
-"path": "res://class/curses.gd"
+"path": "res://scenes/class/curses.gd"
 }, {
 "base": "Node",
 "class": "Player",
 "language": "GDScript",
-"path": "res://class/player.gd"
+"path": "res://scenes/class/player.gd"
 }, {
 "base": "CanvasLayer",
 "class": "UI",
 "language": "GDScript",
-"path": "res://scenes/UI.gd"
+"path": "res://scenes/ui/UI.gd"
 }, {
 "base": "Node",
 "class": "WordList",
 "language": "GDScript",
-"path": "res://class/word_list.gd"
+"path": "res://scenes/class/word_list.gd"
 } ]
 _global_script_class_icons={
 "Curses": "",

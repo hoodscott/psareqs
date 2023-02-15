@@ -3,8 +3,8 @@ extends Node
 onready var Correct := $CorrectLetter
 onready var Incorrect := $IncorrectLetter
 onready var WordComplete := $WordComplete
-onready var DemonDeath := $DemonDeath
-onready var DemonSpawn := $DemonSpawn
+onready var DevilDeath := $DevilDeath
+onready var DevilSpawn := $DevilSpawn
 onready var ButtonPress := $ButtonPress
 
 var muted := false
@@ -32,15 +32,15 @@ func play_word_complete() -> void:
     WordComplete.play()
 
 
-func play_demon_death() -> void:
+func play_devil_death() -> void:
   if not muted:
     WordComplete.stop()
-    DemonDeath.play()
+    DevilDeath.play()
 
 
-func play_demon_spawn() -> void:
+func play_devil_spawn() -> void:
   if not muted:
-    DemonSpawn.play()
+    DevilSpawn.play()
 
 
 func play_button_press() -> void:

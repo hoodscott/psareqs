@@ -11,9 +11,9 @@ script = ExtResource( 1 )
 
 [node name="WordComplete" type="AudioStreamPlayer" parent="."]
 
-[node name="DemonDeath" type="AudioStreamPlayer" parent="."]
+[node name="DevilDeath" type="AudioStreamPlayer" parent="."]
 
-[node name="DemonSpawn" type="AudioStreamPlayer" parent="."]
+[node name="DevilSpawn" type="AudioStreamPlayer" parent="."]
 
 [node name="ButtonPress" type="AudioStreamPlayer" parent="."]
 
