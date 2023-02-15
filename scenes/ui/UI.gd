@@ -159,3 +159,11 @@ func _on_Timer_timeout() -> void:
     # shouldn't get here, but end here as well just in case
     print("game over - should be imposs")
     stop_timer(true)
+
+
+func focus_start() -> void:
+  _StartButton.grab_focus()
+
+
+func focus_choice() -> void:
+  _CurseChoices[0].grab_focus()

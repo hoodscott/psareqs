@@ -12,7 +12,7 @@ enum GAMESTATE {
   PLAYING = 1,
   GAMEOVER = 2
  }
-var current_state = GAMESTATE.CURSE_CHOICE
+var current_state = GAMESTATE.GAMEOVER
 
 onready var UI := $UI
 onready var Mephistopheles := $Mephistopheles
@@ -110,7 +110,6 @@ func end_round() -> void:
   if player.next_round() == curses.num_rounds:
     end_game()
   else:
-    current_state = GAMESTATE.CURSE_CHOICE
     show_curse_options()
 
 
@@ -122,68 +121,84 @@ func end_game() -> void:
 
 
 func _unhandled_key_input(event: InputEventKey) -> void:
-  if current_state == GAMESTATE.PLAYING and event.pressed:
-    if event.scancode >= KEY_A and event.scancode <= KEY_Z:
-      var letter = OS.get_scancode_string(event.scancode).to_lower()
+  if event.pressed:
+    match current_state:
+      GAMESTATE.GAMEOVER:
+        if is_focus_event(event):
+          UI.focus_start()
 
-      if is_valid_choice(letter):
-        UI.AudioManager.play_correct_letter()
-        if not player.is_prefix_complete():
-          player.prefix_add(letter)
-          if check_prefix_complete():
-            player.set_prefix_complete()
-            UI.update_prefix_list(prefixes)
-        else:
-          player.suffix_add(letter)
-          if check_word_complete():
-            for prefix in prefixes:
-              if prefix.current:
-                prefix.current = false
-                prefix.used = true
-            UI.update_prefix_list(prefixes)
+      GAMESTATE.CURSE_CHOICE:
+        if is_focus_event(event):
+          UI.focus_choice()
 
-            for suffix in suffixes:
-              if suffix.current:
-                suffix.current = false
-                suffix.used = true
-            UI.update_suffix_list(suffixes)
+      GAMESTATE.PLAYING:
+        if event.scancode >= KEY_A and event.scancode <= KEY_Z:
+          var letter = OS.get_scancode_string(event.scancode).to_lower()
 
-            print("word complete")
-            player.damage()
-            Mephistopheles.change_face(MAX_HEALTH - player.devil_health)
-            UI.AudioManager.play_word_complete()
-
-            if player.devil_health == 0:
-              Mephistopheles.die()
-              UI.AudioManager.play_devil_death()
-
-              player.score_add()
-              UI.update_score(player.score)
-              player.devil_health = MAX_HEALTH
-              Mephistopheles.spawn()
-
-
-              if player.decr_devils() == 0:
-                print("round complete")
-                end_round()
-              else:
-                UI.AudioManager.play_devil_spawn()
-                UI.update_devils(player.devils_left)
-                generate_words()
+          if is_valid_choice(letter):
+            UI.AudioManager.play_correct_letter()
+            if not player.is_prefix_complete():
+              player.prefix_add(letter)
+              if check_prefix_complete():
+                player.set_prefix_complete()
+                UI.update_prefix_list(prefixes)
             else:
-              player.reset_word()
+              player.suffix_add(letter)
+              if check_word_complete():
+                for prefix in prefixes:
+                  if prefix.current:
+                    prefix.current = false
+                    prefix.used = true
+                UI.update_prefix_list(prefixes)
 
-        UI.update_typed(player.get_word())
-      else:
-        UI.AudioManager.play_incorrect_letter()
-        print("invalid letter: ", letter)
-    elif event.scancode == KEY_BACKSPACE:
-      player.delete_character()
-      if not player.is_prefix_complete():
-        for prefix in prefixes:
-          prefix.current = false
-      UI.update_prefix_list(prefixes)
-      UI.update_typed(player.get_word())
+                for suffix in suffixes:
+                  if suffix.current:
+                    suffix.current = false
+                    suffix.used = true
+                UI.update_suffix_list(suffixes)
+
+                print("word complete")
+                player.damage()
+                Mephistopheles.change_face(MAX_HEALTH - player.devil_health)
+                UI.AudioManager.play_word_complete()
+
+                if player.devil_health == 0:
+                  Mephistopheles.die()
+                  UI.AudioManager.play_devil_death()
+
+                  player.score_add()
+                  UI.update_score(player.score)
+                  player.devil_health = MAX_HEALTH
+                  Mephistopheles.spawn()
+
+
+                  if player.decr_devils() == 0:
+                    print("round complete")
+                    end_round()
+                  else:
+                    UI.AudioManager.play_devil_spawn()
+                    UI.update_devils(player.devils_left)
+                    generate_words()
+                else:
+                  player.reset_word()
+
+            UI.update_typed(player.get_word())
+          else:
+            UI.AudioManager.play_incorrect_letter()
+            print("invalid letter: ", letter)
+        elif event.scancode == KEY_BACKSPACE:
+          player.delete_character()
+          if not player.is_prefix_complete():
+            for prefix in prefixes:
+              prefix.current = false
+          UI.update_prefix_list(prefixes)
+          UI.update_typed(player.get_word())
+
+
+func is_focus_event(event: InputEventKey) -> bool:
+  return event.is_action("ui_right") or event.is_action("ui_up") or \
+    event.is_action("ui_left") or event.is_action("ui_down") or \
+    event.is_action("ui_focus_next") or event.is_action("ui_focus_prev")
 
 
 func is_valid_choice(letter: String) -> bool:
@@ -223,6 +238,7 @@ func check_word_complete() -> bool:
 
 
 func show_curse_options() -> void:
+  current_state = GAMESTATE.CURSE_CHOICE
   for i in range(NUM_CURSE_OPTIONS):
     UI.show_curse_option(curses.get_round_description(player.round_num, i), i)
 

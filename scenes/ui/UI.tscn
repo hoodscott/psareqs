@@ -71,6 +71,7 @@ size_flags_horizontal = 3
 [node name="AudioManager" parent="GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2" instance=ExtResource( 2 )]
 margin_right = 112.0
 margin_bottom = 32.0
+focus_mode = 0
 
 [node name="Score" type="Label" parent="GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
 margin_top = 36.0
@@ -201,18 +202,36 @@ align = 1
 margin_top = 47.0
 margin_right = 149.0
 margin_bottom = 79.0
+focus_neighbour_left = NodePath("../Choice3")
+focus_neighbour_top = NodePath("../Choice3")
+focus_neighbour_right = NodePath("../Choice2")
+focus_neighbour_bottom = NodePath("../Choice2")
+focus_next = NodePath("../Choice2")
+focus_previous = NodePath("../Choice3")
 text = "Ps are Qs"
 
 [node name="Choice2" type="Button" parent="ChooserContainer/CurseChooser"]
 margin_top = 94.0
 margin_right = 149.0
 margin_bottom = 126.0
+focus_neighbour_left = NodePath("../Choice")
+focus_neighbour_top = NodePath("../Choice")
+focus_neighbour_right = NodePath("../Choice3")
+focus_neighbour_bottom = NodePath("../Choice3")
+focus_next = NodePath("../Choice3")
+focus_previous = NodePath("../Choice")
 text = "Ps are Qs"
 
 [node name="Choice3" type="Button" parent="ChooserContainer/CurseChooser"]
 margin_top = 141.0
 margin_right = 149.0
 margin_bottom = 173.0
+focus_neighbour_left = NodePath("../Choice2")
+focus_neighbour_top = NodePath("../Choice2")
+focus_neighbour_right = NodePath("../Choice")
+focus_neighbour_bottom = NodePath("../Choice")
+focus_next = NodePath("../Choice")
+focus_previous = NodePath("../Choice2")
 text = "Ps are Qs"
 
 [node name="Timer" type="Timer" parent="."]
