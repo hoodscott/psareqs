@@ -1,8 +1,8 @@
 extends Node2D
 
 
-onready var HeadSprite := $Sprite/Head/Sprite
-onready var Animations := $AnimationPlayer
+onready var _HeadSprite := $Sprite/Head/Sprite
+onready var _Animations := $AnimationPlayer
 
 
 
@@ -13,25 +13,27 @@ func _ready() -> void:
 func spawn() -> void:
   show()
   change_face(0)
-  Animations.stop()
-  Animations.play("spawn")
+  _Animations.stop()
+  _Animations.play("spawn")
 
 
 func die() -> void:
   _set_playback_speed(1.0)
-  Animations.stop()
-  Animations.play("die")
+  _Animations.stop()
+  _Animations.play("die")
 
 
 func change_face(index: int) -> void:
   _set_playback_speed(1.0 - index*0.33)
-  HeadSprite.frame = index
+  _HeadSprite.frame = index
 
 
 func _set_playback_speed(value: float) -> void:
-  Animations.playback_speed = value
+  _Animations.playback_speed = value
 
 
 func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
   if anim_name == "spawn":
-    Animations.play("idle")
+    _Animations.play("idle")
+  elif anim_name == "die":
+    hide()

@@ -15,12 +15,24 @@ _global_script_classes=[ {
 "path": "res://class/curses.gd"
 }, {
 "base": "Node",
+"class": "Player",
+"language": "GDScript",
+"path": "res://class/player.gd"
+}, {
+"base": "CanvasLayer",
+"class": "UI",
+"language": "GDScript",
+"path": "res://scenes/UI.gd"
+}, {
+"base": "Node",
 "class": "WordList",
 "language": "GDScript",
 "path": "res://class/word_list.gd"
 } ]
 _global_script_class_icons={
 "Curses": "",
+"Player": "",
+"UI": "",
 "WordList": ""
 }
 

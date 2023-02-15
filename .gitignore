@@ -1,3 +1,7 @@
+# Project-specific ignores
+recordings/
+assets/img/*.pdn
+docs/images.txt
 
 # Godot-specific ignores
 .import/

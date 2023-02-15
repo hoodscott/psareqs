@@ -1,6 +1,6 @@
 extends Node
-
 class_name WordList
+
 
 const _prefixes = [
   "dumb", "bum", "poop",

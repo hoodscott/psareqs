@@ -1,6 +1,6 @@
 extends Node
-
 class_name Curses
+
 
 enum CURSE {
   PQ = 0,
@@ -30,6 +30,7 @@ var _curse_options := [
   [CURSE.REVERSE, CURSE.JUMBLE, CURSE.ALPHA, CURSE.ROT1, CURSE.ROT1NEG], # reorder
  ]
 var num_rounds = _curse_options.size()
+
 
 
 func apply_curse(word: String, curse: int) -> String:
