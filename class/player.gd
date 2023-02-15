@@ -76,13 +76,6 @@ func suffix_add(letter: String) -> void:
   _word.suffix += letter
 
 
-func get_next_letter_pos() -> int:
-  if is_prefix_complete():
-    return _word.suffix.length()
-  else:
-    return _word.prefix.length()
-
-
 func delete_character() -> void:
   if _word.prefix_used and _word.suffix.length() > 0:
     _word.suffix = _word.suffix.left(_word.suffix.length() - 1)

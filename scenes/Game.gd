@@ -5,7 +5,7 @@ const MAX_HEALTH := 3 #todo - should current health be stored in devil's script 
 const WORD_BUFFER := 2
 const NUM_CURSE_OPTIONS := 3
 const NUM_DEVILS := 1
-const GAME_LENGTH := 10
+const GAME_LENGTH := 999
 
 enum GAMESTATE {
   CURSE_CHOICE = 0,
@@ -27,6 +27,7 @@ var suffixes := [] #: [Dictionary{fragment, used}]
 
 func _ready() -> void:
   randomize()
+  seed(1)
 
   if (\
     UI.connect("game_started", self, "start_game") != OK or\
@@ -186,18 +187,22 @@ func _unhandled_key_input(event: InputEventKey) -> void:
 
 
 func is_valid_choice(letter: String) -> bool:
-  var letter_pos := player.get_next_letter_pos()
   var list
+  var new_word: String
+
+  # are we checking prefixes or suffixes?
   if not player.is_prefix_complete():
     list = prefixes
+    new_word = player.get_prefix()
   else:
     list = suffixes
+    new_word = player.get_suffix()
+  new_word += letter
 
-  for fragment in list:
-    if not fragment.used and fragment.fragment.length() > letter_pos \
-      and fragment.fragment[letter_pos] == letter:
+  # check left x letters match current word + new letter
+  for word in list:
+    if not word.used and new_word == word.fragment.left(new_word.length()):
       return true
-
   return false
 
 
