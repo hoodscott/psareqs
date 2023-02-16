@@ -1,12 +1,8 @@
-need to add some fanfare when completing word (animate word moving to demon?)
-
-need to find/create sounds for the audioplayers (or just hide button if cba)
-
 need to create nicer heads/faces
 
 nice to have:
 multiple demons
+find/create sounds for the audioplayers
 add particles to summoning circle on summon?
 virtual keyboard for mobiles?
-
 
