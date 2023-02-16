@@ -173,8 +173,7 @@ func _unhandled_key_input(event: InputEventKey) -> void:
 
               UI.update_typed(player.get_word())
             else:
-              UI.AudioManager.play_incorrect_letter()
-              print("invalid letter: ", letter)
+              UI.incorrect_letter(letter)
         elif event.scancode == KEY_BACKSPACE:
           player.delete_character()
           if not player.is_prefix_complete():

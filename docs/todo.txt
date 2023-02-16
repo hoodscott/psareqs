@@ -1,4 +1,3 @@
-need to add visual indicator when incorrect letter pressed
 need to add some fanfare when completing word (animate word moving to demon?)
 
 need to find/create sounds for the audioplayers (or just hide button if cba)

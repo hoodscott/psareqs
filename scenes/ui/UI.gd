@@ -31,6 +31,7 @@ onready var _Score := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2/
 onready var _PrefixList := $GameContainer/VBoxContainer/Fragments/Prefixes
 onready var _SuffixList := $GameContainer/VBoxContainer/Fragments/Suffixes
 onready var _Typed := $GameContainer/VBoxContainer/Typed
+onready var _Animations := $AnimationPlayer
 
 
 
@@ -95,6 +96,12 @@ func stop_timer(emit := false) -> void:
   _GameTimer.stop()
   if emit:
     emit_signal("game_ended")
+
+
+func incorrect_letter(_letter: String) -> void:
+  AudioManager.play_incorrect_letter()
+  _Animations.play("incorrect")
+  print("invalid letter: ", _letter)
 
 
 func _update_clock(time: int) -> void:
