@@ -119,8 +119,9 @@ func end_round() -> void:
 
 
 func end_game() -> void:
-  print("game over")
   current_state = GAMESTATE.GAMEOVER
+  for child in DevilSpawn.get_children():
+    child.queue_free()
 
   UI.end_game(player.score)
 
