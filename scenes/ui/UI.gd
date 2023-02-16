@@ -12,7 +12,7 @@ signal game_ended()
 signal curse_chosen(index)
 
 
-onready var AudioManager := $GameContainer/VBoxContainer/TopRow/TopRight/AudioManager
+onready var AudioManager := $GameContainer/Rows/Top/TopRight/AudioManager
 onready var _GameContainer := $GameContainer
 onready var _StartContainer := $StartContainer
 onready var _CurseChooser := $ChooserContainer
@@ -24,14 +24,18 @@ onready var _CurseChoices := [
 onready var _GameOver := $StartContainer/VBoxContainer/PanelContainer/MarginContainer/GameOver
 onready var _StartButton := $StartContainer/VBoxContainer/StartButton
 onready var _GameTimer := $Timer
-onready var _Clock := $GameContainer/VBoxContainer/TopRow/TopLeft/PanelContainer/MarginContainer/VBoxContainer/Clock
-onready var _Devils :=$GameContainer/VBoxContainer/TopRow/TopLeft/PanelContainer/MarginContainer/VBoxContainer/Devils
-onready var _Rules := $GameContainer/VBoxContainer/TopRow/TopMid/RulesPanel/MarginContainer/Rules
-onready var _Score := $GameContainer/VBoxContainer/TopRow/TopRight/PanelContainer/MarginContainer/Score
-onready var _PrefixList := $GameContainer/VBoxContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes
-onready var _SuffixList := $GameContainer/VBoxContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes
-onready var _Typed := $GameContainer/VBoxContainer/Bottom/PanelContainer/MarginContainer/Typed
+onready var _Clock := $GameContainer/Rows/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer/Clock
+onready var _Devils :=$GameContainer/Rows/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer/Devils
+onready var _Rules := $GameContainer/Rows/Top/TopMid/RulesPanel/MarginContainer/Rules
+onready var _Score := $GameContainer/Rows/Top/TopRight/PanelContainer/MarginContainer/Score
+onready var _PrefixList := $GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes
+onready var _SuffixList := $GameContainer/Rows/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes
+onready var _Typed := $GameContainer/Rows/Bottom/PanelContainer/MarginContainer/Typed
 onready var _Animations := $AnimationPlayer
+onready var _WordCompleteSpawn := $CompleteSpawn
+
+onready var _CompleteWord: PackedScene = preload("res://scenes/ui/CompleteWord.tscn")
+
 
 
 
@@ -104,6 +108,12 @@ func incorrect_letter(_letter: String) -> void:
   print("invalid letter: ", _letter)
 
 
+func word_complete() -> void:
+  var complete_word := _CompleteWord.instance()
+  complete_word.text = _Typed.text
+  _WordCompleteSpawn.add_child(complete_word)
+
+
 func _update_clock(time: int) -> void:
   _Clock.text = "Time Left: %3d" % time
 
@@ -124,8 +134,8 @@ func update_rules(rules) -> void:
   _Rules.text = new_text.trim_suffix(and_string) + "."
 
 
-func update_typed(combined_word: String) -> void:
-  if combined_word == "":
+func update_typed(combined_word: String, help := false) -> void:
+  if combined_word == "" and help:
     _Typed.add_color_override("font_color", Color.dimgray)
     combined_word = _DEFAULT_TYPED
   else:

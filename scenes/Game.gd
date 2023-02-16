@@ -44,7 +44,7 @@ func start_game() -> void:
   player.reset()
 
   UI.update_score(player.score)
-  UI.update_typed(player.get_word())
+  UI.update_typed(player.get_word(), true)
 
   curses.shuffle_curse_options()
   show_curse_options()
@@ -145,17 +145,17 @@ func _unhandled_key_input(event: InputEventKey) -> void:
                 if not prefix.used:
                   prefix.current = true
                   player.prefix_add(prefix.fragment)
+                  UI.update_typed(player.get_word())
                   player.set_prefix_complete()
                   break
               UI.update_prefix_list(prefixes)
-              UI.update_typed(player.get_word())
             else:
               for suffix in suffixes:
                 if not suffix.used:
                   suffix.current = true
                   player.prefix_add(suffix.fragment)
+                  UI.update_typed(player.get_word())
                   break
-              UI.update_typed(player.get_word())
               word_complete()
           else:
             var letter = OS.get_scancode_string(event.scancode).to_lower()
@@ -164,15 +164,15 @@ func _unhandled_key_input(event: InputEventKey) -> void:
               UI.AudioManager.play_correct_letter()
               if not player.is_prefix_complete():
                 player.prefix_add(letter)
+                UI.update_typed(player.get_word())
                 if check_prefix_complete():
                   player.set_prefix_complete()
                   UI.update_prefix_list(prefixes)
               else:
                 player.suffix_add(letter)
+                UI.update_typed(player.get_word())
                 if check_word_complete():
                   word_complete()
-
-              UI.update_typed(player.get_word())
             else:
               UI.incorrect_letter(letter)
         elif event.scancode == KEY_BACKSPACE:
@@ -228,6 +228,8 @@ func check_word_complete() -> bool:
 
 func word_complete() -> void:
   current_state = GAMESTATE.DAMAGING
+
+  UI.word_complete()
 
   for prefix in prefixes:
     if prefix.current:

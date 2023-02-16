@@ -7,7 +7,7 @@
 [sub_resource type="Animation" id=1]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("GameContainer/VBoxContainer/Bottom/PanelContainer/MarginContainer/Typed:rect_position")
+tracks/0/path = NodePath("GameContainer/Rows/Bottom/PanelContainer/MarginContainer/Typed:rect_position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -19,7 +19,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 338 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("GameContainer/VBoxContainer/Bottom/PanelContainer/MarginContainer/Typed:modulate")
+tracks/1/path = NodePath("GameContainer/Rows/Bottom/PanelContainer/MarginContainer/Typed:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -35,7 +35,7 @@ tracks/1/keys = {
 resource_name = "incorrect"
 length = 0.4
 tracks/0/type = "value"
-tracks/0/path = NodePath("GameContainer/VBoxContainer/Bottom/PanelContainer/MarginContainer/Typed:modulate")
+tracks/0/path = NodePath("GameContainer/Rows/Bottom/PanelContainer/MarginContainer/Typed:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -58,72 +58,72 @@ custom_constants/margin_top = 25
 custom_constants/margin_left = 25
 custom_constants/margin_bottom = 25
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameContainer"]
+[node name="Rows" type="VBoxContainer" parent="GameContainer"]
 margin_left = 25.0
 margin_top = 25.0
 margin_right = 643.0
 margin_bottom = 395.0
 alignment = 1
 
-[node name="TopRow" type="HBoxContainer" parent="GameContainer/VBoxContainer"]
+[node name="Top" type="HBoxContainer" parent="GameContainer/Rows"]
 margin_right = 618.0
 margin_bottom = 78.0
 custom_constants/separation = 10
 
-[node name="TopLeft" type="VBoxContainer" parent="GameContainer/VBoxContainer/TopRow"]
+[node name="TopLeft" type="VBoxContainer" parent="GameContainer/Rows/Top"]
 margin_right = 175.0
 margin_bottom = 78.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="GameContainer/VBoxContainer/TopRow/TopLeft"]
+[node name="PanelContainer" type="PanelContainer" parent="GameContainer/Rows/Top/TopLeft"]
 margin_right = 175.0
 margin_bottom = 74.0
 rect_min_size = Vector2( 175, 0 )
 
-[node name="MarginContainer" type="MarginContainer" parent="GameContainer/VBoxContainer/TopRow/TopLeft/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GameContainer/Rows/Top/TopLeft/PanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 173.0
 margin_bottom = 72.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameContainer/VBoxContainer/TopRow/TopLeft/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameContainer/Rows/Top/TopLeft/PanelContainer/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 166.0
 margin_bottom = 65.0
 
-[node name="Clock" type="Label" parent="GameContainer/VBoxContainer/TopRow/TopLeft/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Clock" type="Label" parent="GameContainer/Rows/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer"]
 margin_right = 161.0
 margin_bottom = 28.0
 rect_min_size = Vector2( 140, 0 )
 text = "Time: xxx"
 
-[node name="Devils" type="Label" parent="GameContainer/VBoxContainer/TopRow/TopLeft/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Devils" type="Label" parent="GameContainer/Rows/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 32.0
 margin_right = 161.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 140, 0 )
 text = "Demons: xxx"
 
-[node name="TopMid" type="VBoxContainer" parent="GameContainer/VBoxContainer/TopRow"]
+[node name="TopMid" type="VBoxContainer" parent="GameContainer/Rows/Top"]
 margin_left = 185.0
 margin_right = 494.0
 margin_bottom = 78.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="RulesPanel" type="PanelContainer" parent="GameContainer/VBoxContainer/TopRow/TopMid"]
+[node name="RulesPanel" type="PanelContainer" parent="GameContainer/Rows/Top/TopMid"]
 margin_right = 309.0
 margin_bottom = 33.0
 
-[node name="MarginContainer" type="MarginContainer" parent="GameContainer/VBoxContainer/TopRow/TopMid/RulesPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="GameContainer/Rows/Top/TopMid/RulesPanel"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 307.0
 margin_bottom = 31.0
 
-[node name="Rules" type="Label" parent="GameContainer/VBoxContainer/TopRow/TopMid/RulesPanel/MarginContainer"]
+[node name="Rules" type="Label" parent="GameContainer/Rows/Top/TopMid/RulesPanel/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 300.0
@@ -133,23 +133,23 @@ text = " and words are in alphabetical order, "
 align = 1
 autowrap = true
 
-[node name="TopRight" type="VBoxContainer" parent="GameContainer/VBoxContainer/TopRow"]
+[node name="TopRight" type="VBoxContainer" parent="GameContainer/Rows/Top"]
 margin_left = 504.0
 margin_right = 618.0
 margin_bottom = 78.0
 size_flags_horizontal = 3
 
-[node name="AudioManager" parent="GameContainer/VBoxContainer/TopRow/TopRight" instance=ExtResource( 2 )]
+[node name="AudioManager" parent="GameContainer/Rows/Top/TopRight" instance=ExtResource( 2 )]
 margin_right = 114.0
 margin_bottom = 32.0
 focus_mode = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="GameContainer/VBoxContainer/TopRow/TopRight"]
+[node name="PanelContainer" type="PanelContainer" parent="GameContainer/Rows/Top/TopRight"]
 margin_top = 36.0
 margin_right = 114.0
 margin_bottom = 78.0
 
-[node name="MarginContainer" type="MarginContainer" parent="GameContainer/VBoxContainer/TopRow/TopRight/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GameContainer/Rows/Top/TopRight/PanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 112.0
@@ -159,141 +159,148 @@ custom_constants/margin_top = 5
 custom_constants/margin_left = 5
 custom_constants/margin_bottom = 5
 
-[node name="Score" type="Label" parent="GameContainer/VBoxContainer/TopRow/TopRight/PanelContainer/MarginContainer"]
+[node name="Score" type="Label" parent="GameContainer/Rows/Top/TopRight/PanelContainer/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 105.0
 margin_bottom = 33.0
 text = "Score: xxx"
 
-[node name="Fragments" type="HBoxContainer" parent="GameContainer/VBoxContainer"]
+[node name="Fragments" type="HBoxContainer" parent="GameContainer/Rows"]
 margin_top = 82.0
 margin_right = 618.0
 margin_bottom = 324.0
 size_flags_vertical = 3
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="GameContainer/VBoxContainer/Fragments"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="GameContainer/Rows/Fragments"]
 margin_right = 122.0
 margin_bottom = 242.0
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer2"]
+[node name="PanelContainer" type="PanelContainer" parent="GameContainer/Rows/Fragments/VBoxContainer2"]
 margin_top = 52.0
 margin_right = 122.0
 margin_bottom = 190.0
 
-[node name="MarginContainer" type="MarginContainer" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer2/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 120.0
 margin_bottom = 136.0
 
-[node name="Prefixes" type="VBoxContainer" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer"]
+[node name="Prefixes" type="VBoxContainer" parent="GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 113.0
 margin_bottom = 129.0
 alignment = 1
 
-[node name="Label" type="Label" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
+[node name="Label" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
 margin_right = 108.0
 margin_bottom = 28.0
 text = "test content"
 
-[node name="Label2" type="Label" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
+[node name="Label2" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
 margin_top = 32.0
 margin_right = 108.0
 margin_bottom = 60.0
 text = "test content"
 
-[node name="Label3" type="Label" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
+[node name="Label3" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
 margin_top = 64.0
 margin_right = 108.0
 margin_bottom = 92.0
 text = "test content"
 
-[node name="Label4" type="Label" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
+[node name="Label4" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
 margin_top = 96.0
 margin_right = 108.0
 margin_bottom = 124.0
 text = "test content"
 
-[node name="Spacer" type="HBoxContainer" parent="GameContainer/VBoxContainer/Fragments"]
+[node name="Spacer" type="HBoxContainer" parent="GameContainer/Rows/Fragments"]
 margin_left = 126.0
 margin_right = 492.0
 margin_bottom = 242.0
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameContainer/VBoxContainer/Fragments"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameContainer/Rows/Fragments"]
 margin_left = 496.0
 margin_right = 618.0
 margin_bottom = 242.0
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="GameContainer/Rows/Fragments/VBoxContainer"]
 margin_top = 52.0
 margin_right = 122.0
 margin_bottom = 190.0
 
-[node name="MarginContainer" type="MarginContainer" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GameContainer/Rows/Fragments/VBoxContainer/PanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 120.0
 margin_bottom = 136.0
 
-[node name="Suffixes" type="VBoxContainer" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="Suffixes" type="VBoxContainer" parent="GameContainer/Rows/Fragments/VBoxContainer/PanelContainer/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 113.0
 margin_bottom = 129.0
 alignment = 1
 
-[node name="Label" type="Label" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
+[node name="Label" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
 margin_right = 108.0
 margin_bottom = 28.0
 text = "test content"
 
-[node name="Label2" type="Label" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
+[node name="Label2" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
 margin_top = 32.0
 margin_right = 108.0
 margin_bottom = 60.0
 text = "test content"
 
-[node name="Label3" type="Label" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
+[node name="Label3" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
 margin_top = 64.0
 margin_right = 108.0
 margin_bottom = 92.0
 text = "test content"
 
-[node name="Label4" type="Label" parent="GameContainer/VBoxContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
+[node name="Label4" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
 margin_top = 96.0
 margin_right = 108.0
 margin_bottom = 124.0
 text = "test content"
 
-[node name="Bottom" type="HBoxContainer" parent="GameContainer/VBoxContainer"]
+[node name="Bottom" type="HBoxContainer" parent="GameContainer/Rows"]
 margin_top = 328.0
 margin_right = 618.0
 margin_bottom = 370.0
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="GameContainer/VBoxContainer/Bottom"]
+[node name="PanelContainer" type="PanelContainer" parent="GameContainer/Rows/Bottom"]
 margin_left = 137.0
 margin_right = 481.0
 margin_bottom = 42.0
 
-[node name="MarginContainer" type="MarginContainer" parent="GameContainer/VBoxContainer/Bottom/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GameContainer/Rows/Bottom/PanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 342.0
 margin_bottom = 40.0
 
-[node name="Typed" type="Label" parent="GameContainer/VBoxContainer/Bottom/PanelContainer/MarginContainer"]
+[node name="Typed" type="Label" parent="GameContainer/Rows/Bottom/PanelContainer/MarginContainer"]
 margin_top = 338.0
 margin_right = 330.0
 margin_bottom = 366.0
 rect_min_size = Vector2( 330, 28 )
 align = 1
+
+[node name="CompleteSpawn" type="Control" parent="."]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 643.0
+margin_bottom = 395.0
+mouse_filter = 2
 
 [node name="StartContainer" type="CenterContainer" parent="."]
 anchor_right = 1.0
