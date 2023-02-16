@@ -12,7 +12,7 @@ signal game_ended()
 signal curse_chosen(index)
 
 
-onready var AudioManager := $GameContainer/Rows/Top/TopRight/AudioManager
+onready var AudioManager := $AudioContainer/Control/AudioManager
 onready var _GameContainer := $GameContainer
 onready var _StartContainer := $StartContainer
 onready var _CurseChooser := $ChooserContainer
@@ -105,7 +105,6 @@ func stop_timer(emit := false) -> void:
 func incorrect_letter(_letter: String) -> void:
   AudioManager.play_incorrect_letter()
   _Animations.play("incorrect")
-  print("invalid letter: ", _letter)
 
 
 func word_complete() -> void:
@@ -135,9 +134,12 @@ func update_rules(rules) -> void:
 
 
 func update_typed(combined_word: String, help := false) -> void:
-  if combined_word == "" and help:
+  if combined_word == "":
     _Typed.add_color_override("font_color", Color.dimgray)
-    combined_word = _DEFAULT_TYPED
+    if help:
+      combined_word = _DEFAULT_TYPED
+    else:
+      combined_word = ""
   else:
     _Typed.remove_color_override("font_color")
 
@@ -174,7 +176,6 @@ func _on_Timer_timeout() -> void:
       stop_timer(true)
   else:
     # shouldn't get here, but end here as well just in case
-    print("game over - should be imposs")
     stop_timer(true)
 
 

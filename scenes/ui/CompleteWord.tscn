@@ -2,12 +2,7 @@
 
 [ext_resource path="res://scenes/ui/CompleteWord.gd" type="Script" id=1]
 
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.996078, 0.996078, 0.854902, 1 )
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+[sub_resource type="StyleBoxEmpty" id=3]
 
 [sub_resource type="Animation" id=2]
 resource_name = "spawn"

@@ -4,4 +4,4 @@ day 3: create game loop (time based)
 day 4: art, tweak loop to add num demons
 day 5: animation, refactoring, audio setup
 day 6: refactoring, bug fixes, cheat mode
-day 7: 
+day 7: ui tidy, add audio files  
