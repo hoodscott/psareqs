@@ -5,6 +5,8 @@ const NUM_CURSE_OPTIONS := 3
 const NUM_DEVILS := 2 # per round
 const GAME_LENGTH := 60 # in seconds
 
+const CHEATING := false
+
 enum GAMESTATE {
   CURSE_CHOICE = 0,
   PLAYING = 1,
@@ -105,8 +107,6 @@ func generate_words() -> void:
   UI.update_prefix_list(prefixes)
   UI.update_suffix_list(suffixes)
 
-  player.reset_word()
-
 
 func end_round() -> void:
   UI.stop_timer()
@@ -138,41 +138,43 @@ func _unhandled_key_input(event: InputEventKey) -> void:
 
       GAMESTATE.PLAYING:
         if event.scancode >= KEY_A and event.scancode <= KEY_Z:
-          var letter = OS.get_scancode_string(event.scancode).to_lower()
-
-          if is_valid_choice(letter):
-            UI.AudioManager.play_correct_letter()
+          if CHEATING:
             if not player.is_prefix_complete():
-              player.prefix_add(letter)
-              if check_prefix_complete():
-                player.set_prefix_complete()
-                UI.update_prefix_list(prefixes)
+              for prefix in prefixes:
+                if not prefix.used:
+                  prefix.current = true
+                  player.prefix_add(prefix.fragment)
+                  player.set_prefix_complete()
+                  break
+              UI.update_prefix_list(prefixes)
+              UI.update_typed(player.get_word())
             else:
-              player.suffix_add(letter)
-              if check_word_complete():
-                for prefix in prefixes:
-                  if prefix.current:
-                    prefix.current = false
-                    prefix.used = true
-                UI.update_prefix_list(prefixes)
-
-                for suffix in suffixes:
-                  if suffix.current:
-                    suffix.current = false
-                    suffix.used = true
-                UI.update_suffix_list(suffixes)
-
-                print("word complete")
-                current_state = GAMESTATE.DAMAGING
-                devil.damage()
-                if devil.health == 0:
-                  UI.AudioManager.play_devil_death()
-                UI.AudioManager.play_word_complete()
-
-            UI.update_typed(player.get_word())
+              for suffix in suffixes:
+                if not suffix.used:
+                  suffix.current = true
+                  player.prefix_add(suffix.fragment)
+                  break
+              UI.update_typed(player.get_word())
+              word_complete()
           else:
-            UI.AudioManager.play_incorrect_letter()
-            print("invalid letter: ", letter)
+            var letter = OS.get_scancode_string(event.scancode).to_lower()
+
+            if is_valid_choice(letter):
+              UI.AudioManager.play_correct_letter()
+              if not player.is_prefix_complete():
+                player.prefix_add(letter)
+                if check_prefix_complete():
+                  player.set_prefix_complete()
+                  UI.update_prefix_list(prefixes)
+              else:
+                player.suffix_add(letter)
+                if check_word_complete():
+                  word_complete()
+
+              UI.update_typed(player.get_word())
+            else:
+              UI.AudioManager.play_incorrect_letter()
+              print("invalid letter: ", letter)
         elif event.scancode == KEY_BACKSPACE:
           player.delete_character()
           if not player.is_prefix_complete():
@@ -224,6 +226,30 @@ func check_word_complete() -> bool:
   return false
 
 
+func word_complete() -> void:
+  current_state = GAMESTATE.DAMAGING
+
+  for prefix in prefixes:
+    if prefix.current:
+      prefix.current = false
+      prefix.used = true
+  UI.update_prefix_list(prefixes)
+
+  for suffix in suffixes:
+    if suffix.current:
+      suffix.current = false
+      suffix.used = true
+  UI.update_suffix_list(suffixes)
+
+  devil.damage()
+  if devil.health == 0:
+    UI.AudioManager.play_devil_death()
+  UI.AudioManager.play_word_complete()
+
+  player.reset_word()
+  UI.update_typed(player.get_word())
+
+
 func _on_devil_died() -> void:
   player.score_add()
   UI.update_score(player.score)
@@ -235,7 +261,6 @@ func _on_devil_died() -> void:
 
 
 func _on_devil_damaged() -> void:
-  player.reset_word()
   current_state = GAMESTATE.PLAYING
 
 

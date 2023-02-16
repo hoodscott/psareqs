@@ -1,9 +1,7 @@
 need to add visual indicator when incorrect letter pressed
 need to add some fanfare when completing word (animate word moving to demon?)
-need to add pause when demon dies/word complete before spawning new demon
-or ending round/game (or maybe just add 5s or however long despawn/spawn takes)
 
-need to find/create sounds for the audioplayers
+need to find/create sounds for the audioplayers (or just hide button if cba)
 
 need to create nicer heads/faces
 
