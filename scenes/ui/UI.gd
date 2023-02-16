@@ -12,7 +12,7 @@ signal game_ended()
 signal curse_chosen(index)
 
 
-onready var AudioManager := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2/AudioManager
+onready var AudioManager := $GameContainer/VBoxContainer/TopRow/TopRight/AudioManager
 onready var _GameContainer := $GameContainer
 onready var _StartContainer := $StartContainer
 onready var _CurseChooser := $ChooserContainer
@@ -21,16 +21,16 @@ onready var _CurseChoices := [
   $ChooserContainer/CurseChooser/Choice2,
   $ChooserContainer/CurseChooser/Choice3
  ]
-onready var _GameOver := $StartContainer/VBoxContainer/GameOver
+onready var _GameOver := $StartContainer/VBoxContainer/PanelContainer/MarginContainer/GameOver
 onready var _StartButton := $StartContainer/VBoxContainer/StartButton
 onready var _GameTimer := $Timer
-onready var _Clock := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Clock
-onready var _Devils := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer/Devils
-onready var _Rules := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer1/Rules
-onready var _Score := $GameContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Score
-onready var _PrefixList := $GameContainer/VBoxContainer/Fragments/Prefixes
-onready var _SuffixList := $GameContainer/VBoxContainer/Fragments/Suffixes
-onready var _Typed := $GameContainer/VBoxContainer/Typed
+onready var _Clock := $GameContainer/VBoxContainer/TopRow/TopLeft/PanelContainer/MarginContainer/VBoxContainer/Clock
+onready var _Devils :=$GameContainer/VBoxContainer/TopRow/TopLeft/PanelContainer/MarginContainer/VBoxContainer/Devils
+onready var _Rules := $GameContainer/VBoxContainer/TopRow/TopMid/RulesPanel/MarginContainer/Rules
+onready var _Score := $GameContainer/VBoxContainer/TopRow/TopRight/PanelContainer/MarginContainer/Score
+onready var _PrefixList := $GameContainer/VBoxContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes
+onready var _SuffixList := $GameContainer/VBoxContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes
+onready var _Typed := $GameContainer/VBoxContainer/Bottom/PanelContainer/MarginContainer/Typed
 onready var _Animations := $AnimationPlayer
 
 
