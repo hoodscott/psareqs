@@ -10,7 +10,7 @@ onready var Background :AudioStreamPlayer= $Background
 
 var audio_pos := 0.0
 
-var muted := false
+var muted := true
 const _MUTE_LABEL := "Mute"
 const _UNMUTE_LABEL := "Unmute"
 
@@ -18,6 +18,8 @@ const _UNMUTE_LABEL := "Unmute"
 
 func _ready() -> void:
   _set_button_label()
+  if not muted:
+    Background.play()
 
 
 func play_correct_letter() -> void:
