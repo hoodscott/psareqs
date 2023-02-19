@@ -1,5 +1,6 @@
 # Project-specific ignores
 recordings/
+export/
 assets/img/*.pdn
 docs/images.txt
 
