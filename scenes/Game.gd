@@ -176,12 +176,16 @@ func _unhandled_key_input(event: InputEventKey) -> void:
             else:
               UI.incorrect_letter(letter)
         elif event.scancode == KEY_BACKSPACE:
-          player.delete_character()
-          if not player.is_prefix_complete():
-            for prefix in prefixes:
-              prefix.current = false
-          UI.update_prefix_list(prefixes)
-          UI.update_typed(player.get_word())
+          if player.get_word().length() > 0:
+            UI.AudioManager.play_correct_letter()
+            player.delete_character()
+            if not player.is_prefix_complete():
+              for prefix in prefixes:
+                prefix.current = false
+            UI.update_prefix_list(prefixes)
+            UI.update_typed(player.get_word())
+          else:
+            UI.incorrect_letter("")
 
 
 func is_focus_event(event: InputEventKey) -> bool:
