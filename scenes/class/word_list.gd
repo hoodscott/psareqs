@@ -3,17 +3,23 @@ class_name WordList
 
 
 const _prefixes = [
-  "dumb", "bum", "poop",
-  "dirt", "scum", "mud",
-  "dip",
-  "monkey", "turtle", "fish", "horse", "pig"
- ]
+  "dumb", "bum", "poop", "snot", "toilet",
+  "dirt", "scum", "mud", "stink", "clod",
+  "bean", "onion", "cabbage", "potato", "pea",
+  "dip", "horn", "eel", "dog", "crab",
+  "horse", "pig", "sheep", "goat", "bull",
+  "goose", "duck", "chicken", "pigeon", "rabbit",
+  "monkey", "squirrel", "turtle", "fish", "rat"
+ ] #35
 const _suffixes = [
-  "goblin", "wit", "stick", "stain", "clown",
-  "hat", "bag",
-  "crab",
-  "brain", "head"
- ]
+  "goblin", "clown", "gremlin", "bogey", "troll",
+  "wit", "stick", "stain", "smudge", "wipe",
+  "head", "foot", "toe", "hoof", "legs",
+  "eyes", "hat", "cap", "pants", "vest",
+  "shoe", "sock", "slipper", "bag", "drum",
+  "crab", "slug", "snake", "worm", "grub",
+  "brain", "guts", "mouth", "breath", "whiff"
+ ] #35
 
 var _prefixes_shuffled := []
 var _suffixes_shuffled := []
