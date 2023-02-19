@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/img/arm.png" type="Texture" id=1]
 [ext_resource path="res://assets/img/tail.png" type="Texture" id=2]
@@ -7,6 +7,22 @@
 [ext_resource path="res://scenes/devils/Mephistopheles.gd" type="Script" id=5]
 [ext_resource path="res://assets/img/shock.png" type="Texture" id=6]
 [ext_resource path="res://assets/img/sad.png" type="Texture" id=7]
+[ext_resource path="res://assets/img/head_fluff.PNG" type="Texture" id=8]
+
+[sub_resource type="Shader" id=7]
+code = "// https://godotengine.org/qa/57619/draw-over-another-sprite-as-a-mask?show=57666#c57666
+shader_type canvas_item;
+uniform sampler2D mask;
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 vmask = texture(mask, UV);
+    color.a = vmask.a;
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = SubResource( 7 )
+shader_param/mask = ExtResource( 8 )
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
@@ -90,6 +106,18 @@ tracks/5/keys = {
 "update": 0,
 "values": [ Vector2( 5, 10 ) ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("Sprite/Head:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="Animation" id=5]
 resource_name = "die"
@@ -114,10 +142,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.001, 1, 2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 1, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 5, 10 ), Vector2( 5, 20 ), Vector2( 5, 10 ), Vector2( 5, 30 ) ]
+"values": [ Vector2( 5, 10 ), Vector2( 5, 30 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:modulate")
@@ -184,6 +212,18 @@ tracks/2/keys = {
 "update": 0,
 "values": [ 0.0, -12.0, 15.0, 15.0, 0.0 ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite/Head:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 2.0, 0.0, -2.0, 0.0 ]
+}
 
 [sub_resource type="Animation" id=6]
 resource_name = "spawn"
@@ -219,28 +259,32 @@ script = ExtResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 5, 10 )
+rotation = 12.5664
 z_index = 1
 texture = ExtResource( 3 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Head" type="Position2D" parent="Sprite"]
-position = Vector2( -9, -57 )
-
-[node name="Sprite" type="AnimatedSprite" parent="Sprite/Head"]
-frames = SubResource( 4 )
-__meta__ = {
-"_edit_lock_": true
-}
-
 [node name="ArmRight" type="Position2D" parent="Sprite"]
-position = Vector2( -16, -39 )
+position = Vector2( -17, -37.3333 )
 rotation = 0.349066
 
 [node name="Sprite" type="Sprite" parent="Sprite/ArmRight"]
 position = Vector2( -17, 10 )
 texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Head" type="Position2D" parent="Sprite"]
+position = Vector2( -9, -45.3333 )
+
+[node name="Sprite" type="AnimatedSprite" parent="Sprite/Head"]
+material = SubResource( 8 )
+position = Vector2( 0, -9 )
+scale = Vector2( 1.5, 1.5 )
+frames = SubResource( 4 )
 __meta__ = {
 "_edit_lock_": true
 }
