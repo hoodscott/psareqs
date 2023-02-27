@@ -22,16 +22,16 @@ onready var _CurseChoices := [
   $GameMargin/ChooserContainer/CurseChooser/Choice2,
   $GameMargin/ChooserContainer/CurseChooser/Choice3
  ]
-onready var _GameOver := $GameMargin/StartContainer/VBoxContainer/PanelContainer/MarginContainer/GameOver
+onready var _GameOver := $GameMargin/StartContainer/VBoxContainer/PanelContainer/GameOver
 onready var _StartButton := $GameMargin/StartContainer/VBoxContainer/StartButton
 onready var _GameTimer := $Timer
-onready var _Clock := $GameMargin/GameContainer/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer/Clock
-onready var _Devils :=$GameMargin/GameContainer/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer/Devils
-onready var _Rules := $GameMargin/GameContainer/Top/TopMid/RulesPanel/MarginContainer/Rules
-onready var _Score := $GameMargin/GameContainer/Top/TopRight/PanelContainer/MarginContainer/Score
-onready var _PrefixList := $GameMargin/GameContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes
-onready var _SuffixList := $GameMargin/GameContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes
-onready var _Typed := $GameMargin/GameContainer/Bottom/PanelContainer/MarginContainer/Typed
+onready var _Clock := $GameMargin/GameContainer/Top/TopLeft/PanelContainer/VBoxContainer/Clock
+onready var _Devils :=$GameMargin/GameContainer/Top/TopLeft/PanelContainer/VBoxContainer/Devils
+onready var _Rules := $GameMargin/GameContainer/Top/TopMid/RulesPanel/Rules
+onready var _Score := $GameMargin/GameContainer/Top/TopRight/PanelContainer/Score
+onready var _PrefixList := $GameMargin/GameContainer/Fragments/VBoxContainer2/PanelContainer/Prefixes
+onready var _SuffixList := $GameMargin/GameContainer/Fragments/VBoxContainer/PanelContainer/Suffixes
+onready var _Typed := $GameMargin/GameContainer/Bottom/PanelContainer/Typed
 onready var _Animations := $AnimationPlayer
 onready var _WordCompleteSpawn := $GameMargin/CompleteSpawn
 

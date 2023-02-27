@@ -1,9 +1,10 @@
-[gd_resource type="Theme" load_steps=5 format=2]
+[gd_resource type="Theme" load_steps=6 format=2]
 
 [ext_resource path="res://scenes/ui/theme/font_normal.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/ui/theme/button_styleboxflat.tres" type="StyleBox" id=2]
 [ext_resource path="res://scenes/ui/theme/button_hover_styleboxflat.tres" type="StyleBox" id=3]
 [ext_resource path="res://scenes/ui/theme/label_styleboxflat.tres" type="StyleBox" id=4]
+[ext_resource path="res://scenes/ui/theme/button_focus_styleboxflat.tres" type="StyleBox" id=5]
 
 [resource]
 default_font = ExtResource( 1 )
@@ -11,10 +12,10 @@ Button/colors/font_color = Color( 0.996078, 0.996078, 0.854902, 1 )
 Button/colors/font_color_focus = Color( 0.996078, 0.996078, 0.854902, 1 )
 Button/colors/font_color_hover = Color( 0.996078, 0.996078, 0.854902, 1 )
 Button/colors/font_color_pressed = Color( 0.996078, 0.996078, 0.854902, 1 )
-Button/styles/focus = ExtResource( 3 )
+Button/styles/focus = ExtResource( 5 )
 Button/styles/hover = ExtResource( 3 )
 Button/styles/normal = ExtResource( 2 )
-Button/styles/pressed = ExtResource( 3 )
+Button/styles/pressed = ExtResource( 5 )
 Label/colors/font_color = Color( 0.113725, 0.101961, 0.027451, 1 )
 MarginContainer/constants/margin_bottom = 5
 MarginContainer/constants/margin_left = 5

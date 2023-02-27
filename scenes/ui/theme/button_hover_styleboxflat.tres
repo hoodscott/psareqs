@@ -1,6 +1,10 @@
 [gd_resource type="StyleBoxFlat" format=2]
 
 [resource]
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_top = 5.0
+content_margin_bottom = 7.0
 bg_color = Color( 0.113725, 0.101961, 0.027451, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -11,7 +15,3 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-expand_margin_left = 5.0
-expand_margin_right = 5.0
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
