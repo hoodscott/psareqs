@@ -24,7 +24,7 @@ onready var player := Player.new()
 var prefixes := [] #: [Dictionary{fragment, used}]
 var suffixes := [] #: [Dictionary{fragment, used}]
 
-onready var Mephistopheles: PackedScene = preload("res://scenes/devils/Mephistopheles.tscn")
+onready var Mephistopheles: PackedScene = preload("res://scenes/devils/mephistopheles/Mephistopheles.tscn")
 var devil:Node2D
 
 

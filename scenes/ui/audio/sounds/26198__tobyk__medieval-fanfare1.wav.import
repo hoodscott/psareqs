@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/26198__tobyk__medieval-fanfare1.wav-46bdc56d42c793624046a2edd4a6a8bf.sample"
+
+[deps]
+
+source_file="res://scenes/ui/audio/sounds/26198__tobyk__medieval-fanfare1.wav"
+dest_files=[ "res://.import/26198__tobyk__medieval-fanfare1.wav-46bdc56d42c793624046a2edd4a6a8bf.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

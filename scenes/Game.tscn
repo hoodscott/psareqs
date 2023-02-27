@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/Game.gd" type="Script" id=1]
-[ext_resource path="res://assets/img/background.png" type="Texture" id=2]
+[ext_resource path="res://scenes/sprites/background.png" type="Texture" id=2]
 [ext_resource path="res://scenes/ui/UI.tscn" type="PackedScene" id=3]
 
 [node name="Game" type="Node2D"]

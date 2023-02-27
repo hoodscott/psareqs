@@ -1,0 +1,37 @@
+[gd_resource type="Theme" load_steps=4 format=2]
+
+[ext_resource path="res://scenes/ui/theme/font_24pt.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/ui/theme/styleboxflat.tres" type="StyleBox" id=2]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.113725, 0.101961, 0.027451, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.996078, 0.996078, 0.854902, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_right = 5.0
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+
+[resource]
+default_font = ExtResource( 1 )
+Button/colors/font_color = Color( 0.113725, 0.101961, 0.027451, 1 )
+Button/colors/font_color_focus = Color( 0.996078, 0.996078, 0.854902, 1 )
+Button/colors/font_color_hover = Color( 0.996078, 0.996078, 0.854902, 1 )
+Button/colors/font_color_pressed = Color( 0.113725, 0.101961, 0.027451, 1 )
+Button/styles/focus = SubResource( 2 )
+Button/styles/hover = SubResource( 2 )
+Button/styles/normal = SubResource( 2 )
+Button/styles/pressed = SubResource( 2 )
+Label/colors/font_color = Color( 0.113725, 0.101961, 0.027451, 1 )
+MarginContainer/constants/margin_bottom = 5
+MarginContainer/constants/margin_left = 5
+MarginContainer/constants/margin_right = 5
+MarginContainer/constants/margin_top = 5
+PanelContainer/styles/panel = ExtResource( 2 )

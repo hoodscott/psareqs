@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/the-medieval-banquet.mp3-18338387ccd4f1532c7866bb13c4ba8d.mp3str"
+
+[deps]
+
+source_file="res://scenes/ui/audio/music/the-medieval-banquet.mp3"
+dest_files=[ "res://.import/the-medieval-banquet.mp3-18338387ccd4f1532c7866bb13c4ba8d.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
