@@ -1,13 +1,21 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://scenes/ui/theme/font_16pt.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/ui/theme/font_small.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/ui/audio/AudioManager.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ui/UI.gd" type="Script" id=3]
+[ext_resource path="res://scenes/ui/theme/theme.tres" type="Theme" id=4]
+
+[sub_resource type="InputEventKey" id=3]
+alt = true
+scancode = 78
+
+[sub_resource type="ShortCut" id=4]
+shortcut = SubResource( 3 )
 
 [sub_resource type="Animation" id=1]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("GameContainer/Rows/Bottom/PanelContainer/MarginContainer/Typed:rect_position")
+tracks/0/path = NodePath("GameMargin/GameContainer/Bottom/PanelContainer/MarginContainer/Typed:rect_position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -19,7 +27,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 338 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("GameContainer/Rows/Bottom/PanelContainer/MarginContainer/Typed:modulate")
+tracks/1/path = NodePath("GameMargin/GameContainer/Bottom/PanelContainer/MarginContainer/Typed:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -31,7 +39,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ChooserContainer/CurseChooser/PanelContainer:modulate")
+tracks/2/path = NodePath("GameMargin/ChooserContainer/CurseChooser/PanelContainer:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -43,7 +51,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("GameContainer/Rows/Bottom/PanelContainer:modulate")
+tracks/3/path = NodePath("GameMargin/GameContainer/Bottom/PanelContainer:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -59,7 +67,7 @@ tracks/3/keys = {
 resource_name = "incorrect"
 length = 0.4
 tracks/0/type = "value"
-tracks/0/path = NodePath("GameContainer/Rows/Bottom/PanelContainer/MarginContainer/Typed:modulate")
+tracks/0/path = NodePath("GameMargin/GameContainer/Bottom/PanelContainer/MarginContainer/Typed:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -71,7 +79,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.678431, 0.678431, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0.678431, 0.678431, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0.678431, 0.678431, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("GameContainer/Rows/Bottom/PanelContainer:modulate")
+tracks/1/path = NodePath("GameMargin/GameContainer/Bottom/PanelContainer:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -86,80 +94,81 @@ tracks/1/keys = {
 [node name="UI" type="CanvasLayer"]
 script = ExtResource( 3 )
 
-[node name="GameContainer" type="MarginContainer" parent="."]
+[node name="GameMargin" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 4 )
 custom_constants/margin_right = 25
 custom_constants/margin_top = 25
 custom_constants/margin_left = 25
 custom_constants/margin_bottom = 25
 
-[node name="Rows" type="VBoxContainer" parent="GameContainer"]
+[node name="GameContainer" type="VBoxContainer" parent="GameMargin"]
 margin_left = 25.0
 margin_top = 25.0
 margin_right = 643.0
 margin_bottom = 395.0
 alignment = 1
 
-[node name="Top" type="HBoxContainer" parent="GameContainer/Rows"]
+[node name="Top" type="HBoxContainer" parent="GameMargin/GameContainer"]
 margin_right = 618.0
 margin_bottom = 74.0
 custom_constants/separation = 10
 
-[node name="TopLeft" type="VBoxContainer" parent="GameContainer/Rows/Top"]
+[node name="TopLeft" type="VBoxContainer" parent="GameMargin/GameContainer/Top"]
 margin_right = 175.0
 margin_bottom = 74.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="GameContainer/Rows/Top/TopLeft"]
+[node name="PanelContainer" type="PanelContainer" parent="GameMargin/GameContainer/Top/TopLeft"]
 margin_right = 175.0
 margin_bottom = 74.0
 rect_min_size = Vector2( 175, 0 )
 
-[node name="MarginContainer" type="MarginContainer" parent="GameContainer/Rows/Top/TopLeft/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GameMargin/GameContainer/Top/TopLeft/PanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 173.0
 margin_bottom = 72.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameContainer/Rows/Top/TopLeft/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameMargin/GameContainer/Top/TopLeft/PanelContainer/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 166.0
 margin_bottom = 65.0
 
-[node name="Clock" type="Label" parent="GameContainer/Rows/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Clock" type="Label" parent="GameMargin/GameContainer/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer"]
 margin_right = 161.0
 margin_bottom = 28.0
 rect_min_size = Vector2( 140, 0 )
 text = "Time: xxx"
 
-[node name="Devils" type="Label" parent="GameContainer/Rows/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Devils" type="Label" parent="GameMargin/GameContainer/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 32.0
 margin_right = 161.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 140, 0 )
 text = "Demons: xxx"
 
-[node name="TopMid" type="VBoxContainer" parent="GameContainer/Rows/Top"]
+[node name="TopMid" type="VBoxContainer" parent="GameMargin/GameContainer/Top"]
 margin_left = 185.0
 margin_right = 494.0
 margin_bottom = 74.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="RulesPanel" type="PanelContainer" parent="GameContainer/Rows/Top/TopMid"]
+[node name="RulesPanel" type="PanelContainer" parent="GameMargin/GameContainer/Top/TopMid"]
 margin_right = 309.0
 margin_bottom = 33.0
 
-[node name="MarginContainer" type="MarginContainer" parent="GameContainer/Rows/Top/TopMid/RulesPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="GameMargin/GameContainer/Top/TopMid/RulesPanel"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 307.0
 margin_bottom = 31.0
 
-[node name="Rules" type="Label" parent="GameContainer/Rows/Top/TopMid/RulesPanel/MarginContainer"]
+[node name="Rules" type="Label" parent="GameMargin/GameContainer/Top/TopMid/RulesPanel/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 300.0
@@ -169,17 +178,17 @@ text = " and words are in alphabetical order, "
 align = 1
 autowrap = true
 
-[node name="TopRight" type="VBoxContainer" parent="GameContainer/Rows/Top"]
+[node name="TopRight" type="VBoxContainer" parent="GameMargin/GameContainer/Top"]
 margin_left = 504.0
 margin_right = 618.0
 margin_bottom = 74.0
 size_flags_horizontal = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="GameContainer/Rows/Top/TopRight"]
+[node name="PanelContainer" type="PanelContainer" parent="GameMargin/GameContainer/Top/TopRight"]
 margin_right = 114.0
 margin_bottom = 42.0
 
-[node name="MarginContainer" type="MarginContainer" parent="GameContainer/Rows/Top/TopRight/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GameMargin/GameContainer/Top/TopRight/PanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 112.0
@@ -189,171 +198,166 @@ custom_constants/margin_top = 5
 custom_constants/margin_left = 5
 custom_constants/margin_bottom = 5
 
-[node name="Score" type="Label" parent="GameContainer/Rows/Top/TopRight/PanelContainer/MarginContainer"]
+[node name="Score" type="Label" parent="GameMargin/GameContainer/Top/TopRight/PanelContainer/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 105.0
 margin_bottom = 33.0
 text = "Score: xxx"
 
-[node name="Fragments" type="HBoxContainer" parent="GameContainer/Rows"]
+[node name="Fragments" type="HBoxContainer" parent="GameMargin/GameContainer"]
 margin_top = 78.0
 margin_right = 618.0
 margin_bottom = 324.0
 size_flags_vertical = 3
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="GameContainer/Rows/Fragments"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="GameMargin/GameContainer/Fragments"]
 margin_right = 122.0
 margin_bottom = 246.0
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="GameContainer/Rows/Fragments/VBoxContainer2"]
+[node name="PanelContainer" type="PanelContainer" parent="GameMargin/GameContainer/Fragments/VBoxContainer2"]
 margin_top = 54.0
 margin_right = 122.0
 margin_bottom = 192.0
 
-[node name="MarginContainer" type="MarginContainer" parent="GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GameMargin/GameContainer/Fragments/VBoxContainer2/PanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 120.0
 margin_bottom = 136.0
 
-[node name="Prefixes" type="VBoxContainer" parent="GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer/MarginContainer"]
+[node name="Prefixes" type="VBoxContainer" parent="GameMargin/GameContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 113.0
 margin_bottom = 129.0
 alignment = 1
 
-[node name="Label" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
+[node name="Label" type="Label" parent="GameMargin/GameContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
 margin_right = 108.0
 margin_bottom = 28.0
 text = "test content"
 
-[node name="Label2" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
+[node name="Label2" type="Label" parent="GameMargin/GameContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
 margin_top = 32.0
 margin_right = 108.0
 margin_bottom = 60.0
 text = "test content"
 
-[node name="Label3" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
+[node name="Label3" type="Label" parent="GameMargin/GameContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
 margin_top = 64.0
 margin_right = 108.0
 margin_bottom = 92.0
 text = "test content"
 
-[node name="Label4" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
+[node name="Label4" type="Label" parent="GameMargin/GameContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes"]
 margin_top = 96.0
 margin_right = 108.0
 margin_bottom = 124.0
 text = "test content"
 
-[node name="Spacer" type="HBoxContainer" parent="GameContainer/Rows/Fragments"]
+[node name="Spacer" type="HBoxContainer" parent="GameMargin/GameContainer/Fragments"]
 margin_left = 126.0
 margin_right = 492.0
 margin_bottom = 246.0
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameContainer/Rows/Fragments"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameMargin/GameContainer/Fragments"]
 margin_left = 496.0
 margin_right = 618.0
 margin_bottom = 246.0
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="GameContainer/Rows/Fragments/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="GameMargin/GameContainer/Fragments/VBoxContainer"]
 margin_top = 54.0
 margin_right = 122.0
 margin_bottom = 192.0
 
-[node name="MarginContainer" type="MarginContainer" parent="GameContainer/Rows/Fragments/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GameMargin/GameContainer/Fragments/VBoxContainer/PanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 120.0
 margin_bottom = 136.0
 
-[node name="Suffixes" type="VBoxContainer" parent="GameContainer/Rows/Fragments/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="Suffixes" type="VBoxContainer" parent="GameMargin/GameContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 113.0
 margin_bottom = 129.0
 alignment = 1
 
-[node name="Label" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
+[node name="Label" type="Label" parent="GameMargin/GameContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
 margin_right = 108.0
 margin_bottom = 28.0
 text = "test content"
 
-[node name="Label2" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
+[node name="Label2" type="Label" parent="GameMargin/GameContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
 margin_top = 32.0
 margin_right = 108.0
 margin_bottom = 60.0
 text = "test content"
 
-[node name="Label3" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
+[node name="Label3" type="Label" parent="GameMargin/GameContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
 margin_top = 64.0
 margin_right = 108.0
 margin_bottom = 92.0
 text = "test content"
 
-[node name="Label4" type="Label" parent="GameContainer/Rows/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
+[node name="Label4" type="Label" parent="GameMargin/GameContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes"]
 margin_top = 96.0
 margin_right = 108.0
 margin_bottom = 124.0
 text = "test content"
 
-[node name="Bottom" type="HBoxContainer" parent="GameContainer/Rows"]
+[node name="Bottom" type="HBoxContainer" parent="GameMargin/GameContainer"]
 margin_top = 328.0
 margin_right = 618.0
 margin_bottom = 370.0
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="GameContainer/Rows/Bottom"]
+[node name="PanelContainer" type="PanelContainer" parent="GameMargin/GameContainer/Bottom"]
 margin_left = 137.0
 margin_right = 481.0
 margin_bottom = 42.0
 
-[node name="MarginContainer" type="MarginContainer" parent="GameContainer/Rows/Bottom/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GameMargin/GameContainer/Bottom/PanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 342.0
 margin_bottom = 40.0
 
-[node name="Typed" type="Label" parent="GameContainer/Rows/Bottom/PanelContainer/MarginContainer"]
+[node name="Typed" type="Label" parent="GameMargin/GameContainer/Bottom/PanelContainer/MarginContainer"]
 margin_top = 338.0
 margin_right = 330.0
 margin_bottom = 366.0
 rect_min_size = Vector2( 330, 28 )
 align = 1
 
-[node name="CompleteSpawn" type="Control" parent="."]
+[node name="StartContainer" type="CenterContainer" parent="GameMargin"]
 margin_left = 25.0
 margin_top = 25.0
 margin_right = 643.0
 margin_bottom = 395.0
-mouse_filter = 2
 
-[node name="StartContainer" type="CenterContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="StartContainer"]
-margin_left = 275.0
-margin_top = 147.0
-margin_right = 393.0
-margin_bottom = 272.0
+[node name="VBoxContainer" type="VBoxContainer" parent="GameMargin/StartContainer"]
+margin_left = 250.0
+margin_top = 122.0
+margin_right = 368.0
+margin_bottom = 247.0
 custom_constants/separation = 20
 
-[node name="PanelContainer" type="PanelContainer" parent="StartContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="GameMargin/StartContainer/VBoxContainer"]
 margin_right = 118.0
 margin_bottom = 73.0
 
-[node name="MarginContainer" type="MarginContainer" parent="StartContainer/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GameMargin/StartContainer/VBoxContainer/PanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 116.0
 margin_bottom = 71.0
 
-[node name="GameOver" type="Label" parent="StartContainer/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="GameOver" type="Label" parent="GameMargin/StartContainer/VBoxContainer/PanelContainer/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 109.0
@@ -362,35 +366,36 @@ text = "Mind Your
 Ps are Qs"
 align = 1
 
-[node name="StartButton" type="Button" parent="StartContainer/VBoxContainer"]
+[node name="StartButton" type="Button" parent="GameMargin/StartContainer/VBoxContainer"]
 margin_top = 93.0
 margin_right = 118.0
 margin_bottom = 125.0
 text = "Start Game"
 
-[node name="ChooserContainer" type="CenterContainer" parent="."]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="ChooserContainer" type="CenterContainer" parent="GameMargin"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 643.0
+margin_bottom = 395.0
 
-[node name="CurseChooser" type="VBoxContainer" parent="ChooserContainer"]
-margin_left = 282.0
-margin_top = 137.0
-margin_right = 385.0
-margin_bottom = 282.0
+[node name="CurseChooser" type="VBoxContainer" parent="GameMargin/ChooserContainer"]
+margin_left = 229.0
+margin_top = 93.0
+margin_right = 388.0
+margin_bottom = 276.0
 custom_constants/separation = 15
 
-[node name="PanelContainer" type="PanelContainer" parent="ChooserContainer/CurseChooser"]
+[node name="PanelContainer" type="PanelContainer" parent="GameMargin/ChooserContainer/CurseChooser"]
 margin_right = 159.0
 margin_bottom = 42.0
 
-[node name="MarginContainer" type="MarginContainer" parent="ChooserContainer/CurseChooser/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GameMargin/ChooserContainer/CurseChooser/PanelContainer"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 157.0
 margin_bottom = 40.0
 
-[node name="Label" type="Label" parent="ChooserContainer/CurseChooser/PanelContainer/MarginContainer"]
+[node name="Label" type="Label" parent="GameMargin/ChooserContainer/CurseChooser/PanelContainer/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 150.0
@@ -398,7 +403,7 @@ margin_bottom = 33.0
 text = "Choose a Curse"
 align = 1
 
-[node name="Choice" type="Button" parent="ChooserContainer/CurseChooser"]
+[node name="Choice" type="Button" parent="GameMargin/ChooserContainer/CurseChooser"]
 margin_top = 57.0
 margin_right = 159.0
 margin_bottom = 89.0
@@ -410,7 +415,7 @@ focus_next = NodePath("../Choice2")
 focus_previous = NodePath("../Choice3")
 text = "Ps are Qs"
 
-[node name="Choice2" type="Button" parent="ChooserContainer/CurseChooser"]
+[node name="Choice2" type="Button" parent="GameMargin/ChooserContainer/CurseChooser"]
 margin_top = 104.0
 margin_right = 159.0
 margin_bottom = 136.0
@@ -422,7 +427,7 @@ focus_next = NodePath("../Choice3")
 focus_previous = NodePath("../Choice")
 text = "Ps are Qs"
 
-[node name="Choice3" type="Button" parent="ChooserContainer/CurseChooser"]
+[node name="Choice3" type="Button" parent="GameMargin/ChooserContainer/CurseChooser"]
 margin_top = 151.0
 margin_right = 159.0
 margin_bottom = 183.0
@@ -434,23 +439,14 @@ focus_next = NodePath("../Choice")
 focus_previous = NodePath("../Choice2")
 text = "Ps are Qs"
 
-[node name="AudioContainer" type="MarginContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-custom_constants/margin_right = 25
-custom_constants/margin_top = 25
-custom_constants/margin_left = 25
-custom_constants/margin_bottom = 25
-
-[node name="Control" type="Control" parent="AudioContainer"]
+[node name="AudioContainer" type="Control" parent="GameMargin"]
 margin_left = 25.0
 margin_top = 25.0
 margin_right = 643.0
 margin_bottom = 395.0
 mouse_filter = 2
 
-[node name="AudioManager" parent="AudioContainer/Control" instance=ExtResource( 2 )]
+[node name="AudioManager" parent="GameMargin/AudioContainer" instance=ExtResource( 2 )]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -461,14 +457,30 @@ grow_horizontal = 0
 rect_min_size = Vector2( 90, 0 )
 focus_mode = 0
 
+[node name="FontChange" type="Button" parent="GameMargin/AudioContainer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -32.0
+margin_right = 122.0
+shortcut = SubResource( 4 )
+text = "Change Font"
+
+[node name="CompleteSpawn" type="Control" parent="GameMargin"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 643.0
+margin_bottom = 395.0
+mouse_filter = 2
+
 [node name="Timer" type="Timer" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 1 )
 anims/incorrect = SubResource( 2 )
 
-[connection signal="pressed" from="StartContainer/VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
-[connection signal="pressed" from="ChooserContainer/CurseChooser/Choice" to="." method="_on_Choice_pressed"]
-[connection signal="pressed" from="ChooserContainer/CurseChooser/Choice2" to="." method="_on_Choice2_pressed"]
-[connection signal="pressed" from="ChooserContainer/CurseChooser/Choice3" to="." method="_on_Choice3_pressed"]
+[connection signal="pressed" from="GameMargin/StartContainer/VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="GameMargin/ChooserContainer/CurseChooser/Choice" to="." method="_on_Choice_pressed"]
+[connection signal="pressed" from="GameMargin/ChooserContainer/CurseChooser/Choice2" to="." method="_on_Choice2_pressed"]
+[connection signal="pressed" from="GameMargin/ChooserContainer/CurseChooser/Choice3" to="." method="_on_Choice3_pressed"]
+[connection signal="pressed" from="GameMargin/AudioContainer/FontChange" to="." method="_on_FontChange_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

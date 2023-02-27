@@ -12,30 +12,32 @@ signal game_ended()
 signal curse_chosen(index)
 
 
-onready var AudioManager := $AudioContainer/Control/AudioManager
-onready var _GameContainer := $GameContainer
-onready var _StartContainer := $StartContainer
-onready var _CurseChooser := $ChooserContainer
+onready var AudioManager := $GameMargin/AudioContainer/AudioManager
+onready var _GameMargin = $GameMargin
+onready var _GameContainer := $GameMargin/GameContainer
+onready var _StartContainer := $GameMargin/StartContainer
+onready var _CurseChooser := $GameMargin/ChooserContainer
 onready var _CurseChoices := [
-  $ChooserContainer/CurseChooser/Choice,
-  $ChooserContainer/CurseChooser/Choice2,
-  $ChooserContainer/CurseChooser/Choice3
+  $GameMargin/ChooserContainer/CurseChooser/Choice,
+  $GameMargin/ChooserContainer/CurseChooser/Choice2,
+  $GameMargin/ChooserContainer/CurseChooser/Choice3
  ]
-onready var _GameOver := $StartContainer/VBoxContainer/PanelContainer/MarginContainer/GameOver
-onready var _StartButton := $StartContainer/VBoxContainer/StartButton
+onready var _GameOver := $GameMargin/StartContainer/VBoxContainer/PanelContainer/MarginContainer/GameOver
+onready var _StartButton := $GameMargin/StartContainer/VBoxContainer/StartButton
 onready var _GameTimer := $Timer
-onready var _Clock := $GameContainer/Rows/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer/Clock
-onready var _Devils :=$GameContainer/Rows/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer/Devils
-onready var _Rules := $GameContainer/Rows/Top/TopMid/RulesPanel/MarginContainer/Rules
-onready var _Score := $GameContainer/Rows/Top/TopRight/PanelContainer/MarginContainer/Score
-onready var _PrefixList := $GameContainer/Rows/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes
-onready var _SuffixList := $GameContainer/Rows/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes
-onready var _Typed := $GameContainer/Rows/Bottom/PanelContainer/MarginContainer/Typed
+onready var _Clock := $GameMargin/GameContainer/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer/Clock
+onready var _Devils :=$GameMargin/GameContainer/Top/TopLeft/PanelContainer/MarginContainer/VBoxContainer/Devils
+onready var _Rules := $GameMargin/GameContainer/Top/TopMid/RulesPanel/MarginContainer/Rules
+onready var _Score := $GameMargin/GameContainer/Top/TopRight/PanelContainer/MarginContainer/Score
+onready var _PrefixList := $GameMargin/GameContainer/Fragments/VBoxContainer2/PanelContainer/MarginContainer/Prefixes
+onready var _SuffixList := $GameMargin/GameContainer/Fragments/VBoxContainer/PanelContainer/MarginContainer/Suffixes
+onready var _Typed := $GameMargin/GameContainer/Bottom/PanelContainer/MarginContainer/Typed
 onready var _Animations := $AnimationPlayer
-onready var _WordCompleteSpawn := $CompleteSpawn
+onready var _WordCompleteSpawn := $GameMargin/CompleteSpawn
 
 onready var _CompleteWord: PackedScene = preload("res://scenes/ui/CompleteWord.tscn")
 
+var alt_font := false
 
 
 
@@ -185,3 +187,14 @@ func focus_start() -> void:
 
 func focus_choice() -> void:
   _CurseChoices[0].grab_focus()
+
+
+func _on_FontChange_pressed() -> void:
+  var alt_string = "" if alt_font else "_alt"
+  var new_small_font := load("res://scenes/ui/theme/font_small%s.tres" % alt_string)
+  var new_normal_font := load("res://scenes/ui/theme/font_normal%s.tres" % alt_string)
+
+  _GameMargin.get_theme().set_default_font(new_normal_font)
+  _Rules.add_font_override("font", new_small_font)
+  alt_font = not alt_font
+
