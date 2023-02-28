@@ -46,8 +46,8 @@ func next_round() -> int:
   return round_num
 
 
-func score_add() -> void:
-  score += 1 * curses.size()
+func score_add(value := 1) -> void:
+  score += value
 
 
 func decr_devils() -> int:

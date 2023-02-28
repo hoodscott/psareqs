@@ -5,7 +5,7 @@ const NUM_CURSE_OPTIONS := 3
 const NUM_DEVILS := 2 # per round
 const GAME_LENGTH := 60 # in seconds
 
-const CHEATING := false
+const CHEATING := true
 
 enum GAMESTATE {
   CURSE_CHOICE = 0,
@@ -56,6 +56,7 @@ func curse_chosen(index: int) -> void:
 
   player.add_curse(curses.get_option(player.round_num, index))
   show_rules()
+  show_multiplier()
 
   start_round()
 
@@ -266,7 +267,8 @@ func word_complete() -> void:
 
 
 func _on_devil_died() -> void:
-  player.score_add()
+  var score = UI.get_seconds_left() * curses.calc_curse_multiplier(player.curses)
+  player.score_add(score)
   UI.update_score(player.score)
 
   if player.decr_devils() == 0:
@@ -290,3 +292,7 @@ func show_rules() -> void:
   for curse in player.curses:
     curse_descs.append(curses.get_description(curse))
   UI.update_rules(curse_descs)
+
+
+func show_multiplier() -> void:
+  UI.update_multiplier(curses.calc_curse_multiplier(player.curses))

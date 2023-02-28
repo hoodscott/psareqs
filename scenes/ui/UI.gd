@@ -33,7 +33,8 @@ onready var _GameContainer := $GameMargin/GameContainer
 onready var _Clock := $GameMargin/GameContainer/Top/TopLeft/PanelContainer/VBoxContainer/Clock
 onready var _Devils :=$GameMargin/GameContainer/Top/TopLeft/PanelContainer/VBoxContainer/Devils
 onready var _Rules := $GameMargin/GameContainer/Top/TopMid/RulesPanel/Rules
-onready var _Score := $GameMargin/GameContainer/Top/TopRight/PanelContainer/Score
+onready var _Score := $GameMargin/GameContainer/Top/TopRight/PanelContainer/VBoxContainer/Score
+onready var _Multiplier := $GameMargin/GameContainer/Top/TopRight/PanelContainer/VBoxContainer/Multiplier
 onready var _PrefixList := $GameMargin/GameContainer/Fragments/VBoxContainer2/PanelContainer/Prefixes
 onready var _SuffixList := $GameMargin/GameContainer/Fragments/VBoxContainer/PanelContainer/Suffixes
 onready var _Typed := $GameMargin/GameContainer/Bottom/PanelContainer/Typed
@@ -133,6 +134,10 @@ func stop_timer(emit := false) -> void:
     emit_signal("game_ended")
 
 
+func get_seconds_left() -> int:
+  return int(_time_remaining)
+
+
 func incorrect_letter(_letter: String) -> void:
   AudioManager.play_incorrect_letter()
   _Animations.play("incorrect")
@@ -150,6 +155,10 @@ func _update_clock(time: int) -> void:
 
 func update_score(score: int) -> void:
   _Score.text = "Score: %d" % score
+
+
+func update_multiplier(mult: int) -> void:
+  _Multiplier.text = "Multiplier: x%d" % mult
 
 
 func update_devils(devil_count: int) -> void:
@@ -242,10 +251,10 @@ func _on_MuteSoundButton_pressed() -> void:
 
 func _on_SettingsButton_pressed() -> void:
   AudioManager.play_button_press()
-  toggle_settings()
+  _toggle_settings()
 
 
-func toggle_settings() -> void:
+func _toggle_settings() -> void:
   if _settings_open:
     _SettingsButton.text = "Settings"
     _GameTimer.set_paused(false)
@@ -320,7 +329,7 @@ func _on_CreditsCloseButton_pressed() -> void:
 
 func _on_RestartButton_pressed() -> void:
   AudioManager.play_button_press()
-  toggle_settings()
+  _toggle_settings()
   emit_signal("game_restarted")
 
 

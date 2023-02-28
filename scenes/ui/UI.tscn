@@ -164,19 +164,19 @@ text = "Demons: xxx"
 
 [node name="TopMid" type="VBoxContainer" parent="GameMargin/GameContainer/Top"]
 margin_left = 185.0
-margin_right = 488.0
+margin_right = 464.0
 margin_bottom = 70.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
 [node name="RulesPanel" type="PanelContainer" parent="GameMargin/GameContainer/Top/TopMid"]
-margin_right = 303.0
+margin_right = 279.0
 margin_bottom = 59.0
 
 [node name="Rules" type="Label" parent="GameMargin/GameContainer/Top/TopMid/RulesPanel"]
 margin_left = 10.0
 margin_top = 5.0
-margin_right = 293.0
+margin_right = 269.0
 margin_bottom = 54.0
 custom_fonts/font = ExtResource( 1 )
 text = " and words are in alphabetical order, "
@@ -184,21 +184,31 @@ align = 1
 autowrap = true
 
 [node name="TopRight" type="VBoxContainer" parent="GameMargin/GameContainer/Top"]
-margin_left = 498.0
+margin_left = 474.0
 margin_right = 618.0
 margin_bottom = 70.0
 size_flags_horizontal = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="GameMargin/GameContainer/Top/TopRight"]
-margin_right = 120.0
-margin_bottom = 38.0
+margin_right = 144.0
+margin_bottom = 70.0
 
-[node name="Score" type="Label" parent="GameMargin/GameContainer/Top/TopRight/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameMargin/GameContainer/Top/TopRight/PanelContainer"]
 margin_left = 10.0
 margin_top = 5.0
-margin_right = 110.0
-margin_bottom = 33.0
+margin_right = 134.0
+margin_bottom = 65.0
+
+[node name="Score" type="Label" parent="GameMargin/GameContainer/Top/TopRight/PanelContainer/VBoxContainer"]
+margin_right = 124.0
+margin_bottom = 28.0
 text = "Score: xxx"
+
+[node name="Multiplier" type="Label" parent="GameMargin/GameContainer/Top/TopRight/PanelContainer/VBoxContainer"]
+margin_top = 32.0
+margin_right = 124.0
+margin_bottom = 60.0
+text = "Multiplier: x2"
 
 [node name="Fragments" type="HBoxContainer" parent="GameMargin/GameContainer"]
 margin_top = 74.0
@@ -567,6 +577,7 @@ margin_bottom = 395.0
 mouse_filter = 2
 
 [node name="HelpContainer" type="PanelContainer" parent="GameMargin"]
+visible = false
 margin_left = 25.0
 margin_top = 25.0
 margin_right = 643.0
@@ -631,6 +642,7 @@ margin_bottom = 38.0
 text = "Close"
 
 [node name="CreditsContainer" type="PanelContainer" parent="GameMargin"]
+visible = false
 margin_left = 25.0
 margin_top = 25.0
 margin_right = 643.0
