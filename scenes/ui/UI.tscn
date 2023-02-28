@@ -171,13 +171,13 @@ size_flags_stretch_ratio = 3.0
 
 [node name="RulesPanel" type="PanelContainer" parent="GameMargin/GameContainer/Top/TopMid"]
 margin_right = 303.0
-margin_bottom = 29.0
+margin_bottom = 59.0
 
 [node name="Rules" type="Label" parent="GameMargin/GameContainer/Top/TopMid/RulesPanel"]
 margin_left = 10.0
 margin_top = 5.0
 margin_right = 293.0
-margin_bottom = 24.0
+margin_bottom = 54.0
 custom_fonts/font = ExtResource( 1 )
 text = " and words are in alphabetical order, "
 align = 1
@@ -517,25 +517,24 @@ margin_top = 170.0
 margin_right = 276.0
 margin_bottom = 174.0
 
-[node name="CreditContainer" type="HBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row"]
+[node name="ButtonsContainer" type="HBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row"]
 margin_top = 178.0
 margin_right = 276.0
 margin_bottom = 216.0
 alignment = 1
 
-[node name="HelpButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/CreditContainer"]
+[node name="HelpButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/ButtonsContainer"]
 margin_right = 94.0
 margin_bottom = 38.0
 text = "Tutorial"
 
-[node name="CreditsButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/CreditContainer"]
+[node name="CreditsButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/ButtonsContainer"]
 margin_left = 98.0
 margin_right = 182.0
 margin_bottom = 38.0
-disabled = true
 text = "Credits"
 
-[node name="RestartButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/CreditContainer"]
+[node name="RestartButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/ButtonsContainer"]
 margin_left = 186.0
 margin_right = 276.0
 margin_bottom = 38.0
@@ -631,6 +630,117 @@ margin_right = 598.0
 margin_bottom = 38.0
 text = "Close"
 
+[node name="CreditsContainer" type="PanelContainer" parent="GameMargin"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 643.0
+margin_bottom = 395.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameMargin/CreditsContainer"]
+margin_left = 10.0
+margin_top = 5.0
+margin_right = 608.0
+margin_bottom = 365.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameMargin/CreditsContainer/VBoxContainer"]
+margin_right = 598.0
+margin_bottom = 36.0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameMargin/CreditsContainer/VBoxContainer/HBoxContainer"]
+margin_left = 267.0
+margin_right = 331.0
+margin_bottom = 36.0
+
+[node name="Label" type="Label" parent="GameMargin/CreditsContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 64.0
+margin_bottom = 28.0
+text = "Credits"
+
+[node name="HSeparator" type="HSeparator" parent="GameMargin/CreditsContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 32.0
+margin_right = 64.0
+margin_bottom = 36.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="GameMargin/CreditsContainer/VBoxContainer"]
+margin_top = 40.0
+margin_right = 598.0
+margin_bottom = 318.0
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="GameMargin/CreditsContainer/VBoxContainer/HBoxContainer2"]
+margin_right = 598.0
+margin_bottom = 278.0
+rect_min_size = Vector2( 598, 0 )
+rect_pivot_offset = Vector2( 259, 119 )
+bbcode_enabled = true
+bbcode_text = "[center]Created by: Scott Hood
+As an entry to Godot Wild Jam #54 with the theme of \"Curses\"
+[url=https://hoodscott.itch.io/mind-your-ps-are-qs][color=blue]https://hoodscott.itch.io/mind-your-ps-are-qs[/color][/url]
+[url=https://itch.io/jam/godot-wild-jam-54][color=blue]https://itch.io/jam/godot-wild-jam-54[/color][/url]
+
+Background Image: \"Chap-books of the eighteenth century\" (1882), page 62, Internet Archive Book Images
+[url=https://www.flickr.com/photos/internetarchivebookimages/14780158621][color=blue]https://www.flickr.com/photos/internetarchivebookimages/14780158621[/color][/url]
+
+[b]Demon Head[/b]: Amy Hood
+
+Font: Augusta, Dieter Steffmann
+[url=http://www.steffmann.de][color=blue]http://www.steffmann.de[/color][/url]
+
+Font: OpenDyslexic, Abbie Gonzalez
+[url=https://opendyslexic.org][color=blue]https://opendyslexic.org[/color][/url]
+
+Game Engine: Godot
+[url=https://godotengine.org][color=blue]https://godotengine.org[/color][/url]
+
+Music: The Medieval Banquet, Shane Ivers
+[url=https://www.silvermansound.com/free-music/the-medieval-banquet][color=blue]https://www.silvermansound.com/free-music/the-medieval-banquet[/color][/url]
+
+Percussion: Medieval Perc, menegass
+[url=https://freesound.org/people/menegass/packs/5824][color=blue]https://freesound.org/people/menegass/packs/5824[/color][/url]
+
+Trumpet: Medieval Fanfare, tobyk
+[url=https://freesound.org/s/26198][color=blue]https://freesound.org/s/26198[/color][/url][center]"
+text = "Created by: Scott Hood
+As an entry to Godot Wild Jam #54 with the theme of \"Curses\"
+https://hoodscott.itch.io/mind-your-ps-are-qs
+https://itch.io/jam/godot-wild-jam-54
+
+Background Image: \"Chap-books of the eighteenth century\" (1882), page 62, Internet Archive Book Images
+https://www.flickr.com/photos/internetarchivebookimages/14780158621
+
+Demon Head: Amy Hood
+
+Font: Augusta, Dieter Steffmann
+http://www.steffmann.de
+
+Font: OpenDyslexic, Abbie Gonzalez
+https://opendyslexic.org
+
+Game Engine: Godot
+https://godotengine.org
+
+Music: The Medieval Banquet, Shane Ivers
+https://www.silvermansound.com/free-music/the-medieval-banquet
+
+Percussion: Medieval Perc, menegass
+https://freesound.org/people/menegass/packs/5824
+
+Trumpet: Medieval Fanfare, tobyk
+https://freesound.org/s/26198"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="GameMargin/CreditsContainer/VBoxContainer"]
+margin_top = 322.0
+margin_right = 598.0
+margin_bottom = 360.0
+alignment = 2
+
+[node name="CreditsCloseButton" type="Button" parent="GameMargin/CreditsContainer/VBoxContainer/HBoxContainer3"]
+margin_left = 532.0
+margin_right = 598.0
+margin_bottom = 38.0
+text = "Close"
+
 [node name="Timer" type="Timer" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -648,9 +758,11 @@ anims/incorrect = SubResource( 2 )
 [connection signal="value_changed" from="GameMargin/SettingsContainer/Panel/Row/SoundContainer/VBoxContainer/SoundVolumeSlider" to="." method="_on_SoundVolumeSlider_value_changed"]
 [connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/SoundContainer/MuteSoundButton" to="." method="_on_MuteSoundButton_pressed"]
 [connection signal="toggled" from="GameMargin/SettingsContainer/Panel/Row/FontContainer/FontChange" to="." method="_on_FontChange_toggled"]
-[connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/CreditContainer/HelpButton" to="." method="_on_HelpButton_pressed"]
-[connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/CreditContainer/CreditsButton" to="." method="_on_CreditsButton_pressed"]
-[connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/CreditContainer/RestartButton" to="." method="_on_RestartButton_pressed"]
+[connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/ButtonsContainer/HelpButton" to="." method="_on_HelpButton_pressed"]
+[connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/ButtonsContainer/CreditsButton" to="." method="_on_CreditsButton_pressed"]
+[connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/ButtonsContainer/RestartButton" to="." method="_on_RestartButton_pressed"]
 [connection signal="pressed" from="GameMargin/SettingOpener/SettingsButton" to="." method="_on_SettingsButton_pressed"]
 [connection signal="pressed" from="GameMargin/HelpContainer/VBoxContainer/HBoxContainer3/HelpCloseButton" to="." method="_on_HelpCloseButton_pressed"]
+[connection signal="meta_clicked" from="GameMargin/CreditsContainer/VBoxContainer/HBoxContainer2/RichTextLabel" to="." method="_on_RichTextLabel_meta_clicked"]
+[connection signal="pressed" from="GameMargin/CreditsContainer/VBoxContainer/HBoxContainer3/CreditsCloseButton" to="." method="_on_CreditsCloseButton_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -46,6 +46,8 @@ onready var _SettingsButton := $GameMargin/SettingOpener/SettingsButton
 
 onready var _Help := $GameMargin/HelpContainer
 onready var _HelpCloseButton := $GameMargin/HelpContainer/VBoxContainer/HBoxContainer3/HelpCloseButton
+onready var _Credits := $GameMargin/CreditsContainer
+onready var _CreditsCloseButton := $GameMargin/CreditsContainer/VBoxContainer/HBoxContainer3/CreditsCloseButton
 
 onready var _Animations := $AnimationPlayer
 onready var _GameTimer := $Timer
@@ -64,6 +66,7 @@ func reset() -> void:
   _CurseChooser.hide()
   _Settings.hide()
   _Help.hide()
+  _Credits.hide()
   _StartContainer.show()
 
 
@@ -221,9 +224,9 @@ func _on_FontChange_toggled(button_pressed: bool) -> void:
 
   var alt_string = "" if _alt_font else "_alt"
   var new_small_font := load("res://scenes/ui/theme/font_small%s.tres" % alt_string)
-  var new_normal_font := load("res://scenes/ui/theme/font_normal%s.tres" % alt_string)
+  var new_theme := load("res://scenes/ui/theme/theme%s.tres" % alt_string)
 
-  _GameMargin.get_theme().set_default_font(new_normal_font)
+  _GameMargin.set_theme(new_theme)
   _Rules.add_font_override("font", new_small_font)
 
 
@@ -303,9 +306,24 @@ func _on_HelpButton_pressed() -> void:
 
 func _on_CreditsButton_pressed() -> void:
   AudioManager.play_button_press()
+  _Settings.hide()
+  _Credits.show()
+  _CreditsCloseButton.grab_focus()
+
+
+func _on_CreditsCloseButton_pressed() -> void:
+  AudioManager.play_button_press()
+  _Credits.hide()
+  _Settings.show()
+  _MusicSlider.grab_focus()
 
 
 func _on_RestartButton_pressed() -> void:
   AudioManager.play_button_press()
   toggle_settings()
   emit_signal("game_restarted")
+
+
+func _on_RichTextLabel_meta_clicked(meta) -> void:
+  if OS.shell_open(str(meta)) != OK:
+    print("error opening link ", meta)
