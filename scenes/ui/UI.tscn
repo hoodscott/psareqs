@@ -624,9 +624,10 @@ scroll_horizontal_enabled = false
 margin_right = 598.0
 margin_bottom = 276.0
 rect_min_size = Vector2( 598, 0 )
-text = "A portal has opened and demons are pouring through.  We need to curse them back to hell.  However, a cursed aura surrounds the portal and affects your ability to think clearly.  Can you deal with these demons?
+text = "A portal has opened and devils are pouring through.  We need to curse them back to hell.  However, a cursed aura surrounds the portal and affects your ability to think clearly.
+Can you deal with these devils?
 
-To play: Type two words (one from the left list and one from the right) to combine into an insult.  Be mindful of your current curses as they will affect the letters in the lists making them harder to read."
+To play: Type two words (one from the left list and one from the right) to combine into an insult.  Be mindful of your current curses as they will affect the letters in the lists making them harder to read.  Harder curses give higher scores."
 autowrap = true
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="GameMargin/HelpContainer/VBoxContainer"]
@@ -694,7 +695,7 @@ As an entry to Godot Wild Jam #54 with the theme of \"Curses\"
 Background Image: \"Chap-books of the eighteenth century\" (1882), page 62, Internet Archive Book Images
 [url=https://www.flickr.com/photos/internetarchivebookimages/14780158621][color=blue]https://www.flickr.com/photos/internetarchivebookimages/14780158621[/color][/url]
 
-Demon Head: Amy Hood
+Devil Head: Amy Hood
 
 Font: Augusta, Dieter Steffmann
 [url=http://www.steffmann.de][color=blue]http://www.steffmann.de[/color][/url]
@@ -721,7 +722,7 @@ https://itch.io/jam/godot-wild-jam-54
 Background Image: \"Chap-books of the eighteenth century\" (1882), page 62, Internet Archive Book Images
 https://www.flickr.com/photos/internetarchivebookimages/14780158621
 
-Demon Head: Amy Hood
+Devil Head: Amy Hood
 
 Font: Augusta, Dieter Steffmann
 http://www.steffmann.de

@@ -115,17 +115,17 @@ func end_round() -> void:
 
 
   if player.next_round() == curses.num_rounds:
-    end_game()
+    end_game(true)
   else:
     show_curse_options()
 
 
-func end_game() -> void:
+func end_game(won := false) -> void:
   current_state = GAMESTATE.GAMEOVER
   for child in DevilSpawn.get_children():
     child.queue_free()
 
-  UI.end_game(player.score)
+  UI.end_game(player.score, false, won)
 
 
 func restart_game() -> void:

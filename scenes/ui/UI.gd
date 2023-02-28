@@ -71,19 +71,21 @@ func reset() -> void:
   _StartContainer.show()
 
 
-func end_game(score: int, clean := false) -> void:
+func end_game(score: int, reset := false, won := false) -> void:
   _GameContainer.hide()
   _StartContainer.show()
 
-  if clean:
+  if won:
+    _GameOver.text = "Congratulations!\n\nThe devils have been dealt with!\n\nFinal Score: %s" % score
+  elif reset:
     _GameOver.text = "Mind your\nPs and Qs"
     _StartButton.text = "Start Game"
   else:
-    _GameOver.text = "Game Over!\nFinal Score: %s" % score
+    _GameOver.text = "Game Over!\n\nThere is no time left\nto deal with the devils.\n\nFinal Score: %s" % score
 
   _GameOver.show()
 
-  if not clean:
+  if not reset:
     yield(get_tree().create_timer(3), "timeout")
   _StartButton.show()
 
@@ -192,7 +194,7 @@ func _on_StartButton_pressed() -> void:
   emit_signal("game_started")
   _StartContainer.hide()
   _StartButton.hide()
-  _StartButton.text = "Play Again"
+  _StartButton.text = "Play Again?"
   _GameOver.hide()
 
 
