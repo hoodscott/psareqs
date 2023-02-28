@@ -26,5 +26,4 @@ MarginContainer/constants/margin_right = 5
 MarginContainer/constants/margin_top = 5
 PanelContainer/styles/panel = ExtResource( 4 )
 RichTextLabel/colors/default_color = Color( 0.113725, 0.101961, 0.027451, 1 )
-RichTextLabel/fonts/bold_font = ExtResource( 6 )
 RichTextLabel/fonts/normal_font = ExtResource( 6 )
