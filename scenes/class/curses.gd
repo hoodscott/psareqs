@@ -15,26 +15,41 @@ enum CURSE {
   ROT1NEG = 9,
   ALLE = 10,
   KC = 11,
-  ALLY = 12
+  ALLY = 12,
+  ALLO = 13,
+  UNVOWEL = 14,
+  FG = 15,
+  LT = 16,
+  RS = 17, # description reads awkwardly
+  VOWELPAIR = 18
  }
 const _curse_descriptions = [
   "Ps are Qs", "Ds are Bs", "vowels are shifted (a>e>i>o>u>a)",
   "words are alphabetised", "words are reversed", "UNIMPLEMENTED",
   "words are jumbled",  "words are ciphered using rot13 (a>m>a, b>n>b)",
   "letters are shifted (a>b>c>...)", "letters are shifted backwards (c>b>a>z>...)",
-  "vowels are all E", "Ks are Cs", "vowels are all Y"
+  "vowels are all E", "Ks are Cs", "vowels are all Y", "vowels are all O",
+  "vowels are unshifted (a>u>o>i>e>a)", "Fs are Gs", "Ls are Ts",
+  "Rs are Ss", "vowel pairs are flipped"
  ]
 var _curse_multipliers = {
   # letter swap
   CURSE.PQ: 1,
   CURSE.DB: 1,
   CURSE.KC: 1,
+  CURSE.FG: 1,
+  CURSE.LT: 1,
+  CURSE.RS: 1,
 
   # vowel change easy
+  CURSE.VOWELPAIR: 1,
+  # vowel change medium
   CURSE.VOWEL: 2,
+  CURSE.UNVOWEL: 2,
   # vowel change hard
-  CURSE.ALLE: 3,
-  CURSE.ALLY: 3,
+  CURSE.ALLE: 4,
+  CURSE.ALLY: 4,
+  CURSE.ALLO: 3,
 
   # word reorder easy
   CURSE.REVERSE: 2,
@@ -47,9 +62,18 @@ var _curse_multipliers = {
   CURSE.ROT13: 16,
  }
 var _curse_options := [
-  [CURSE.PQ, CURSE.DB, CURSE.KC], # letter swaps
-  [CURSE.VOWEL, CURSE.ALLE, CURSE.ALLY], # vowel changes
-  [CURSE.REVERSE, CURSE.JUMBLE, CURSE.ALPHA, CURSE.ROT1, CURSE.ROT1NEG, CURSE.ROT13], # reorder
+  # 1: letter swaps
+  [CURSE.PQ, CURSE.DB, CURSE.KC, CURSE.FG, CURSE.LT],
+  # 2: vowel changes
+  [
+    CURSE.VOWEL, CURSE.UNVOWEL, CURSE.VOWELPAIR,
+    CURSE.ALLE, CURSE.ALLY, CURSE.ALLO
+  ],
+  # 3: word reorder
+  [
+    CURSE.REVERSE, CURSE.JUMBLE, CURSE.ALPHA,
+    CURSE.ROT1, CURSE.ROT1NEG, CURSE.ROT13
+  ]
  ]
 var num_rounds = _curse_options.size()
 
@@ -59,6 +83,10 @@ func apply_curse(word: String, curse: int) -> String:
   match curse:
     CURSE.VOWEL:
       word = _vowel_shift(word)
+    CURSE.UNVOWEL:
+      word = _vowel_shift(word, true)
+    CURSE.VOWELPAIR:
+      word = _vowel_pair_flip(word)
     CURSE.REVERSE:
       word = _reverse(word)
     CURSE.PQ:
@@ -81,6 +109,8 @@ func apply_curse(word: String, curse: int) -> String:
       word = _vowel_replace(word, "e")
     CURSE.ALLY:
       word = _vowel_replace(word, "y")
+    CURSE.ALLO:
+      word = _vowel_replace(word, "o")
     _:
       print("no curse implementation", curse)
       word = word
@@ -149,9 +179,11 @@ func _swap(s: String, swapa: String, swapb: String) -> String:
   return new_string
 
 
-func _vowel_shift(s: String) -> String:
+func _vowel_shift(s: String, reverse := false) -> String:
   var vowel_shifted := ""
   var vowels := "aeiou"
+  if reverse:
+    vowels = _reverse(vowels)
   var vowel_index: int
   for letter in s:
     vowel_index = vowels.find(letter)
@@ -190,3 +222,24 @@ func _vowel_replace(s: String, replace_with: String) -> String:
     else:
       replaced += letter
   return replaced
+
+
+func _vowel_pair_flip(s: String) -> String:
+  var flipped := ""
+  var vowels := "aeiou"
+  var prev_vowel := ""
+
+  for letter in s:
+    if not letter in vowels:
+      if prev_vowel != "":
+        flipped += prev_vowel
+        prev_vowel = ""
+      flipped += letter
+    else:
+      if prev_vowel == "":
+        prev_vowel = letter
+      else:
+        flipped += letter + prev_vowel
+        prev_vowel = ""
+
+  return flipped
