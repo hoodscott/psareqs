@@ -539,7 +539,6 @@ text = "Credits"
 margin_left = 186.0
 margin_right = 276.0
 margin_bottom = 38.0
-disabled = true
 text = "Restart"
 
 [node name="SettingOpener" type="Control" parent="GameMargin"]
@@ -650,6 +649,8 @@ anims/incorrect = SubResource( 2 )
 [connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/SoundContainer/MuteSoundButton" to="." method="_on_MuteSoundButton_pressed"]
 [connection signal="toggled" from="GameMargin/SettingsContainer/Panel/Row/FontContainer/FontChange" to="." method="_on_FontChange_toggled"]
 [connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/CreditContainer/HelpButton" to="." method="_on_HelpButton_pressed"]
+[connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/CreditContainer/CreditsButton" to="." method="_on_CreditsButton_pressed"]
+[connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/CreditContainer/RestartButton" to="." method="_on_RestartButton_pressed"]
 [connection signal="pressed" from="GameMargin/SettingOpener/SettingsButton" to="." method="_on_SettingsButton_pressed"]
 [connection signal="pressed" from="GameMargin/HelpContainer/VBoxContainer/HBoxContainer3/HelpCloseButton" to="." method="_on_HelpCloseButton_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

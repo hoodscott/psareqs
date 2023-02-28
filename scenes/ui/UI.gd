@@ -5,6 +5,7 @@ class_name UI
 signal game_started()
 signal game_ended()
 signal curse_chosen(index)
+signal game_restarted()
 
 
 const _DEFAULT_TYPED := "type an insult to deal with the devil"
@@ -54,6 +55,11 @@ onready var _CompleteWord: PackedScene = preload("res://scenes/ui/CompleteWord.t
 
 
 func _ready() -> void:
+  reset()
+
+
+func reset() -> void:
+  _GameTimer.stop()
   _GameContainer.hide()
   _CurseChooser.hide()
   _Settings.hide()
@@ -61,14 +67,20 @@ func _ready() -> void:
   _StartContainer.show()
 
 
-func end_game(score: int) -> void:
+func end_game(score: int, clean := false) -> void:
   _GameContainer.hide()
   _StartContainer.show()
 
-  _GameOver.text = "Game Over!\nFinal Score: %s" % score
+  if clean:
+    _GameOver.text = "Mind your\nPs and Qs"
+    _StartButton.text = "Start Game"
+  else:
+    _GameOver.text = "Game Over!\nFinal Score: %s" % score
+
   _GameOver.show()
 
-  yield(get_tree().create_timer(3), "timeout")
+  if not clean:
+    yield(get_tree().create_timer(3), "timeout")
   _StartButton.show()
 
 
@@ -227,7 +239,10 @@ func _on_MuteSoundButton_pressed() -> void:
 
 func _on_SettingsButton_pressed() -> void:
   AudioManager.play_button_press()
+  toggle_settings()
 
+
+func toggle_settings() -> void:
   if _settings_open:
     _SettingsButton.text = "Settings"
     _GameTimer.set_paused(false)
@@ -284,3 +299,13 @@ func _on_HelpButton_pressed() -> void:
   _Settings.hide()
   _Help.show()
   _HelpCloseButton.grab_focus()
+
+
+func _on_CreditsButton_pressed() -> void:
+  AudioManager.play_button_press()
+
+
+func _on_RestartButton_pressed() -> void:
+  AudioManager.play_button_press()
+  toggle_settings()
+  emit_signal("game_restarted")

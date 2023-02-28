@@ -33,6 +33,7 @@ func _ready() -> void:
 
   if (\
     UI.connect("game_started", self, "start_game") != OK or\
+    UI.connect("game_restarted", self, "restart_game") != OK or\
     UI.connect("game_ended", self, "end_game") != OK or\
     UI.connect("curse_chosen", self, "curse_chosen") != OK):
       print("error connecting UI signals")
@@ -125,6 +126,14 @@ func end_game() -> void:
 
   UI.end_game(player.score)
 
+
+func restart_game() -> void:
+  current_state = GAMESTATE.GAMEOVER
+  for child in DevilSpawn.get_children():
+    child.queue_free()
+
+  UI.end_game(0,true)
+  UI.reset()
 
 func _unhandled_key_input(event: InputEventKey) -> void:
   if event.pressed:
