@@ -2,29 +2,33 @@ extends CanvasLayer
 class_name UI
 
 
-const _DEFAULT_TYPED := "type an insult to deal with the devil"
-var GAME_LENGTH:int # set in Game.gd
-var _time_remaining := 0
-
-
 signal game_started()
 signal game_ended()
 signal curse_chosen(index)
 
 
-onready var AudioManager := $GameMargin/AudioContainer/AudioManager
+const _DEFAULT_TYPED := "type an insult to deal with the devil"
+var GAME_LENGTH:int # set in Game.gd
+var _time_remaining := 0
+var _alt_font := false
+var _settings_open := false
+var _visibilty_states := []
+
+
+onready var AudioManager := $AudioManager
+
 onready var _GameMargin = $GameMargin
-onready var _GameContainer := $GameMargin/GameContainer
 onready var _StartContainer := $GameMargin/StartContainer
+onready var _GameOver := $GameMargin/StartContainer/VBoxContainer/PanelContainer/GameOver
+onready var _StartButton := $GameMargin/StartContainer/VBoxContainer/StartButton
+
 onready var _CurseChooser := $GameMargin/ChooserContainer
 onready var _CurseChoices := [
   $GameMargin/ChooserContainer/CurseChooser/Choice,
   $GameMargin/ChooserContainer/CurseChooser/Choice2,
   $GameMargin/ChooserContainer/CurseChooser/Choice3
  ]
-onready var _GameOver := $GameMargin/StartContainer/VBoxContainer/PanelContainer/GameOver
-onready var _StartButton := $GameMargin/StartContainer/VBoxContainer/StartButton
-onready var _GameTimer := $Timer
+onready var _GameContainer := $GameMargin/GameContainer
 onready var _Clock := $GameMargin/GameContainer/Top/TopLeft/PanelContainer/VBoxContainer/Clock
 onready var _Devils :=$GameMargin/GameContainer/Top/TopLeft/PanelContainer/VBoxContainer/Devils
 onready var _Rules := $GameMargin/GameContainer/Top/TopMid/RulesPanel/Rules
@@ -32,19 +36,25 @@ onready var _Score := $GameMargin/GameContainer/Top/TopRight/PanelContainer/Scor
 onready var _PrefixList := $GameMargin/GameContainer/Fragments/VBoxContainer2/PanelContainer/Prefixes
 onready var _SuffixList := $GameMargin/GameContainer/Fragments/VBoxContainer/PanelContainer/Suffixes
 onready var _Typed := $GameMargin/GameContainer/Bottom/PanelContainer/Typed
-onready var _Animations := $AnimationPlayer
 onready var _WordCompleteSpawn := $GameMargin/CompleteSpawn
 
-onready var _CompleteWord: PackedScene = preload("res://scenes/ui/CompleteWord.tscn")
+onready var _Settings := $GameMargin/SettingsContainer
+onready var _MusicSlider := $GameMargin/SettingsContainer/Panel/Row/MusicContainer/VBoxContainer/MusicVolumeSlider
+onready var _SoundSlider := $GameMargin/SettingsContainer/Panel/Row/SoundContainer/VBoxContainer/SoundVolumeSlider
+onready var _SettingsButton := $GameMargin/SettingOpener/SettingsButton
 
-var alt_font := false
+onready var _Animations := $AnimationPlayer
+onready var _GameTimer := $Timer
+
+onready var _CompleteWord: PackedScene = preload("res://scenes/ui/CompleteWord.tscn")
 
 
 
 func _ready() -> void:
   _GameContainer.hide()
-  _StartContainer.show()
   _CurseChooser.hide()
+  _Settings.hide()
+  _StartContainer.show()
 
 
 func end_game(score: int) -> void:
@@ -189,12 +199,70 @@ func focus_choice() -> void:
   _CurseChoices[0].grab_focus()
 
 
-func _on_FontChange_pressed() -> void:
-  var alt_string = "" if alt_font else "_alt"
+func _on_FontChange_toggled(button_pressed: bool) -> void:
+  AudioManager.play_button_press()
+  _alt_font = not button_pressed
+
+  var alt_string = "" if _alt_font else "_alt"
   var new_small_font := load("res://scenes/ui/theme/font_small%s.tres" % alt_string)
   var new_normal_font := load("res://scenes/ui/theme/font_normal%s.tres" % alt_string)
 
   _GameMargin.get_theme().set_default_font(new_normal_font)
   _Rules.add_font_override("font", new_small_font)
-  alt_font = not alt_font
 
+
+func _on_MuteMusicButton_pressed() -> void:
+  AudioManager.play_button_press()
+  _MusicSlider.value = 0
+
+
+func _on_MuteSoundButton_pressed() -> void:
+  AudioManager.play_button_press()
+  _SoundSlider.value = 0
+
+
+func _on_SettingsButton_pressed() -> void:
+  AudioManager.play_button_press()
+
+  if _settings_open:
+    _SettingsButton.text = "Settings"
+    _GameTimer.set_paused(false)
+
+    # put game UI back to state before settings were opened
+    if _visibilty_states[0]:
+      _GameContainer.show()
+    if _visibilty_states[1]:
+      _StartContainer.show()
+    if _visibilty_states[2]:
+      _CurseChooser.show()
+
+    _Settings.hide()
+    # release focus trick
+    _SettingsButton.hide()
+    _SettingsButton.show()
+  else:
+    _SettingsButton.text = "Close Settings"
+    _GameTimer.set_paused(true)
+
+    # remember current state of UI before settings were opened
+    _visibilty_states = []
+    _visibilty_states.append(_GameContainer.visible)
+    _GameContainer.hide()
+    _visibilty_states.append(_StartContainer.visible)
+    _StartContainer.hide()
+    _visibilty_states.append(_CurseChooser.visible)
+    _CurseChooser.hide()
+
+    _Settings.show()
+    _MusicSlider.grab_focus()
+
+  _settings_open = not _settings_open
+
+
+func _on_SoundVolumeSlider_value_changed(value: float) -> void:
+  AudioManager.change_sound_bus(value)
+  AudioManager.play_button_press()
+
+
+func _on_MusicVolumeSlider_value_changed(value: float) -> void:
+  AudioManager.change_music_bus(value)

@@ -1,16 +1,33 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenes/ui/theme/font_small.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/ui/audio/AudioManager.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ui/UI.gd" type="Script" id=3]
 [ext_resource path="res://scenes/ui/theme/theme.tres" type="Theme" id=4]
 
-[sub_resource type="InputEventKey" id=3]
-alt = true
-scancode = 78
+[sub_resource type="InputEventKey" id=6]
+scancode = 49
+
+[sub_resource type="ShortCut" id=7]
+shortcut = SubResource( 6 )
+
+[sub_resource type="InputEventKey" id=8]
+scancode = 50
+
+[sub_resource type="ShortCut" id=9]
+shortcut = SubResource( 8 )
+
+[sub_resource type="InputEventKey" id=10]
+scancode = 51
+
+[sub_resource type="ShortCut" id=11]
+shortcut = SubResource( 10 )
+
+[sub_resource type="InputEventKey" id=5]
+scancode = 16777217
 
 [sub_resource type="ShortCut" id=4]
-shortcut = SubResource( 3 )
+shortcut = SubResource( 5 )
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -327,94 +344,207 @@ margin_bottom = 127.0
 text = "Start Game"
 
 [node name="ChooserContainer" type="CenterContainer" parent="GameMargin"]
-visible = false
 margin_left = 25.0
 margin_top = 25.0
 margin_right = 643.0
 margin_bottom = 395.0
 
 [node name="CurseChooser" type="VBoxContainer" parent="GameMargin/ChooserContainer"]
-margin_left = 249.0
-margin_top = 100.0
-margin_right = 368.0
-margin_bottom = 269.0
+margin_left = 226.0
+margin_top = 86.0
+margin_right = 391.0
+margin_bottom = 283.0
 custom_constants/separation = 15
 
 [node name="PanelContainer" type="PanelContainer" parent="GameMargin/ChooserContainer/CurseChooser"]
-margin_right = 159.0
-margin_bottom = 42.0
+margin_right = 165.0
+margin_bottom = 38.0
 
 [node name="Label" type="Label" parent="GameMargin/ChooserContainer/CurseChooser/PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 152.0
-margin_bottom = 35.0
+margin_left = 10.0
+margin_top = 5.0
+margin_right = 155.0
+margin_bottom = 33.0
 text = "Choose a Curse"
 align = 1
 
 [node name="Choice" type="Button" parent="GameMargin/ChooserContainer/CurseChooser"]
-margin_top = 57.0
-margin_right = 159.0
-margin_bottom = 95.0
+margin_top = 53.0
+margin_right = 165.0
+margin_bottom = 91.0
 focus_neighbour_left = NodePath("../Choice3")
 focus_neighbour_top = NodePath("../Choice3")
 focus_neighbour_right = NodePath("../Choice2")
 focus_neighbour_bottom = NodePath("../Choice2")
-focus_next = NodePath("../Choice2")
-focus_previous = NodePath("../Choice3")
+shortcut = SubResource( 7 )
 text = "Ps are Qs"
 
 [node name="Choice2" type="Button" parent="GameMargin/ChooserContainer/CurseChooser"]
-margin_top = 110.0
-margin_right = 159.0
-margin_bottom = 148.0
+margin_top = 106.0
+margin_right = 165.0
+margin_bottom = 144.0
 focus_neighbour_left = NodePath("../Choice")
 focus_neighbour_top = NodePath("../Choice")
 focus_neighbour_right = NodePath("../Choice3")
 focus_neighbour_bottom = NodePath("../Choice3")
-focus_next = NodePath("../Choice3")
-focus_previous = NodePath("../Choice")
+shortcut = SubResource( 9 )
 text = "Ps are Qs"
 
 [node name="Choice3" type="Button" parent="GameMargin/ChooserContainer/CurseChooser"]
-margin_top = 163.0
-margin_right = 159.0
-margin_bottom = 201.0
+margin_top = 159.0
+margin_right = 165.0
+margin_bottom = 197.0
 focus_neighbour_left = NodePath("../Choice2")
 focus_neighbour_top = NodePath("../Choice2")
 focus_neighbour_right = NodePath("../Choice")
 focus_neighbour_bottom = NodePath("../Choice")
-focus_next = NodePath("../Choice")
-focus_previous = NodePath("../Choice2")
+shortcut = SubResource( 11 )
 text = "Ps are Qs"
 
-[node name="AudioContainer" type="Control" parent="GameMargin"]
+[node name="SettingsContainer" type="CenterContainer" parent="GameMargin"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 643.0
+margin_bottom = 395.0
+
+[node name="Panel" type="PanelContainer" parent="GameMargin/SettingsContainer"]
+margin_left = 180.0
+margin_top = 72.0
+margin_right = 437.0
+margin_bottom = 298.0
+
+[node name="Row" type="VBoxContainer" parent="GameMargin/SettingsContainer/Panel"]
+margin_left = 10.0
+margin_top = 5.0
+margin_right = 247.0
+margin_bottom = 221.0
+
+[node name="SettingsLabel" type="Label" parent="GameMargin/SettingsContainer/Panel/Row"]
+margin_right = 237.0
+margin_bottom = 28.0
+text = "Settings"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="GameMargin/SettingsContainer/Panel/Row"]
+margin_top = 32.0
+margin_right = 237.0
+margin_bottom = 36.0
+
+[node name="MusicContainer" type="HBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row"]
+margin_top = 40.0
+margin_right = 237.0
+margin_bottom = 78.0
+
+[node name="Label" type="Label" parent="GameMargin/SettingsContainer/Panel/Row/MusicContainer"]
+margin_top = 5.0
+margin_right = 60.0
+margin_bottom = 33.0
+rect_min_size = Vector2( 60, 0 )
+text = "Music"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row/MusicContainer"]
+margin_left = 64.0
+margin_right = 164.0
+margin_bottom = 38.0
+alignment = 1
+
+[node name="MusicVolumeSlider" type="HSlider" parent="GameMargin/SettingsContainer/Panel/Row/MusicContainer/VBoxContainer"]
+margin_top = 11.0
+margin_right = 100.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 100, 0 )
+max_value = 4.0
+value = 2.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="MuteMusicButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/MusicContainer"]
+margin_left = 168.0
+margin_right = 237.0
+margin_bottom = 38.0
+text = "Mute"
+
+[node name="SoundContainer" type="HBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row"]
+margin_top = 82.0
+margin_right = 237.0
+margin_bottom = 120.0
+
+[node name="Label" type="Label" parent="GameMargin/SettingsContainer/Panel/Row/SoundContainer"]
+margin_top = 5.0
+margin_right = 60.0
+margin_bottom = 33.0
+rect_min_size = Vector2( 60, 0 )
+text = "Sound"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row/SoundContainer"]
+margin_left = 64.0
+margin_right = 164.0
+margin_bottom = 38.0
+alignment = 1
+
+[node name="SoundVolumeSlider" type="HSlider" parent="GameMargin/SettingsContainer/Panel/Row/SoundContainer/VBoxContainer"]
+margin_top = 11.0
+margin_right = 100.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 100, 0 )
+max_value = 4.0
+value = 2.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="MuteSoundButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/SoundContainer"]
+margin_left = 168.0
+margin_right = 237.0
+margin_bottom = 38.0
+text = "Mute"
+
+[node name="FontContainer" type="HBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row"]
+margin_top = 124.0
+margin_right = 237.0
+margin_bottom = 166.0
+alignment = 1
+
+[node name="FontChange" type="CheckButton" parent="GameMargin/SettingsContainer/Panel/Row/FontContainer"]
+margin_left = 7.0
+margin_right = 229.0
+margin_bottom = 42.0
+text = "Alternate Font"
+
+[node name="HSeparator2" type="HSeparator" parent="GameMargin/SettingsContainer/Panel/Row"]
+margin_top = 170.0
+margin_right = 237.0
+margin_bottom = 174.0
+
+[node name="CreditContainer" type="HBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row"]
+margin_top = 178.0
+margin_right = 237.0
+margin_bottom = 216.0
+alignment = 1
+
+[node name="CreditsButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/CreditContainer"]
+margin_left = 76.0
+margin_right = 160.0
+margin_bottom = 38.0
+text = "Credits"
+
+[node name="SettingOpener" type="Control" parent="GameMargin"]
 margin_left = 25.0
 margin_top = 25.0
 margin_right = 643.0
 margin_bottom = 395.0
 mouse_filter = 2
 
-[node name="FontChange" type="Button" parent="GameMargin/AudioContainer"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -32.0
-margin_right = 138.0
-margin_bottom = 6.0
-focus_mode = 0
-shortcut = SubResource( 4 )
-text = "Change Font"
-
-[node name="AudioManager" parent="GameMargin/AudioContainer" instance=ExtResource( 2 )]
+[node name="SettingsButton" type="Button" parent="GameMargin/SettingOpener"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -90.0
+margin_left = -95.0
 margin_top = -38.0
-rect_min_size = Vector2( 90, 0 )
-focus_mode = 0
-text = "Mute"
+grow_horizontal = 0
+grow_vertical = 0
+shortcut = SubResource( 4 )
+text = "Settings"
 
 [node name="CompleteSpawn" type="Control" parent="GameMargin"]
 margin_left = 25.0
@@ -429,9 +559,16 @@ mouse_filter = 2
 anims/RESET = SubResource( 1 )
 anims/incorrect = SubResource( 2 )
 
+[node name="AudioManager" parent="." instance=ExtResource( 2 )]
+
 [connection signal="pressed" from="GameMargin/StartContainer/VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="GameMargin/ChooserContainer/CurseChooser/Choice" to="." method="_on_Choice_pressed"]
 [connection signal="pressed" from="GameMargin/ChooserContainer/CurseChooser/Choice2" to="." method="_on_Choice2_pressed"]
 [connection signal="pressed" from="GameMargin/ChooserContainer/CurseChooser/Choice3" to="." method="_on_Choice3_pressed"]
-[connection signal="pressed" from="GameMargin/AudioContainer/FontChange" to="." method="_on_FontChange_pressed"]
+[connection signal="value_changed" from="GameMargin/SettingsContainer/Panel/Row/MusicContainer/VBoxContainer/MusicVolumeSlider" to="." method="_on_MusicVolumeSlider_value_changed"]
+[connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/MusicContainer/MuteMusicButton" to="." method="_on_MuteMusicButton_pressed"]
+[connection signal="value_changed" from="GameMargin/SettingsContainer/Panel/Row/SoundContainer/VBoxContainer/SoundVolumeSlider" to="." method="_on_SoundVolumeSlider_value_changed"]
+[connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/SoundContainer/MuteSoundButton" to="." method="_on_MuteSoundButton_pressed"]
+[connection signal="toggled" from="GameMargin/SettingsContainer/Panel/Row/FontContainer/FontChange" to="." method="_on_FontChange_toggled"]
+[connection signal="pressed" from="GameMargin/SettingOpener/SettingsButton" to="." method="_on_SettingsButton_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

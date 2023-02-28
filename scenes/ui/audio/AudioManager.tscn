@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/ui/audio/AudioManager.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/audio/music/the-medieval-banquet.mp3" type="AudioStream" id=2]
@@ -9,37 +9,34 @@
 [ext_resource path="res://scenes/ui/audio/sounds/99729__menegass__clp2.wav" type="AudioStream" id=7]
 [ext_resource path="res://scenes/ui/audio/sounds/321083__benjaminnelan__wooden-click.wav" type="AudioStream" id=8]
 
-[sub_resource type="InputEventKey" id=1]
-alt = true
-scancode = 77
-
-[sub_resource type="ShortCut" id=2]
-shortcut = SubResource( 1 )
-
-[node name="AudioManager" type="Button"]
-shortcut = SubResource( 2 )
+[node name="AudioManager" type="Node"]
 script = ExtResource( 1 )
 
 [node name="Background" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
 volume_db = -5.0
+bus = "Music"
 
 [node name="CorrectLetter" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
+bus = "Sounds"
 
 [node name="IncorrectLetter" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+bus = "Sounds"
 
 [node name="WordComplete" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
+bus = "Sounds"
 
 [node name="DevilDeath" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+bus = "Sounds"
 
 [node name="DevilSpawn" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+bus = "Sounds"
 
 [node name="ButtonPress" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
-
-[connection signal="pressed" from="." to="." method="_on_AudioManager_pressed"]
+bus = "Sounds"

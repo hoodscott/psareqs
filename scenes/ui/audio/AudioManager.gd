@@ -6,68 +6,65 @@ onready var WordComplete := $WordComplete
 onready var DevilDeath := $DevilDeath
 onready var DevilSpawn := $DevilSpawn
 onready var ButtonPress := $ButtonPress
-onready var Background :AudioStreamPlayer= $Background
+onready var Background: AudioStreamPlayer = $Background
 
-var audio_pos := 0.0
+onready var music_bus := AudioServer.get_bus_index("Music")
+onready var sound_bus := AudioServer.get_bus_index("Sounds")
 
-var muted := true
-const _MUTE_LABEL := "Mute"
-const _UNMUTE_LABEL := "Unmute"
+var music_pos := 0.0
 
 
 
 func _ready() -> void:
-  _set_button_label()
-  if not muted:
+  if not AudioServer.is_bus_mute(music_bus):
     Background.play()
 
 
 func play_correct_letter() -> void:
-  if not muted:
-    Correct.play()
+  Correct.play()
 
 
 func play_incorrect_letter() -> void:
-  if not muted:
-    Incorrect.play()
+  Incorrect.play()
 
 
 func play_word_complete() -> void:
-  if not muted:
-    WordComplete.play()
+  WordComplete.play()
 
 
 func play_devil_death() -> void:
-  if not muted:
-    WordComplete.stop()
-    DevilDeath.play()
+  WordComplete.stop()
+  DevilDeath.play()
 
 
 func play_devil_spawn() -> void:
-  if not muted:
-    DevilSpawn.play()
+  DevilSpawn.play()
 
 
 func play_button_press() -> void:
-  if not muted:
-    ButtonPress.play()
+  ButtonPress.play()
 
 
-func _on_AudioManager_pressed() -> void:
-  muted = not muted
-  _set_button_label()
-
-  if muted:
-    audio_pos = Background.get_playback_position()
+func change_music_bus(value: int) -> void:
+  # if mute status is changing, pause the tracks
+  if AudioServer.is_bus_mute(music_bus) and value > 0:
+    Background.play(music_pos)
+  elif not AudioServer.is_bus_mute(music_bus) and value == 0:
+    music_pos = Background.get_playback_position()
     Background.stop()
+
+  if value == 0:
+    AudioServer.set_bus_mute(music_bus, true)
   else:
-    ButtonPress.play()
-    Background.play(audio_pos)
+    value = -pow(2, 5 - value)
+    AudioServer.set_bus_mute(music_bus, false)
+    AudioServer.set_bus_volume_db(music_bus, value)
 
 
-func _set_button_label() -> void:
-  if muted:
-    self.text = _UNMUTE_LABEL
+func change_sound_bus(value: int) -> void:
+  if value == 0:
+    AudioServer.set_bus_mute(sound_bus, true)
   else:
-    self.text = _MUTE_LABEL
-
+    value = 4 * (value - 2)
+    AudioServer.set_bus_mute(sound_bus, false)
+    AudioServer.set_bus_volume_db(sound_bus, value)
