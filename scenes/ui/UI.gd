@@ -43,6 +43,9 @@ onready var _MusicSlider := $GameMargin/SettingsContainer/Panel/Row/MusicContain
 onready var _SoundSlider := $GameMargin/SettingsContainer/Panel/Row/SoundContainer/VBoxContainer/SoundVolumeSlider
 onready var _SettingsButton := $GameMargin/SettingOpener/SettingsButton
 
+onready var _Help := $GameMargin/HelpContainer
+onready var _HelpCloseButton := $GameMargin/HelpContainer/VBoxContainer/HBoxContainer3/HelpCloseButton
+
 onready var _Animations := $AnimationPlayer
 onready var _GameTimer := $Timer
 
@@ -54,6 +57,7 @@ func _ready() -> void:
   _GameContainer.hide()
   _CurseChooser.hide()
   _Settings.hide()
+  _Help.hide()
   _StartContainer.show()
 
 
@@ -266,3 +270,17 @@ func _on_SoundVolumeSlider_value_changed(value: float) -> void:
 
 func _on_MusicVolumeSlider_value_changed(value: float) -> void:
   AudioManager.change_music_bus(value)
+
+
+func _on_HelpCloseButton_pressed() -> void:
+  AudioManager.play_button_press()
+  _Help.hide()
+  _Settings.show()
+  _MusicSlider.grab_focus()
+
+
+func _on_HelpButton_pressed() -> void:
+  AudioManager.play_button_press()
+  _Settings.hide()
+  _Help.show()
+  _HelpCloseButton.grab_focus()

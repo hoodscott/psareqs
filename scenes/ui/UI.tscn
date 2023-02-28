@@ -333,7 +333,7 @@ margin_left = 10.0
 margin_top = 5.0
 margin_right = 120.0
 margin_bottom = 64.0
-text = "Mind Your
+text = "Mind your
 Ps are Qs"
 align = 1
 
@@ -408,31 +408,31 @@ margin_right = 643.0
 margin_bottom = 395.0
 
 [node name="Panel" type="PanelContainer" parent="GameMargin/SettingsContainer"]
-margin_left = 180.0
+margin_left = 161.0
 margin_top = 72.0
-margin_right = 437.0
+margin_right = 457.0
 margin_bottom = 298.0
 
 [node name="Row" type="VBoxContainer" parent="GameMargin/SettingsContainer/Panel"]
 margin_left = 10.0
 margin_top = 5.0
-margin_right = 247.0
+margin_right = 286.0
 margin_bottom = 221.0
 
 [node name="SettingsLabel" type="Label" parent="GameMargin/SettingsContainer/Panel/Row"]
-margin_right = 237.0
+margin_right = 276.0
 margin_bottom = 28.0
 text = "Settings"
 align = 1
 
 [node name="HSeparator" type="HSeparator" parent="GameMargin/SettingsContainer/Panel/Row"]
 margin_top = 32.0
-margin_right = 237.0
+margin_right = 276.0
 margin_bottom = 36.0
 
 [node name="MusicContainer" type="HBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row"]
 margin_top = 40.0
-margin_right = 237.0
+margin_right = 276.0
 margin_bottom = 78.0
 
 [node name="Label" type="Label" parent="GameMargin/SettingsContainer/Panel/Row/MusicContainer"]
@@ -444,13 +444,14 @@ text = "Music"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row/MusicContainer"]
 margin_left = 64.0
-margin_right = 164.0
+margin_right = 203.0
 margin_bottom = 38.0
+size_flags_horizontal = 3
 alignment = 1
 
 [node name="MusicVolumeSlider" type="HSlider" parent="GameMargin/SettingsContainer/Panel/Row/MusicContainer/VBoxContainer"]
 margin_top = 11.0
-margin_right = 100.0
+margin_right = 139.0
 margin_bottom = 27.0
 rect_min_size = Vector2( 100, 0 )
 max_value = 4.0
@@ -459,14 +460,14 @@ tick_count = 5
 ticks_on_borders = true
 
 [node name="MuteMusicButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/MusicContainer"]
-margin_left = 168.0
-margin_right = 237.0
+margin_left = 207.0
+margin_right = 276.0
 margin_bottom = 38.0
 text = "Mute"
 
 [node name="SoundContainer" type="HBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row"]
 margin_top = 82.0
-margin_right = 237.0
+margin_right = 276.0
 margin_bottom = 120.0
 
 [node name="Label" type="Label" parent="GameMargin/SettingsContainer/Panel/Row/SoundContainer"]
@@ -478,13 +479,14 @@ text = "Sound"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row/SoundContainer"]
 margin_left = 64.0
-margin_right = 164.0
+margin_right = 203.0
 margin_bottom = 38.0
+size_flags_horizontal = 3
 alignment = 1
 
 [node name="SoundVolumeSlider" type="HSlider" parent="GameMargin/SettingsContainer/Panel/Row/SoundContainer/VBoxContainer"]
 margin_top = 11.0
-margin_right = 100.0
+margin_right = 139.0
 margin_bottom = 27.0
 rect_min_size = Vector2( 100, 0 )
 max_value = 4.0
@@ -493,39 +495,52 @@ tick_count = 5
 ticks_on_borders = true
 
 [node name="MuteSoundButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/SoundContainer"]
-margin_left = 168.0
-margin_right = 237.0
+margin_left = 207.0
+margin_right = 276.0
 margin_bottom = 38.0
 text = "Mute"
 
 [node name="FontContainer" type="HBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row"]
 margin_top = 124.0
-margin_right = 237.0
+margin_right = 276.0
 margin_bottom = 166.0
 alignment = 1
 
 [node name="FontChange" type="CheckButton" parent="GameMargin/SettingsContainer/Panel/Row/FontContainer"]
-margin_left = 7.0
-margin_right = 229.0
+margin_left = 27.0
+margin_right = 249.0
 margin_bottom = 42.0
 text = "Alternate Font"
 
 [node name="HSeparator2" type="HSeparator" parent="GameMargin/SettingsContainer/Panel/Row"]
 margin_top = 170.0
-margin_right = 237.0
+margin_right = 276.0
 margin_bottom = 174.0
 
 [node name="CreditContainer" type="HBoxContainer" parent="GameMargin/SettingsContainer/Panel/Row"]
 margin_top = 178.0
-margin_right = 237.0
+margin_right = 276.0
 margin_bottom = 216.0
 alignment = 1
 
-[node name="CreditsButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/CreditContainer"]
-margin_left = 76.0
-margin_right = 160.0
+[node name="HelpButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/CreditContainer"]
+margin_right = 94.0
 margin_bottom = 38.0
+text = "Tutorial"
+
+[node name="CreditsButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/CreditContainer"]
+margin_left = 98.0
+margin_right = 182.0
+margin_bottom = 38.0
+disabled = true
 text = "Credits"
+
+[node name="RestartButton" type="Button" parent="GameMargin/SettingsContainer/Panel/Row/CreditContainer"]
+margin_left = 186.0
+margin_right = 276.0
+margin_bottom = 38.0
+disabled = true
+text = "Restart"
 
 [node name="SettingOpener" type="Control" parent="GameMargin"]
 margin_left = 25.0
@@ -553,6 +568,70 @@ margin_right = 643.0
 margin_bottom = 395.0
 mouse_filter = 2
 
+[node name="HelpContainer" type="PanelContainer" parent="GameMargin"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 643.0
+margin_bottom = 395.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameMargin/HelpContainer"]
+margin_left = 10.0
+margin_top = 5.0
+margin_right = 608.0
+margin_bottom = 365.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameMargin/HelpContainer/VBoxContainer"]
+margin_right = 598.0
+margin_bottom = 36.0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameMargin/HelpContainer/VBoxContainer/HBoxContainer"]
+margin_left = 193.0
+margin_right = 405.0
+margin_bottom = 36.0
+
+[node name="Label" type="Label" parent="GameMargin/HelpContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 212.0
+margin_bottom = 28.0
+text = "Mind your Ps and Qs"
+
+[node name="HSeparator" type="HSeparator" parent="GameMargin/HelpContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 32.0
+margin_right = 212.0
+margin_bottom = 36.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="GameMargin/HelpContainer/VBoxContainer"]
+margin_top = 40.0
+margin_right = 598.0
+margin_bottom = 318.0
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="GameMargin/HelpContainer/VBoxContainer/HBoxContainer2"]
+margin_right = 598.0
+margin_bottom = 278.0
+scroll_horizontal_enabled = false
+
+[node name="Label" type="Label" parent="GameMargin/HelpContainer/VBoxContainer/HBoxContainer2/ScrollContainer"]
+margin_right = 598.0
+margin_bottom = 276.0
+rect_min_size = Vector2( 598, 0 )
+text = "A portal has opened and demons are pouring through.  We need to curse them back to hell.  However, a cursed aura surrounds the portal and affects your ability to think clearly.  Can you deal with these demons?
+
+To play: Type two words (one from the left list and one from the right) to combine into an insult.  Be mindful of your current curses as they will affect the letters in the lists making them harder to read."
+autowrap = true
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="GameMargin/HelpContainer/VBoxContainer"]
+margin_top = 322.0
+margin_right = 598.0
+margin_bottom = 360.0
+alignment = 2
+
+[node name="HelpCloseButton" type="Button" parent="GameMargin/HelpContainer/VBoxContainer/HBoxContainer3"]
+margin_left = 532.0
+margin_right = 598.0
+margin_bottom = 38.0
+text = "Close"
+
 [node name="Timer" type="Timer" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -570,5 +649,7 @@ anims/incorrect = SubResource( 2 )
 [connection signal="value_changed" from="GameMargin/SettingsContainer/Panel/Row/SoundContainer/VBoxContainer/SoundVolumeSlider" to="." method="_on_SoundVolumeSlider_value_changed"]
 [connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/SoundContainer/MuteSoundButton" to="." method="_on_MuteSoundButton_pressed"]
 [connection signal="toggled" from="GameMargin/SettingsContainer/Panel/Row/FontContainer/FontChange" to="." method="_on_FontChange_toggled"]
+[connection signal="pressed" from="GameMargin/SettingsContainer/Panel/Row/CreditContainer/HelpButton" to="." method="_on_HelpButton_pressed"]
 [connection signal="pressed" from="GameMargin/SettingOpener/SettingsButton" to="." method="_on_SettingsButton_pressed"]
+[connection signal="pressed" from="GameMargin/HelpContainer/VBoxContainer/HBoxContainer3/HelpCloseButton" to="." method="_on_HelpCloseButton_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

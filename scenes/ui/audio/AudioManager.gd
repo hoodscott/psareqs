@@ -56,7 +56,7 @@ func change_music_bus(value: int) -> void:
   if value == 0:
     AudioServer.set_bus_mute(music_bus, true)
   else:
-    value = -pow(2, 5 - value)
+    value = int(-pow(2, 5 - value))
     AudioServer.set_bus_mute(music_bus, false)
     AudioServer.set_bus_volume_db(music_bus, value)
 

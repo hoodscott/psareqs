@@ -42,6 +42,10 @@ config/name="Mind your Ps are Qs"
 run/main_scene="res://scenes/Game.tscn"
 config/icon="res://icon.png"
 
+[audio]
+
+default_bus_layout="res://scenes/default_bus_layout.tres"
+
 [display]
 
 window/size/width=668
@@ -67,4 +71,4 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-environment/default_environment="res://default_env.tres"
+environment/default_environment="res://scenes/default_env.tres"
