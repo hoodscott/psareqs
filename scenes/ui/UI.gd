@@ -76,17 +76,21 @@ func end_game(score: int, reset := false, won := false) -> void:
   _StartContainer.show()
 
   if won:
-    _GameOver.text = "Congratulations!\n\nThe devils have been dealt with!\n\nFinal Score: %s" % score
+    _GameOver.text = "Congratulations!\n\n" + \
+      "You have dealt with the devils.\nTheir cursed power shrivels\n" + \
+      "back to indistinct ripples.\nAll it took was some drivel!" + \
+      "\n\nFinal Score: %s" % score
   elif reset:
     _GameOver.text = "Mind your\nPs and Qs"
     _StartButton.text = "Start Game"
   else:
-    _GameOver.text = "Game Over!\n\nThere is no time left\nto deal with the devils.\n\nFinal Score: %s" % score
+    _GameOver.text = "Game Over!\n\n" + \
+      "The devils were not dealt with.\nNow found abundant on Earth\n" + \
+      "they are no longer a myth.\nA new Dark Age given birth." + \
+      "\n\nFinal Score: %s" % score
 
   _GameOver.show()
 
-  if not reset:
-    yield(get_tree().create_timer(3), "timeout")
   _StartButton.show()
 
 
