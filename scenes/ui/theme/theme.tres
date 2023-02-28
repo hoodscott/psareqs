@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=7 format=2]
+[gd_resource type="Theme" load_steps=8 format=2]
 
 [ext_resource path="res://scenes/ui/theme/font_normal.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/ui/theme/button_styleboxflat.tres" type="StyleBox" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scenes/ui/theme/label_styleboxflat.tres" type="StyleBox" id=4]
 [ext_resource path="res://scenes/ui/theme/button_focus_styleboxflat.tres" type="StyleBox" id=5]
 [ext_resource path="res://scenes/ui/theme/font_small.tres" type="DynamicFont" id=6]
+[ext_resource path="res://scenes/ui/theme/sprites/grabber.png" type="Texture" id=7]
 
 [resource]
 default_font = ExtResource( 1 )
@@ -17,6 +18,7 @@ Button/styles/focus = ExtResource( 5 )
 Button/styles/hover = ExtResource( 3 )
 Button/styles/normal = ExtResource( 2 )
 Button/styles/pressed = ExtResource( 5 )
+HSlider/icons/grabber_highlight = ExtResource( 7 )
 Label/colors/font_color = Color( 0.113725, 0.101961, 0.027451, 1 )
 MarginContainer/constants/margin_bottom = 5
 MarginContainer/constants/margin_left = 5
