@@ -5,7 +5,7 @@ const NUM_CURSE_OPTIONS := 3
 const NUM_DEVILS := 2 # per round
 const GAME_LENGTH := 60 # in seconds
 
-const CHEATING := true
+const CHEATING := false
 
 enum GAMESTATE {
   CURSE_CHOICE = 0,
@@ -226,7 +226,7 @@ func is_valid_choice(letter: String) -> bool:
 
 func check_prefix_complete() -> bool:
   for prefix in prefixes:
-    if prefix.fragment == player.get_prefix():
+    if prefix.fragment == player.get_prefix() and not prefix.used:
       prefix.current = true
       return true
   return false

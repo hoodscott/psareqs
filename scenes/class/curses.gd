@@ -53,7 +53,7 @@ var _curse_multipliers = {
 
   # word reorder easy
   CURSE.REVERSE: 2,
-  # word reoder medium
+  # word reorder medium
   CURSE.ROT1: 4,
   CURSE.ROT1NEG: 4,
   CURSE.JUMBLE: 4,
@@ -95,6 +95,10 @@ func apply_curse(word: String, curse: int) -> String:
       word = _swap(word, "b", "d")
     CURSE.KC:
       word = _swap(word, "k", "c")
+    CURSE.FG:
+      word = _swap(word, "f", "g")
+    CURSE.LT:
+      word = _swap(word, "l", "t")
     CURSE.ALPHA:
       word = _alphabetise(word)
     CURSE.JUMBLE:
@@ -132,6 +136,7 @@ func get_option(current_round: int, index: int) -> int:
 
 
 func shuffle_curse_options() -> void:
+
   for i in _curse_options:
     i.shuffle()
 
@@ -242,4 +247,4 @@ func _vowel_pair_flip(s: String) -> String:
         flipped += letter + prev_vowel
         prev_vowel = ""
 
-  return flipped
+  return flipped + prev_vowel
