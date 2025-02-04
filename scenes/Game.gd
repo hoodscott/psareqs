@@ -3,9 +3,9 @@ extends Node2D
 const WORD_BUFFER := 2 # possible words = devil's max health + word_buffer
 const NUM_CURSE_OPTIONS := 3
 const NUM_DEVILS := 2 # per round
-const GAME_LENGTH := 60 # in seconds
+const GAME_LENGTH := 10 # in seconds
 
-const CHEATING := false
+const CHEATING := true
 
 enum GAMESTATE {
   CURSE_CHOICE = 0,
@@ -125,7 +125,7 @@ func end_game(won := false) -> void:
   for child in DevilSpawn.get_children():
     child.queue_free()
 
-  UI.end_game(player.score, false, won)
+  UI.end_game(player.score, false, won, _generate_poem(won))
 
 
 func restart_game() -> void:
@@ -296,3 +296,32 @@ func show_rules() -> void:
 
 func show_multiplier() -> void:
   UI.update_multiplier(curses.calc_curse_multiplier(player.curses))
+
+
+func _generate_poem(won: bool) -> String:
+  var poem = [
+    "you have dealt with the devils", "their cursed power shrivels", \
+    "back to indistinct ripples", "all it took was some drivel"] if won else [
+    "the devils were not dealt with", "now found abundant on earth", \
+    "they are no longer a myth", "a new dark age given birth"
+    ]
+
+  var final_punct = "!" if won else "."
+
+  var first := true
+
+  var poem_jumble = []
+  for line in poem:
+    var line_jumble = []
+    for word in line.split(" "):
+      var word_jumble: String = word
+      for curse in player.curses:
+        word_jumble = curses.apply_curse(word_jumble, curse)
+      if first:
+        line_jumble.append(word_jumble.capitalize())
+        first = false
+      else:
+        line_jumble.append(word_jumble)
+    poem_jumble.append(" ".join(line_jumble))
+
+  return "\n".join(poem_jumble) + final_punct

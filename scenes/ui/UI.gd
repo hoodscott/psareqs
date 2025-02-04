@@ -71,23 +71,18 @@ func reset() -> void:
   _StartContainer.show()
 
 
-func end_game(score: int, reset := false, won := false) -> void:
+func end_game(score: int, reset := false, won := false, poem := "") -> void:
   _GameContainer.hide()
   _StartContainer.show()
-
-  var poemw = "You have dealt with the devils.\nTheir cursed power shrivels\n" + \
-      "back to indistinct ripples.\nAll it took was some drivel!"
-  var poeml = "The devils were not dealt with.\nNow found abundant on Earth\n" + \
-      "they are no longer a myth.\nA new Dark Age given birth."
 
   if reset:
     _GameOver.text = "Mind your\nPs and Qs"
     _StartButton.text = "Start Game"
   else:
     if won:
-      _GameOver.text = "Congratulations!\n\n" + poemw
+      _GameOver.text = "Congratulations!\n\n" + poem
     else:
-      _GameOver.text = "Game Over!\n\n" + poeml
+      _GameOver.text = "Game Over!\n\n" + poem
     _GameOver.text += "\n\nFinal Score: %s" % score
 
   _GameOver.show()
